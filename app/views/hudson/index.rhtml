@@ -1,0 +1,35 @@
+<%# $Id$
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+%>
+
+<div class="flash notice" id="info" style="display:none;">build accepted</div>
+<div class="flash error" id="error" style="display:none;">build failure</div>
+<div id="remote-debug" style="display:none;"></div>
+
+<% @builds.each do |item|%>
+  <div class="contextual">
+  <%= link_to_remote_if_authorized '[Build Now]', 
+        :url => {:action => 'build', :id => @project, :name => item[:name]},
+        :update => {:success => 'remote-debug', :failure => 'remote-debug'},
+        :success => "if(request.responseText.indexOf('build_accepted') > 0 ){Element.show('info');Element.hide('error');}else{Element.show('error');Element.hide('info');}",
+        :failure => "Element.show('error');Element.hide('info');"
+  %>
+  </div>
+
+  <h2 class="icon icon-<%=item[:state]%>"><%=link_to item[:name], item[:url]%></h2>
+
+  <p><%=item[:healthReport][:description]%> <%=item[:healthReport][:score]%>%</p>
+
+  <fieldset class="latest-build"><legend><%=l(:label_latest_build)%></legend>
+    #<%=item[:latestBuild][:number]%> <span class="<%="result #{item[:latestBuild][:result].downcase}"%>"><%=item[:latestBuild][:result]%></span> <%=item[:latestBuild][:timestamp].strftime("%Y/%m/%d %H:%M:%S")%>
+  </fieldset>
+
+  <div class="wiki">
+    <%= textilizable item[:description] -%>
+  </div>
+<% end %>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag "hudson.css", :plugin => "redmine_hudson", :media => "screen" %>
+<% end %>

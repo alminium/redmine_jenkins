@@ -1,0 +1,8 @@
+
+.icon-blue { background-image: url(/plugin_assets/redmine_hudson/images/blue.png); }
+
+.icon-red { background-image: url(/plugin_assets/redmine_hudson/images/red.png); }
+
+.result.failure {color:red;}
+
+.result.success {color:blue;}
