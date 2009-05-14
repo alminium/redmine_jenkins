@@ -3,31 +3,53 @@
 # and open the template in the editor.
 %>
 
-<div class="flash notice" id="info" style="display:none;">build accepted</div>
-<div class="flash error" id="error" style="display:none;">build failure</div>
-<div id="remote-debug" style="display:none;"></div>
+<h2><%=l(:label_job_list)%></h2>
 
-<% @builds.each do |item|%>
-  <div class="contextual">
-  <%= link_to_remote_if_authorized '[Build Now]', 
-        :url => {:action => 'build', :id => @project, :name => item[:name]},
-        :update => {:success => 'remote-debug', :failure => 'remote-debug'},
-        :success => "if(request.responseText.indexOf('build_accepted') > 0 ){Element.show('info');Element.hide('error');}else{Element.show('error');Element.hide('info');}",
-        :failure => "Element.show('error');Element.hide('info');"
-  %>
-  </div>
+<% if @jobs == nil || @jobs.length == 0 %>
+  <div class="nodata"><%=l(:notice_no_jobs)%></div>
+<% else %>
+  <div class="flash notice" id="info" style="display:none;">build accepted</div>
+  <div class="flash error" id="error" style="display:none;">build failure</div>
+  <div id="remote-debug" style="display:none;"></div>
 
-  <h2 class="icon icon-<%=item[:state]%>"><%=link_to item[:name], item[:url]%></h2>
+  <% @jobs.each do |job|%>
+    <div class="contextual">
+    <%= link_to_remote_if_authorized '[Build Now]',
+          :url => {:action => 'build', :id => @project, :name => job[:name]},
+          :update => {:success => 'remote-debug', :failure => 'remote-debug'},
+          :success => "if(request.responseText.indexOf('build_accepted') > 0 ){Element.show('info');Element.hide('error');}else{Element.show('error');Element.hide('info');}",
+          :failure => "Element.show('error');Element.hide('info');"
+    %>
+    </div>
 
-  <p><%=item[:healthReport][:description]%> <%=item[:healthReport][:score]%>%</p>
+    <div>
+    <h3 class="icon icon-<%=job[:state]%>"><%=link_to job[:name], job[:url]%></h3>
 
-  <fieldset class="latest-build"><legend><%=l(:label_latest_build)%></legend>
-    #<%=item[:latestBuild][:number]%> <span class="<%="result #{item[:latestBuild][:result].downcase}"%>"><%=item[:latestBuild][:result]%></span> <%=item[:latestBuild][:timestamp].strftime("%Y/%m/%d %H:%M:%S")%>
-  </fieldset>
+    <div class="wiki">
+      <%= textilizable job[:description] -%>
+    </div>
 
-  <div class="wiki">
-    <%= textilizable item[:description] -%>
-  </div>
+    <div>
+    <fieldset class="latest-build"><legend><%=l(:label_latest_build)%></legend>
+      <% if "" != job[:latestBuild][:number] %>
+        <%="##{job[:latestBuild][:number]}"%>
+        <%=content_tag("span", job[:latestBuild][:result], :class => "result #{job[:latestBuild][:result].downcase}")%>
+        <%=content_tag("span", job[:latestBuild][:timestamp].strftime("%Y/%m/%d %H:%M:%S")) %>
+      <% end %>
+      <% if "" == job[:latestBuild][:number] %>
+        <%=l(:notice_no_builds)%>
+      <% end %>
+    </fieldset>
+    </div>
+
+    <ul>
+      <% job[:healthReport].each do |report| %>
+        <li><%=report[:description]%> <%=report[:score]%>%
+      <% end %>
+    </ul>
+
+    </div>
+  <% end %>
 <% end %>
 
 <% content_for :header_tags do %>

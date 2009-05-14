@@ -1,8 +1,9 @@
 
 .icon-blue { background-image: url(../images/blue.png); }
-
 .icon-red { background-image: url(../images/red.png); }
+.icon-grey { background-image: url(../images/grey.png); }
+.icon-yellow { background-image: url(../images/yellow.png); }
 
 .result.failure {color:red;}
-
 .result.success {color:blue;}
+.result {color:#999;}

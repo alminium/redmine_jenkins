@@ -13,6 +13,11 @@ Redmine::Plugin.register :redmine_hudson do
     permission :build_hudson_jobs, {:hudson => [:build]}, :require => :member
   end
 
+  # とりあえずの設定。 "プロジェクト名" => {:url => "HudsonのURL", :job_filter => "表示したいジョブ"}
+  settings :default => {'test-1' => {:url => 'http://192.168.0.51:8080/'},
+                         'nextproject' => {:url => 'http://192.168.0.51:8080/', :job_filter => 'Empty;NUnit'}
+                        }
+
   menu :project_menu, :hudson, { :controller => :hudson, :action => :index }, :param => :id, :caption => :label_hudson
 
 end
