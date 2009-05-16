@@ -1,0 +1,22 @@
+<%# $Id$
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+%>
+
+<h2><%=l(:label_settings)%></h2>
+
+<%= error_messages_for 'settings' %>
+
+<% form_tag({:action => 'edit'}) do %>
+
+<fieldset class="box"><legend><%=l(:label_hudson)%></legend>
+  <p><label><%=l(:label_url)%></label>
+     <%=text_field :settings, :url, :size=>50%> <%=l(:notice_hudson_url)%></p>
+  <p><label><%=l(:label_jobs)%></label>
+    <%=render :partial => 'joblist'%>
+  </p>
+</fieldset>
+
+<%= submit_tag l(:button_save) %>
+
+<% end %>

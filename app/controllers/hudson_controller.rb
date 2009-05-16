@@ -4,6 +4,7 @@
 
 require "rexml/document"
 require 'open-uri'
+require 'hudson_exceptions'
 
 RAILS_DEFAULT_LOGGER.info 'Starting Hudson plugin for RedMine'
 
@@ -15,45 +16,45 @@ class HudsonController < ApplicationController
   before_filter :find_settings
   before_filter :authorize
 
+  include HudsonHelper
+  include RexmlHelper
+
   def index
-    if @settings == nil
-      flash.now[:error] = l(:notice_no_settings)
-      return
+    @jobs = []
+
+    raise HudsonNoSettingsException if @settings.is_new?
+
+    api_url = "#{@settings.url}/api/xml?depth=1"
+    content = open(api_url)
+    doc = REXML::Document.new content
+    doc.elements.each("hudson/job") do |element|
+      @jobs << make_job(element) if is_target?(get_element_value(element, "name"))
     end
 
-    api_url = "#{@settings[:url]}/api/xml?depth=1"
-
-    begin
-      # Open the feed and parse it
-      content = open(api_url)
-      doc = REXML::Document.new content
-      @jobs = []
-      doc.elements.each("hudson/job") do |element|
-        @jobs << make_job(element) if is_target?(get_element_value(element, "name"))
-      end
-    rescue OpenURI::HTTPError => error
-      flash.now[:error] = l(:notice_http_error, error.message)
-      return
-    rescue Errno::ECONNREFUSED
-      flash.now[:error] = l(:notice_connect_refused)
-      return
-    end
-
+  rescue HudsonNoSettingsException
+    flash.now[:error] = l(:notice_err_no_settings, url_for(:controller => 'hudson_settings', :action => 'edit', :id => @project))
+  rescue OpenURI::HTTPError => error
+    flash.now[:error] = l(:notice_err_http_error, error.message)
+  rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
+    flash.now[:error] = l(:notice_err_cant_connect)
   end
 
   def build
-    raise 'no job' if params[:name] == nil
+    raise HudsonNoSettingsException if @settings.is_new?
+    raise HudsonNoJobException if params[:name] == nil
 
-    build_url = "#{@settings[:url]}/job/#{params[:name]}/build"
+    build_url = "#{@settings.url}/job/#{params[:name]}/build"
 
     content = ""
     open(build_url) do |s| content = s.read end
     p "info --> #{content}"
 
-  rescue
-      render :text => "#{params[:name]} #{l(:build_failed)}"
-    else
-      render :text => "#{params[:name]} #{l(:build_accepted)}"
+  rescue HudsonNoSettingException
+    render :text => "#{l(:notice_err_build_failed, :notice_err_no_settings)}"
+  rescue HudsonNoJobException
+    render :text => "#{l(:notice_err_build_failed_no_job, params[:name])}"
+  else
+    render :text => "#{params[:name]} #{l(:build_accepted)}"
   end
 
 private
@@ -64,18 +65,11 @@ private
   end
 
   def find_settings
-    return if @project == nil
-    return if Setting.plugin_redmine_hudson[@project.identifier] == nil
-
-    @settings = {}
-    @settings[:url] = Setting.plugin_redmine_hudson[@project.identifier][:url]
-    @settings[:job_filter] = Setting.plugin_redmine_hudson[@project.identifier][:job_filter]
+    @settings = HudsonSettings.load(@project)
   end
 
   def is_target?(job)
-    return true if @settings[:job_filter] == nil || @settings[:job_filter] == ""
-    return true if @settings[:job_filter].split(";").include?(job)
-    return false
+    return @settings.job_include?(job)
   end
 
   def make_job( element )
@@ -106,7 +100,7 @@ private
     retval[:url] = ""
     retval[:timestamp] = ""
 
-    api_url = "#{@settings[:url]}/job/#{name}/lastBuild/api/xml?"
+    api_url = "#{@settings.url}/job/#{name}/lastBuild/api/xml?"
 
     begin
       # Open the feed and parse it
@@ -115,7 +109,7 @@ private
     rescue OpenURI::HTTPError => error
       # TODO:ここどうしよう？
       return retval
-    rescue Errno::ECONNREFUSED
+    rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
       # TODO:ここどうしよう？
       return retval
     end
@@ -129,13 +123,6 @@ private
 
     return retval
 
-  end
-
-  def get_element_value(element, name)
-    return "" if element == nil
-    return "" if element.get_text(name) == nil
-    return "" if element.get_text(name).value == nil
-    return element.get_text(name).value
   end
 
 end

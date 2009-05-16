@@ -5,7 +5,7 @@
 
 <h2><%=l(:label_job_list)%></h2>
 
-<% if @jobs == nil || @jobs.length == 0 %>
+<% if @jobs.length == 0 %>
   <div class="nodata"><%=l(:notice_no_jobs)%></div>
 <% else %>
   <div class="flash notice" id="info" style="display:none;">build accepted</div>
@@ -22,15 +22,7 @@
     %>
     </div>
 
-    <div>
-    <h3 class="icon icon-<%=job[:state]%>"><%=link_to job[:name], job[:url]%></h3>
-
-    <div class="wiki">
-      <%= textilizable job[:description] -%>
-    </div>
-
-    <div>
-    <fieldset class="latest-build"><legend><%=l(:label_latest_build)%></legend>
+    <div class="contextual">
       <% if "" != job[:latestBuild][:number] %>
         <%="##{job[:latestBuild][:number]}"%>
         <%=content_tag("span", job[:latestBuild][:result], :class => "result #{job[:latestBuild][:result].downcase}")%>
@@ -39,7 +31,13 @@
       <% if "" == job[:latestBuild][:number] %>
         <%=l(:notice_no_builds)%>
       <% end %>
-    </fieldset>
+    </div>
+
+    <div>
+    <h3 class="icon icon-<%=job[:state]%>"><%=link_to job[:name], job[:url]%></h3>
+
+    <div class="wiki">
+      <%= textilizable job[:description] -%>
     </div>
 
     <ul>
@@ -50,6 +48,10 @@
 
     </div>
   <% end %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <%= render :partial => 'hudson_sidebar' %>
 <% end %>
 
 <% content_for :header_tags do %>

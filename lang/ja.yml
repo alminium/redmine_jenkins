@@ -4,10 +4,21 @@ label_hudson: Hudson
 label_latest_build: 最新のビルド
 label_job_list: ジョブの一覧
 label_health_report: ビルドの健康状態
+label_settings: 設定
+label_url: URL
+label_jobs: 表示するジョブ
+label_update_jobs: ジョブの一覧を更新する
 
-notice_connect_refused: Hudson に接続できませんでした（Hudson が起動していないかもしれません）
-notice_response_invalid: 'Hudson からの応答が何か変です。 %1s'
-notice_http_error: 'Hudson からエラーが返って来ました。%1s'
 notice_no_jobs: ジョブはありません。
 notice_no_builds: ビルドは実行されていません。
-notice_no_settings: 設定が見当たりません。init.rb に設定を記述して、Redmine を再起動してください。
+
+notice_hudson_url: 'http:// から記述してください'
+
+notice_err_cant_connect: Hudson に接続できませんでした（Hudson が起動していないかもしれません）
+notice_err_response_invalid: 'Hudson からの応答が何か変です。 %1s'
+notice_err_http_error: 'Hudson からエラーが返って来ました。%1s'
+notice_err_no_settings: このプロジェクトの設定が見当たりません。<a href='%1s'>設定を確認</a>してください。
+notice_err_no_jobs: URLが設定されていないか、HudsonにJobが登録されていません。
+
+notice_err_build_failed: 'ビルドに失敗しました。%1s'
+notice_err_build_failed_no_job: 'ビルドに失敗しました。ジョブが見当たりません。[%1s]'
