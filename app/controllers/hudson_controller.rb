@@ -4,6 +4,7 @@
 
 require "rexml/document"
 require 'open-uri'
+require 'cgi'
 require 'hudson_exceptions'
 
 RAILS_DEFAULT_LOGGER.info 'Starting Hudson plugin for RedMine'
@@ -54,7 +55,7 @@ class HudsonController < ApplicationController
     raise HudsonNoSettingsException if @settings.is_new?
     raise HudsonNoJobException if params[:name] == nil
 
-    build_url = "#{@settings.url}job/#{params[:name]}/build"
+    build_url = URI.escape("#{@settings.url}job/#{params[:name]}/build")
 
     content = ""
     open(build_url) do |s| content = s.read end
@@ -113,7 +114,7 @@ private
     retval[:url] = ""
     retval[:timestamp] = ""
 
-    api_url = "#{@settings.url}job/#{name}/lastBuild/api/xml?"
+    api_url = URI.escape("#{@settings.url}job/#{name}/lastBuild/api/xml?")
 
     begin
       # Open the feed and parse it
