@@ -23,14 +23,15 @@
     </div>
 
     <div class="contextual">
-      <% if "" != job[:latestBuild][:number] %>
-        <%="##{job[:latestBuild][:number]}"%>
-        <%=content_tag("span", job[:latestBuild][:result], :class => "result #{job[:latestBuild][:result].downcase}") if "true" != job[:latestBuild][:building] && "" != job[:latestBuild][:result]%>
-        <%=content_tag("span", l(:notice_building), :class => "result") if "true" == job[:latestBuild][:building] %>
-        <%=content_tag("span", job[:latestBuild][:timestamp].strftime("%Y/%m/%d %H:%M:%S")) %>
-      <% end %>
-      <% if "" == job[:latestBuild][:number] %>
-        <%=l(:notice_no_builds)%>
+      <%=job[:latestBuild][:error] if "" != job[:latestBuild][:error]%>
+      <% if "" == job[:latestBuild][:error] %>
+        <% if "" != job[:latestBuild][:number] %>
+          <%="##{job[:latestBuild][:number]}"%>
+          <%=content_tag("span", job[:latestBuild][:result], :class => "result #{job[:latestBuild][:result].downcase}") if "true" != job[:latestBuild][:building] && "" != job[:latestBuild][:result]%>
+          <%=content_tag("span", l(:notice_building), :class => "result") if "true" == job[:latestBuild][:building] %>
+          <%=content_tag("span", job[:latestBuild][:timestamp].strftime("%Y/%m/%d %H:%M:%S")) %>
+        <% end %>
+        <%=l(:notice_no_builds) if "" == job[:latestBuild][:number]%>
       <% end %>
     </div>
 

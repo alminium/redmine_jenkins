@@ -113,6 +113,7 @@ private
     retval[:result] = ""
     retval[:url] = ""
     retval[:timestamp] = ""
+    retval[:error] = "" # ビルド情報を取得する際に発生したエラー
 
     api_url = URI.escape("#{@settings.url}job/#{name}/lastBuild/api/xml?")
 
@@ -121,13 +122,14 @@ private
       content = open(api_url)
       doc = REXML::Document.new content
     rescue OpenURI::HTTPError => error
-      # TODO:ここどうしよう？
+      # 404 って、URLを間違えた場合にも発生しちゃうんだけど…
+      retval[:error] = l(:notice_err_http_error, error.message) if error.message.index("404") == nil
       return retval
     rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
-      # TODO:ここどうしよう？
+      retval[:error] = l(:notice_err_cant_connect)
       return retval
     rescue URI::InvalidURIError
-      # TODO:ここどうしよう？
+      retval[:error] = l(:notice_err_invalid_url)
       return retval
     end
 
