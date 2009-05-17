@@ -1,3 +1,26 @@
 # $Id$
 # English strings go here
 label_hudson: Hudson
+label_latest_build: Latest Build
+label_job_list: Job List
+label_health_report: Health Report
+label_settings: Settings
+label_url: URL
+label_jobs: Jobs
+label_update_jobs: Update Jobs
+
+notice_no_jobs: No Jobs
+notice_no_builds: No Builds
+
+notice_building: Now Building...
+notice_hudson_url: 'with http:// ...'
+
+notice_err_cant_connect: "Can't Connect Hudson"
+notice_err_response_invalid: 'Response Invalid %1s'
+notice_err_http_error: 'Http Error %1s'
+notice_err_no_settings: "No settings for this project. Please <a href='%1s'>confirm settings</a>"
+notice_err_no_jobs: Hudson has no job
+notice_err_invalid_url: Invalid URL
+
+notice_err_build_failed: 'Build failed %1s'
+notice_err_build_failed_no_job: 'Build failed. Job not found [%1s]'
