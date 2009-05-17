@@ -12,7 +12,7 @@
 <fieldset class="box"><legend><%=l(:label_hudson)%></legend>
   <p><label><%=l(:label_url)%></label>
      <%=text_field :settings, :url, :size=>50%> <%=l(:notice_hudson_url)%></p>
-  <p><label><%=l(:label_jobs)%></label>
+  <p><label style="float:left;margin-right:5px;"><%=l(:label_jobs)%></label>
     <%=render :partial => 'joblist'%>
   </p>
 </fieldset>

@@ -41,6 +41,8 @@ class HudsonSettingsController < ApplicationController
       @error = l(:notice_err_http_error, error.message)
     rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
       @error = l(:notice_err_cant_connect)
+    rescue URI::InvalidURIError
+      @error = l(:notice_err_invalid_url)
     end
     render :layout => false, :template => 'hudson_settings/_joblist.rhtml'
   end
@@ -61,7 +63,7 @@ private
 
     return if url == nil || url.length == 0
 
-    api_url = "#{url}/api/xml?depth=1"
+    api_url = "#{url}api/xml?depth=0"
 
     # Open the feed and parse it
     content = open(api_url)

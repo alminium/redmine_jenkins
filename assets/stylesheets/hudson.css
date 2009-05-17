@@ -4,6 +4,11 @@
 .icon-grey { background-image: url(../images/grey.png); }
 .icon-yellow { background-image: url(../images/yellow.png); }
 
+.icon-blue_anime { background-image: url(../images/blue_anime.png); }
+.icon-red_anime { background-image: url(../images/red_anime.png); }
+.icon-grey_anime { background-image: url(../images/grey_anime.png); }
+.icon-yellow_amine { background-image: url(../images/yellow_anime.png); }
+
 .result.failure {color:red;}
 .result.success {color:blue;}
 .result {color:#999;}

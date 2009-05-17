@@ -25,7 +25,7 @@ class HudsonController < ApplicationController
     raise HudsonNoSettingsException if @settings.is_new?
 
     # job/build, view, primaryView は省く
-    api_url = "#{@settings.url}/api/xml?depth=1" + 
+    api_url = "#{@settings.url}api/xml?depth=1" + 
               "&xpath=/hudson" +
               "&exclude=/hudson/view" +
               "&exclude=/hudson/primaryView" +
@@ -52,7 +52,7 @@ class HudsonController < ApplicationController
     raise HudsonNoSettingsException if @settings.is_new?
     raise HudsonNoJobException if params[:name] == nil
 
-    build_url = "#{@settings.url}/job/#{params[:name]}/build"
+    build_url = "#{@settings.url}job/#{params[:name]}/build"
 
     content = ""
     open(build_url) do |s| content = s.read end
@@ -109,7 +109,7 @@ private
     retval[:url] = ""
     retval[:timestamp] = ""
 
-    api_url = "#{@settings.url}/job/#{name}/lastBuild/api/xml?"
+    api_url = "#{@settings.url}job/#{name}/lastBuild/api/xml?"
 
     begin
       # Open the feed and parse it
@@ -127,6 +127,7 @@ private
       retval[:number] = get_element_value(doc.root, "number")
       retval[:result] = get_element_value(doc.root, "result")
       retval[:url] = get_element_value(doc.root, "url")
+      retval[:building] = get_element_value(doc.root, "building")
       retval[:timestamp] = Time.at( get_element_value(doc.root, "timestamp").to_f / 1000 )
     end
 

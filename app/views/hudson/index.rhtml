@@ -25,7 +25,8 @@
     <div class="contextual">
       <% if "" != job[:latestBuild][:number] %>
         <%="##{job[:latestBuild][:number]}"%>
-        <%=content_tag("span", job[:latestBuild][:result], :class => "result #{job[:latestBuild][:result].downcase}")%>
+        <%=content_tag("span", job[:latestBuild][:result], :class => "result #{job[:latestBuild][:result].downcase}") if "true" != job[:latestBuild][:building] && "" != job[:latestBuild][:result]%>
+        <%=content_tag("span", l(:notice_building), :class => "result") if "true" == job[:latestBuild][:building] %>
         <%=content_tag("span", job[:latestBuild][:timestamp].strftime("%Y/%m/%d %H:%M:%S")) %>
       <% end %>
       <% if "" == job[:latestBuild][:number] %>
