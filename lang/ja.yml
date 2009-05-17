@@ -24,3 +24,7 @@ notice_err_invalid_url: URLに誤りがあるようです。
 
 notice_err_build_failed: 'ビルドに失敗しました。%1s'
 notice_err_build_failed_no_job: 'ビルドに失敗しました。ジョブが見当たりません。[%1s]'
+
+keyword_build_health_report: 安定したビルド
+keyword_test_health_report: テスト結果
+

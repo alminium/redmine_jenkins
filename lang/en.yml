@@ -24,3 +24,7 @@ notice_err_invalid_url: Invalid URL
 
 notice_err_build_failed: 'Build failed %1s'
 notice_err_build_failed_no_job: 'Build failed. Job not found [%1s]'
+
+keyword_build_health_report: Build
+keyword_test_health_report: Test
+

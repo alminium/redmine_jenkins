@@ -44,7 +44,8 @@
 
     <ul>
       <% job[:healthReport].each do |report| %>
-        <li><%=report[:description]%> <%=report[:score]%>%
+        <%="<li>#{link_to(report[:description], report[:url])} #{report[:score]}%" if report[:url] != ""%>
+        <%="<li>#{report[:description]} #{report[:score]}%" if report[:url] == ""%>
       <% end %>
     </ul>
 

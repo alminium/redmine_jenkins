@@ -98,12 +98,23 @@ private
       report = {}
       report[:description] = get_element_value(hReport, "description")
       report[:score] = get_element_value(hReport, "score")
+      report[:url] = get_health_report_url(retval[:name], report[:description])
       retval[:healthReport] << report
     end
 
     retval[:latestBuild] = make_latest_build( retval[:name] )
 
     return retval
+  end
+
+  def get_health_report_url(name, description)
+    if description.index(l(:keyword_build_health_report)) != nil
+      return URI.escape("#{@settings.url}job/#{name}/lastBuild/")
+    end
+    if description.index(l(:keyword_test_health_report)) != nil
+      return URI.escape("#{@settings.url}job/#{name}/lastBuild/testReport/")
+    end
+    return ""
   end
 
   def make_latest_build( name )
