@@ -24,7 +24,16 @@ class HudsonController < ApplicationController
 
     raise HudsonNoSettingsException if @settings.is_new?
 
-    api_url = "#{@settings.url}/api/xml?depth=1"
+    # job/build, view, primaryView は省く
+    api_url = "#{@settings.url}/api/xml?depth=1" + 
+              "&xpath=/hudson" +
+              "&exclude=/hudson/view" +
+              "&exclude=/hudson/primaryView" +
+              "&exclude=/hudson/job/build" +
+              "&exclude=/hudson/job/lastBuild" +
+              "&exclude=/hudson/job/lastCompletedBuild" +
+              "&exclude=/hudson/job/lastStableBuild" +
+              "&exclude=/hudson/job/lastSuccessfulBuild"
     content = open(api_url)
     doc = REXML::Document.new content
     doc.elements.each("hudson/job") do |element|
