@@ -46,6 +46,8 @@ class HudsonController < ApplicationController
     flash.now[:error] = l(:notice_err_http_error, error.message)
   rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
     flash.now[:error] = l(:notice_err_cant_connect)
+  rescue URI::InvalidURIError
+    flash.now[:error] = l(:notice_err_invalid_url)
   end
 
   def build
@@ -62,6 +64,8 @@ class HudsonController < ApplicationController
     render :text => "#{l(:notice_err_build_failed, :notice_err_no_settings)}"
   rescue HudsonNoJobException
     render :text => "#{l(:notice_err_build_failed_no_job, params[:name])}"
+  rescue URI::InvalidURIError
+    render :text => l(:notice_err_invalid_url)
   else
     render :text => "#{params[:name]} #{l(:build_accepted)}"
   end
@@ -119,6 +123,9 @@ private
       # TODO:ここどうしよう？
       return retval
     rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
+      # TODO:ここどうしよう？
+      return retval
+    rescue URI::InvalidURIError
       # TODO:ここどうしよう？
       return retval
     end

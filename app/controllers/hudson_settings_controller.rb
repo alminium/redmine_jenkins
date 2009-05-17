@@ -31,6 +31,8 @@ class HudsonSettingsController < ApplicationController
     flash.now[:error] = l(:notice_err_http_error, error.message)
   rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
     flash.now[:error] = l(:notice_err_cant_connect)
+  rescue URI::InvalidURIError
+    flash.now[:error] = l(:notice_err_invalid_url)
   end
 
   def joblist
