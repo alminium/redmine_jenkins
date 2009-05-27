@@ -9,6 +9,7 @@ ja:
   label_url: URL
   label_jobs: 表示するジョブ
   label_update_jobs: ジョブの一覧を更新する
+  label_history: ビルド履歴
 
   notice_no_jobs: ジョブはありません。
   notice_no_builds: ビルドは実行されていません。
@@ -22,6 +23,7 @@ ja:
   notice_err_no_settings: このプロジェクトの設定が見当たりません。<a href='%1s'>設定を確認</a>してください。
   notice_err_no_jobs: URLが設定されていないか、HudsonにJobが登録されていません。
   notice_err_invalid_url: URLに誤りがあるようです。
+  notice_err_no_job : 'Jobが見当たりません。[%1s]'
 
   notice_err_build_failed: 'ビルドに失敗しました。%1s'
   notice_err_build_failed_no_job: 'ビルドに失敗しました。ジョブが見当たりません。[%1s]'

@@ -22,10 +22,11 @@
     %>
     </div>
 
-    <div class="contextual">
+    <div class="contextual latest-build" id='latest-build-<%=job[:name]%>'>
       <%=job[:latestBuild][:error] if "" != job[:latestBuild][:error]%>
       <% if "" == job[:latestBuild][:error] %>
         <% if "" != job[:latestBuild][:number] %>
+          <%=image_tag 'document.png', :class=>'build-history', :id=>"build-history-#{job[:name]}"%>
           <%="##{job[:latestBuild][:number]}"%>
           <%=content_tag("span", job[:latestBuild][:result], :class => "result #{job[:latestBuild][:result].downcase}") if "true" != job[:latestBuild][:building] && "" != job[:latestBuild][:result]%>
           <%=content_tag("span", l(:notice_building), :class => "result") if "true" == job[:latestBuild][:building] %>
@@ -51,6 +52,9 @@
 
     </div>
   <% end %>
+
+  <div id="build-history" style="display:none;"></div>
+  <%= javascript_tag "new BuildHistory('#{url_for(:controller => 'hudson', :action => 'history', :id=>@project)}')" %>
 <% end %>
 
 <% content_for :sidebar do %>
@@ -59,4 +63,5 @@
 
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag "hudson.css", :plugin => "redmine_hudson", :media => "screen" %>
+  <%= javascript_include_tag 'build_history', :plugin => "redmine_hudson" %>
 <% end %>

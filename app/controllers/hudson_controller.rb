@@ -59,9 +59,8 @@ class HudsonController < ApplicationController
 
     content = ""
     open(build_url) do |s| content = s.read end
-    p "info --> #{content}"
 
-  rescue HudsonNoSettingException
+  rescue HudsonNoSettingsException
     render :text => "#{l(:notice_err_build_failed, :notice_err_no_settings)}"
   rescue HudsonNoJobException
     render :text => "#{l(:notice_err_build_failed_no_job, params[:name])}"
@@ -69,6 +68,33 @@ class HudsonController < ApplicationController
     render :text => l(:notice_err_invalid_url)
   else
     render :text => "#{params[:name]} #{l(:build_accepted)}"
+  end
+
+  def history
+    raise HudsonNoSettingsException if @settings.is_new?
+    raise HudsonNoJobException if params[:name] == nil
+    raise HudsonNoJobException unless is_target?(params[:name]) # ちょっと強引だけど、見えない設定のジョブはないものとみなす
+
+    @name = params[:name]
+    api_uri = URI.escape("#{@settings.url}job/#{params[:name]}/rssAll")
+    content = ""
+    open(api_uri) do |s| content = s.read end
+    doc = REXML::Document.new content
+    @builds = []
+    doc.elements.each("//entry") do |entry|
+      params = get_element_value(entry, "title").scan(/(.*)#(.*)\s\((.*)\)/)[0]
+      link = "#{entry.elements['link'].attributes['href']}"
+      @builds << {:name => params[0], :number=>params[1], :result=>params[2], :url=>link}
+    end
+
+  rescue HudsonNoSettingsException
+    render :text => "#{l(:notice_err_no_settings, url_for(:controller => 'hudson_settings', :action => 'edit', :id => @project))}"
+  rescue HudsonNoJobException
+    render :text => "#{l(:notice_err_no_job, params[:name])}"
+  rescue URI::InvalidURIError
+    render :text => l(:notice_err_invalid_url)
+  else
+    render :partial => 'history'
   end
 
 private

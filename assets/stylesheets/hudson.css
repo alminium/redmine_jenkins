@@ -12,3 +12,5 @@
 .result.failure {color:red;}
 .result.success {color:blue;}
 .result {color:#999;}
+
+#build-history { position:absolute; background-color:white; }

@@ -9,6 +9,7 @@ en:
   label_url: URL
   label_jobs: Jobs
   label_update_jobs: Update Jobs
+  label_history: Build History
 
   notice_no_jobs: No Jobs
   notice_no_builds: No Builds
@@ -22,6 +23,7 @@ en:
   notice_err_no_settings: "No settings for this project. Please <a href='%1s'>confirm settings</a>"
   notice_err_no_jobs: Hudson has no job
   notice_err_invalid_url: Invalid URL
+  notice_err_no_job : 'job not found [%1s]'
 
   notice_err_build_failed: 'Build failed %1s'
   notice_err_build_failed_no_job: 'Build failed. Job not found [%1s]'

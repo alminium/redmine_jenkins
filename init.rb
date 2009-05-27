@@ -11,7 +11,7 @@ Redmine::Plugin.register :redmine_hudson do
 
   project_module :hudson do
     # パーミッション設定。
-    permission :show_jobs, {:hudson => [:index]}
+    permission :show_jobs, {:hudson => [:index, :history]}
     permission :build_jobs, {:hudson => [:build]}, :require => :member
     permission :edit_settings, {:hudson_settings => [:edit, :joblist]}
   end
