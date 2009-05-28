@@ -27,7 +27,7 @@
       <% if "" == job[:latestBuild][:error] %>
         <% if "" != job[:latestBuild][:number] %>
           <%=image_tag 'document.png', :class=>'build-history', :id=>"build-history-#{job[:name]}"%>
-          <%="##{job[:latestBuild][:number]}"%>
+          <%=link_to "##{job[:latestBuild][:number]}", job[:latestBuild][:url]%>
           <%=content_tag("span", job[:latestBuild][:result], :class => "result #{job[:latestBuild][:result].downcase}") if "true" != job[:latestBuild][:building] && "" != job[:latestBuild][:result]%>
           <%=content_tag("span", l(:notice_building), :class => "result") if "true" == job[:latestBuild][:building] %>
           <%=content_tag("span", job[:latestBuild][:timestamp].strftime("%Y/%m/%d %H:%M:%S")) %>

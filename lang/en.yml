@@ -8,7 +8,7 @@ label_settings: Settings
 label_url: URL
 label_jobs: Jobs
 label_update_jobs: Update Jobs
-label_history: Build History
+label_build_history: Build History
 
 notice_no_jobs: No Jobs
 notice_no_builds: No Builds

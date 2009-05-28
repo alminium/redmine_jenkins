@@ -2,7 +2,7 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 %>
-<fieldset><legend><%="#{l(:label_history)}" %></legend>
+<fieldset><legend><%="#{l(:label_build_history)}" %></legend>
   <%@builds.each do|build| %>
   <span><%=link_to "##{build[:number]} #{build[:result]}", build[:url]%> <%=link_to image_tag('console.png', :plugin => "redmine_hudson"), "#{build[:url]}console"%></span><br>
   <% end %>
