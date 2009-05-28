@@ -6,6 +6,7 @@ require "rexml/document"
 require 'open-uri'
 require 'cgi'
 require 'hudson_exceptions'
+require 'date'
 
 RAILS_DEFAULT_LOGGER.info 'Starting Hudson plugin for RedMine'
 
@@ -84,7 +85,8 @@ class HudsonController < ApplicationController
     doc.elements.each("//entry") do |entry|
       params = get_element_value(entry, "title").scan(/(.*)#(.*)\s\((.*)\)/)[0]
       link = "#{entry.elements['link'].attributes['href']}"
-      @builds << {:name => params[0], :number=>params[1], :result=>params[2], :url=>link}
+      published = Time.xmlschema(get_element_value(entry, "published"))
+      @builds << {:name => params[0], :number=>params[1], :result=>params[2], :url=>link, :published => published}
     end
 
   rescue HudsonNoSettingsException

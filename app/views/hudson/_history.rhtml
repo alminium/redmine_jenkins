@@ -2,8 +2,8 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 %>
-<legend><%="#{l(:label_build_history)}" %></legend><br>
-<hr>
+<%="#{l(:label_build_history)}" %>
+<hr style="width:18em;">
 <%@builds.each do|build| %>
-<span><%=link_to "##{build[:number]} #{build[:result]}", build[:url]%> <%=link_to image_tag('console.png', :plugin => "redmine_hudson"), "#{build[:url]}console"%></span><br>
+<p class="build-entry"><%=link_to "##{build[:number]} #{build[:result]}", build[:url]%> <span style="font-size:smaller;"><%=build[:published].localtime.strftime("%Y/%m/%d %H:%M:%S") %></span> <%=link_to image_tag('console.png', :plugin => "redmine_hudson"), "#{build[:url]}console"%></p>
 <% end %>
