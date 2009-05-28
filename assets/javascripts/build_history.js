@@ -11,15 +11,15 @@ BuildHistory.prototype = {
 	 for (i=0; i<latestBuilds.length; i++) {
    		Event.observe(latestBuilds[i], 'click', this.show.bindAsEventListener(this));
 	 }
-     Event.observe('build-history', 'click', this.hide.bindAsEventListener(this) );
+     Event.observe(document, 'click', this.hide.bindAsEventListener(this) );
   },
 
   hide: function(e) {
-    if ( Event.element(e).tagName == 'A' ) { return; }
-    if ( Event.element(e).tagName == 'IMG' ) { return; }
     if ( Element.childOf(Event.element(e), 'build-history')) {
-        Element.hide('build-history');
+        if ( Event.element(e).tagName == 'A' ) { return; }
+        if ( Event.element(e).tagName == 'IMG' ) { return; }
     }
+    Element.hide('build-history');
   },
 
   show: function(e) {
