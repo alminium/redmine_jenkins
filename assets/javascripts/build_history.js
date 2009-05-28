@@ -7,7 +7,7 @@ BuildHistory = Class.create();
 BuildHistory.prototype = {
   initialize: function (url) {
      this.url = url;
-	 var latestBuilds = $$('img[class^="build-history"]');
+	 var latestBuilds = $$('img[class^="icon-build-history"]');
 	 for (i=0; i<latestBuilds.length; i++) {
    		Event.observe(latestBuilds[i], 'click', this.show.bindAsEventListener(this));
 	 }
