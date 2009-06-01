@@ -15,6 +15,7 @@
   <p><label style="float:left;margin-right:5px;"><%=l(:label_jobs)%></label>
     <%=render :partial => 'joblist'%>
   </p>
+  <p><label><%=check_box_tag 'settings[show_compact]', 'true', @settings.show_compact == true%><%=l(:label_show_compact)%></label></p>
 </fieldset>
 
 <%= submit_tag l(:button_save) %>

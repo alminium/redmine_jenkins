@@ -2,7 +2,14 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 %>
-
+<style type="text/css">
+<!-- div#content {
+  background-image: url("<%="#{@settings.url}images/hudson.png"%>");
+  background-position: left bottom;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}// -->
+</style>
 <h2><%=l(:label_job_list)%></h2>
 
 <% if @jobs.length == 0 %>
@@ -36,20 +43,20 @@
       <% end %>
     </div>
 
-    <div>
+    <div class="job-state">
     <h3 class="icon icon-<%=job[:state]%>"><%=link_to job[:name], job[:url]%></h3>
+    <% if @settings[:show_compact] != true %>
+      <div class="wiki">
+        <%= textilizable job[:description] -%>
+      </div>
 
-    <div class="wiki">
-      <%= textilizable job[:description] -%>
-    </div>
-
-    <ul>
-      <% job[:healthReport].each do |report| %>
-        <%="<li>#{link_to(report[:description], report[:url])} #{report[:score]}%" if report[:url] != ""%>
-        <%="<li>#{report[:description]} #{report[:score]}%" if report[:url] == ""%>
-      <% end %>
-    </ul>
-
+      <ul>
+        <% job[:healthReport].each do |report| %>
+          <%="<li>#{link_to(report[:description], report[:url])} #{report[:score]}%" if report[:url] != ""%>
+          <%="<li>#{report[:description]} #{report[:score]}%" if report[:url] == ""%>
+        <% end %>
+      </ul>
+    <% end %>
     </div>
   <% end %>
 
@@ -60,6 +67,8 @@
 <% content_for :sidebar do %>
   <%= render :partial => 'hudson_sidebar' %>
 <% end %>
+
+<style type="text/css"></style>
 
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag "hudson.css", :plugin => "redmine_hudson", :media => "screen" %>

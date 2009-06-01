@@ -21,6 +21,8 @@ class HudsonSettingsController < ApplicationController
       @settings.project_id = @project.id
       @settings.url = params[:settings].fetch(:url)
       @settings.job_filter = HudsonSettings.to_value(params[:settings].fetch(:jobs))
+      @settings.show_compact = params[:settings].fetch(:show_compact) if params[:settings][:show_compact] != nil
+      @settings.show_compact = false if params[:settings][:show_compact] == nil
       @settings.save
     end
 

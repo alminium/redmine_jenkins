@@ -10,6 +10,7 @@ ja:
   label_jobs: 表示するジョブ
   label_update_jobs: ジョブの一覧を更新する
   label_build_history: ビルド履歴
+  label_show_compact: 簡単表示
 
   notice_no_jobs: ジョブはありません。
   notice_no_builds: ビルドは実行されていません。
