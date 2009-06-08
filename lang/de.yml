@@ -1,0 +1,33 @@
+# $Id$
+# German strings go here
+label_hudson: Hudson
+label_latest_build: Letzer Build
+label_job_list: Jobliste
+label_health_report: Health Bericht
+label_settings: Einstellungen
+label_url: URL
+label_jobs: Jobs
+label_update_jobs: Jobs
+label_build_history: Build Verlauf
+label_show_compact: Kompaktdarstellung
+
+notice_no_jobs: Keine Jobs vorhanden
+notice_no_builds: Keine Builds vorhanden
+
+notice_building: Baue jetzt...
+notice_hudson_url: 'mit http:// ...'
+
+notice_err_cant_connect: "Es kann keine Verbindung zu Hudson aufgebaut werden."
+notice_err_response_invalid: 'Antwort nicht valide [%1s]'
+notice_err_http_error: 'Http-Fehler [%1s]'
+notice_err_no_settings: "Keine Einstellungen für dieses Projekt. Bitte überprüfen Sie die <a href='%1s'>Einstellungen</a>."
+notice_err_no_jobs: In Hudson wurde kein Job konfiguriert.
+notice_err_invalid_url: Nicht valide URL
+notice_err_no_job : 'Der Job [%1s] wurde nicht gefunden.'
+
+notice_err_build_failed: 'Build fehlgeschlagen [%1s].'
+notice_err_build_failed_no_job: 'Build fehlgeschlagen. Der Job [%1s] wurde nicht gefunden.'
+
+keyword_build_health_report: Build
+keyword_test_health_report: Test
+
