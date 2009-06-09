@@ -41,7 +41,7 @@ BuildHistory.prototype = {
          if (window.parseStylesheets) { window.parseStylesheets(); } // IE
       },
       onFailure:function(httpObj){
-         Element.update('build-history', "ビルド履歴の取得中にエラーが発生しました。");
+         Element.update('build-history', "Can't get build history. http-status : " + httpObj.status);
          Effect.Appear('build-history');
       }})
   }
