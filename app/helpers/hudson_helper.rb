@@ -16,12 +16,12 @@ module HudsonHelper
     request = Net::HTTP::Get.new(getpath)
     request.basic_auth(auth_user, auth_password) if (auth_user != nil && auth_password != nil)
 
-    if "https".equal?(param.scheme) then
+    if "https" == param.scheme then
       param.port = 443 if param.port == nil || param.port = ""
     end
 
     http = Net::HTTP.new(param.host, param.port)
-    if "https".equal?(param.scheme) then
+    if "https" == param.scheme then
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
