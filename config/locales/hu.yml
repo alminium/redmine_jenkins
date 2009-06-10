@@ -1,0 +1,33 @@
+# $Id$
+hu:
+  label_hudson: Hudson
+  label_latest_build: Utolsó fordítás
+  label_job_list: Feladatlista
+  label_health_report:
+  label_settings: Beállítások
+  label_url: URL
+  label_jobs: Feladatok
+  label_update_jobs: Frissítési feladatok
+  label_build_history: Fordítási történet
+  label_show_compact: Show Compact
+
+  notice_no_jobs: Nincsenek feladatok
+  notice_no_builds: Nincsenek fordított változatok
+
+  notice_building: Most fordul...
+  notice_hudson_url: 'with http:// ...'
+
+  notice_err_cant_connect: "Nem tudok csatlakozni a Hudson-hoz"
+  notice_err_response_invalid: 'Érvénytelen válasz %1s'
+  notice_err_http_error: 'Http hiba %1s'
+  notice_err_no_settings: "Ehhez a projekthez nincsenek megadva beállítások-. Kérlek <a href='%1s'>fogadd el a beállításokat</a>"
+  notice_err_no_jobs: Nincsen feladat
+  notice_err_invalid_url: Érvénytelen URL
+  notice_err_no_job : 'feladatot nem találom [%1s]'
+
+  notice_err_build_failed: 'Sikertelen fordítás %1s'
+  notice_err_build_failed_no_job: 'Sikertelen fordítás. Feladatot nem találtam [%1s]'
+
+  keyword_build_health_report: Fordítás
+  keyword_test_health_report: Tesztelés
+
