@@ -9,13 +9,18 @@
 
 <% form_tag({:action => 'edit'}) do %>
 
-<fieldset class="box"><legend><%=l(:label_hudson)%></legend>
+<div class="box tabular">
   <p><label><%=l(:label_url)%></label>
      <%=text_field :settings, :url, :size=>50%> <%=l(:notice_hudson_url)%></p>
-  <p><label style="float:left;margin-right:5px;"><%=l(:label_jobs)%></label>
+  <p><label><%=l(:field_user)%></label>
+     <%=text_field :settings, :auth_user, :size=>20%></p>
+  <p><label><%=l(:field_password)%></label>
+     <%=text_field :settings, :auth_password, :size=>20%></p>
+  <p><label><%=l(:label_show_compact)%></label><%=check_box_tag 'settings[show_compact]', 'true', @settings.show_compact == true%></p>
+</div>
+
+<fieldset class="box"><legend><%=l(:label_jobs)%></legend>
     <%=render :partial => 'joblist'%>
-  </p>
-  <p><label><%=check_box_tag 'settings[show_compact]', 'true', @settings.show_compact == true%><%=l(:label_show_compact)%></label></p>
 </fieldset>
 
 <%= submit_tag l(:button_save) %>

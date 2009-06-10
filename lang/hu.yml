@@ -13,7 +13,7 @@ notice_no_jobs: Nincsenek feladatok
 notice_no_builds: Nincsenek fordított változatok
 
 notice_building: Most fordul...
-notice_hudson_url: 'with http:// ...'
+notice_hudson_url: 'with http://, https:// ...'
 
 notice_err_cant_connect: "Nem tudok csatlakozni a Hudson-hoz"
 notice_err_response_invalid: 'Érvénytelen válasz %1s'

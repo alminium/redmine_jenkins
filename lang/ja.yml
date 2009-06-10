@@ -15,7 +15,7 @@ notice_no_jobs: ジョブはありません。
 notice_no_builds: ビルドは実行されていません。
 
 notice_building: ビルド中です。
-notice_hudson_url: 'http:// から記述してください'
+notice_hudson_url: 'http://, https:// から記述してください'
 
 notice_err_cant_connect: Hudson に接続できませんでした（Hudson が起動していないかもしれません）
 notice_err_response_invalid: 'Hudson からの応答が何か変です。 %1s'

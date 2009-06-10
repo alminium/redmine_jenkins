@@ -3,7 +3,6 @@
 # and open the template in the editor.
 
 require "rexml/document"
-require 'open-uri'
 require 'hudson_exceptions'
 
 class HudsonSettingsController < ApplicationController
@@ -15,12 +14,15 @@ class HudsonSettingsController < ApplicationController
   before_filter :authorize
 
   include RexmlHelper
+  include HudsonHelper
 
   def edit
     if (params[:settings] != nil)
       @settings.project_id = @project.id
       @settings.url = params[:settings].fetch(:url)
       @settings.job_filter = HudsonSettings.to_value(params[:settings].fetch(:jobs))
+      @settings.auth_user = params[:settings].fetch(:auth_user)
+      @settings.auth_password = params[:settings].fetch(:auth_password)
       @settings.show_compact = params[:settings].fetch(:show_compact) if params[:settings][:show_compact] != nil
       @settings.show_compact = false if params[:settings][:show_compact] == nil
       @settings.save
@@ -29,7 +31,7 @@ class HudsonSettingsController < ApplicationController
     # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない
     find_hudson_jobs(@settings.url)
 
-  rescue OpenURI::HTTPError => error
+  rescue HudsonHttpError => error
     flash.now[:error] = l(:notice_err_http_error, error.message)
   rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
     flash.now[:error] = l(:notice_err_cant_connect)
@@ -41,8 +43,8 @@ class HudsonSettingsController < ApplicationController
     begin
       # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない
       find_hudson_jobs(params[:url])
-    rescue OpenURI::HTTPError => error
-      @error = l(:notice_err_http_error, error.message)
+    rescue HudsonHttpError => error
+      flash.now[:error] = l(:notice_err_http_error, error.message)
     rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
       @error = l(:notice_err_cant_connect)
     rescue URI::InvalidURIError
@@ -70,7 +72,7 @@ private
     api_url = "#{url}api/xml?depth=0"
 
     # Open the feed and parse it
-    content = open(api_url)
+    content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
     doc = REXML::Document.new content
     doc.elements.each("hudson/job") do |element|
       @jobs << get_element_value(element, "name")

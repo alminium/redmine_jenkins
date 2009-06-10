@@ -15,7 +15,7 @@ notice_no_jobs: No Jobs
 notice_no_builds: No Builds
 
 notice_building: Now Building...
-notice_hudson_url: 'with http:// ...'
+notice_hudson_url: 'with http://, https:// ...'
 
 notice_err_cant_connect: "Can't Connect Hudson"
 notice_err_response_invalid: 'Response Invalid %1s'

@@ -2,6 +2,8 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 
+require "digest/sha1"
+
 class HudsonSettings < ActiveRecord::Base
   # 空白を許さないもの
   validates_presence_of :project_id, :url
@@ -21,6 +23,7 @@ class HudsonSettings < ActiveRecord::Base
     value = HudsonSettings.to_array( self.job_filter )
     return value.include?(other.to_s)
   end
+
 end
 
 def HudsonSettings.load(project)

@@ -16,6 +16,8 @@
 .result.success {color:blue;}
 .result {color:#999;}
 
+.latest-build { width:28em; }
+
 #build-history { 
     position:absolute;
     background-color:white;

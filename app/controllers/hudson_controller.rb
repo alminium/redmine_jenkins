@@ -3,7 +3,6 @@
 # and open the template in the editor.
 
 require "rexml/document"
-require 'open-uri'
 require 'cgi'
 require 'hudson_exceptions'
 require 'date'
@@ -36,7 +35,8 @@ class HudsonController < ApplicationController
               "&exclude=/hudson/job/lastCompletedBuild" +
               "&exclude=/hudson/job/lastStableBuild" +
               "&exclude=/hudson/job/lastSuccessfulBuild"
-    content = open(api_url)
+    content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
+
     doc = REXML::Document.new content
     doc.elements.each("hudson/job") do |element|
       @jobs << make_job(element) if is_target?(get_element_value(element, "name"))
@@ -44,7 +44,7 @@ class HudsonController < ApplicationController
 
   rescue HudsonNoSettingsException
     flash.now[:error] = l(:notice_err_no_settings, url_for(:controller => 'hudson_settings', :action => 'edit', :id => @project))
-  rescue OpenURI::HTTPError => error
+  rescue HudsonHttpError => error
     flash.now[:error] = l(:notice_err_http_error, error.message)
   rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
     flash.now[:error] = l(:notice_err_cant_connect)
@@ -56,11 +56,12 @@ class HudsonController < ApplicationController
     raise HudsonNoSettingsException if @settings.is_new?
     raise HudsonNoJobException if params[:name] == nil
 
-    build_url = URI.escape("#{@settings.url}job/#{params[:name]}/build")
+    build_url = "#{@settings.url}job/#{params[:name]}/build"
 
-    content = ""
-    open(build_url) do |s| content = s.read end
+    content = open_hudson(build_url, @settings.auth_user, @settings.auth_password)
 
+  rescue HudsonHttpError => error
+    render :text => "#{l(:notice_err_http_error, error.message)}"
   rescue HudsonNoSettingsException
     render :text => "#{l(:notice_err_build_failed, :notice_err_no_settings)}"
   rescue HudsonNoJobException
@@ -77,9 +78,8 @@ class HudsonController < ApplicationController
     raise HudsonNoJobException unless is_target?(params[:name]) # ちょっと強引だけど、見えない設定のジョブはないものとみなす
 
     @name = params[:name]
-    api_uri = URI.escape("#{@settings.url}job/#{params[:name]}/rssAll")
-    content = ""
-    open(api_uri) do |s| content = s.read end
+    api_uri = "#{@settings.url}job/#{params[:name]}/rssAll"
+    content = open_hudson(api_uri, @settings.auth_user, @settings.auth_password)
     doc = REXML::Document.new content
     @builds = []
     doc.elements.each("//entry") do |entry|
@@ -89,6 +89,8 @@ class HudsonController < ApplicationController
       @builds << {:name => params[0], :number=>params[1], :result=>params[2], :url=>link, :published => published}
     end
 
+  rescue HudsonHttpError => error
+    render :text => "#{l(:notice_err_http_error, error.message)}"
   rescue HudsonNoSettingsException
     render :text => "#{l(:notice_err_no_settings, url_for(:controller => 'hudson_settings', :action => 'edit', :id => @project))}"
   rescue HudsonNoJobException
@@ -154,15 +156,15 @@ private
     retval[:timestamp] = ""
     retval[:error] = "" # ビルド情報を取得する際に発生したエラー
 
-    api_url = URI.escape("#{@settings.url}job/#{name}/lastBuild/api/xml?")
+    api_url = "#{@settings.url}job/#{name}/lastBuild/api/xml"
 
     begin
       # Open the feed and parse it
-      content = open(api_url)
+      content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
       doc = REXML::Document.new content
-    rescue OpenURI::HTTPError => error
+    rescue HudsonHttpError => error
       # 404 って、URLを間違えた場合にも発生しちゃうんだけど…
-      retval[:error] = l(:notice_err_http_error, error.message) if error.message.index("404") == nil
+      retval[:error] = l(:notice_err_http_error, error.message) if error.code != "404"
       return retval
     rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
       retval[:error] = l(:notice_err_cant_connect)
