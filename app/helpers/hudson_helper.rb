@@ -14,7 +14,7 @@ module HudsonHelper
     getpath += "?" + param.query if param.query != nil && param.query.length > 0
 
     request = Net::HTTP::Get.new(getpath)
-    request.basic_auth(auth_user, auth_password) if (auth_user != nil && auth_password != nil)
+    request.basic_auth(auth_user, auth_password) if (auth_user != nil && auth_user.length > 0)
 
     if "https" == param.scheme then
       param.port = 443 if param.port == nil || param.port = ""
