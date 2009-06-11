@@ -16,15 +16,14 @@ class HudsonController < ApplicationController
   before_filter :find_project
   before_filter :find_settings
   before_filter :authorize
+  before_filter :clear_flash
 
   include HudsonHelper
   include RexmlHelper
 
   def index
     @jobs = []
-
     raise HudsonNoSettingsException if @settings.is_new?
-
     # job/build, view, primaryView は省く
     api_url = "#{@settings.url}api/xml?depth=1" + 
               "&xpath=/hudson" +
@@ -110,6 +109,10 @@ private
 
   def find_settings
     @settings = HudsonSettings.load(@project)
+  end
+
+  def clear_flash
+    flash.clear
   end
 
   def is_target?(job)

@@ -12,6 +12,7 @@ class HudsonSettingsController < ApplicationController
   before_filter :find_project
   before_filter :find_settings
   before_filter :authorize
+  before_filter :clear_flash
 
   include RexmlHelper
   include HudsonHelper
@@ -25,7 +26,10 @@ class HudsonSettingsController < ApplicationController
       @settings.auth_password = params[:settings].fetch(:auth_password)
       @settings.show_compact = params[:settings].fetch(:show_compact) if params[:settings][:show_compact] != nil
       @settings.show_compact = false if params[:settings][:show_compact] == nil
-      @settings.save
+
+      if ( @settings.save )
+        flash[:notice] = l(:notice_successful_update)
+      end
     end
 
     # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない
@@ -62,6 +66,10 @@ private
 
   def find_settings
     @settings = HudsonSettings.load(@project)
+  end
+
+  def clear_flash
+    flash.clear
   end
 
   def find_hudson_jobs(url)
