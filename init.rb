@@ -1,4 +1,4 @@
-﻿# $Id$
+# $Id$
 require 'redmine'
 
 Redmine::Plugin.register :redmine_hudson do
