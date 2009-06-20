@@ -18,4 +18,17 @@ Redmine::Plugin.register :redmine_hudson do
 
   menu :project_menu, :hudson, { :controller => :hudson, :action => :index }, :param => :id, :caption => :label_hudson
 
+  Redmine::WikiFormatting::Macros.register do
+    desc "This is my macro link to hudson"
+    macro :build do |obj, args|
+      return nil if args.length < 2 # require JobName, BuildNumber
+      return nil if @project == nil
+      settings = HudsonSettings.load(@project)
+      return nil if settings == nil
+      name = args[0].strip
+      number = args[1].strip
+      return link_to "Build:#{name} ##{number}", URI.escape("#{settings.url}job/#{name}/#{number}/")
+    end
+  end
+
 end
