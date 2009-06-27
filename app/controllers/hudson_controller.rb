@@ -15,6 +15,7 @@ class HudsonController < ApplicationController
 
   before_filter :find_project
   before_filter :find_settings
+  before_filter :find_hudson_jobs
   before_filter :authorize
   before_filter :clear_flash
 
@@ -22,33 +23,35 @@ class HudsonController < ApplicationController
   include RexmlHelper
 
   def index
-    @jobs = []
     raise HudsonNoSettingsException if @settings.is_new?
-    # job/build, view, primaryView は省く
-    api_url = "#{@settings.url}api/xml?depth=1" + 
-              "&xpath=/hudson" +
-              "&exclude=/hudson/view" +
-              "&exclude=/hudson/primaryView" +
-              "&exclude=/hudson/job/build" +
-              "&exclude=/hudson/job/lastBuild" +
-              "&exclude=/hudson/job/lastCompletedBuild" +
-              "&exclude=/hudson/job/lastStableBuild" +
-              "&exclude=/hudson/job/lastSuccessfulBuild"
-    content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
+
+    content = ""
+    begin
+      # job/build, view, primaryView は省く
+      api_url = "#{@settings.url}api/xml?depth=1" +
+                "&xpath=/hudson" +
+                "&exclude=/hudson/view" +
+                "&exclude=/hudson/primaryView" +
+                "&exclude=/hudson/job/build" +
+                "&exclude=/hudson/job/lastCompletedBuild" +
+                "&exclude=/hudson/job/lastStableBuild" +
+                "&exclude=/hudson/job/lastSuccessfulBuild"
+      content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
+    rescue HudsonHttpException => error
+      flash.now[:error] = error.message
+      return
+    end
 
     doc = REXML::Document.new content
-    doc.elements.each("hudson/job") do |element|
-      @jobs << make_job(element) if is_target?(get_element_value(element, "name"))
-    end
+
+    # 全てのジョブの状態を更新する
+    update_all_jobs doc
+
+    # 最新のビルド情報をチェックする
+    update_all_builds doc
 
   rescue HudsonNoSettingsException
     flash.now[:error] = l(:notice_err_no_settings, url_for(:controller => 'hudson_settings', :action => 'edit', :id => @project))
-  rescue HudsonHttpError => error
-    flash.now[:error] = l(:notice_err_http_error, error.message)
-  rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
-    flash.now[:error] = l(:notice_err_cant_connect)
-  rescue URI::InvalidURIError
-    flash.now[:error] = l(:notice_err_invalid_url)
   end
 
   def build
@@ -59,14 +62,12 @@ class HudsonController < ApplicationController
 
     content = open_hudson(build_url, @settings.auth_user, @settings.auth_password)
 
-  rescue HudsonHttpError => error
-    render :text => "#{l(:notice_err_http_error, error.message)}"
+  rescue HudsonHttpException => error
+    render :text => error.message
   rescue HudsonNoSettingsException
     render :text => "#{l(:notice_err_build_failed, :notice_err_no_settings)}"
   rescue HudsonNoJobException
     render :text => "#{l(:notice_err_build_failed_no_job, params[:name])}"
-  rescue URI::InvalidURIError
-    render :text => l(:notice_err_invalid_url)
   else
     render :text => "#{params[:name]} #{l(:build_accepted)}"
   end
@@ -82,20 +83,16 @@ class HudsonController < ApplicationController
     doc = REXML::Document.new content
     @builds = []
     doc.elements.each("//entry") do |entry|
-      params = get_element_value(entry, "title").scan(/(.*)#(.*)\s\((.*)\)/)[0]
-      link = "#{entry.elements['link'].attributes['href']}"
-      published = Time.xmlschema(get_element_value(entry, "published"))
-      @builds << {:name => params[0], :number=>params[1], :result=>params[2], :url=>link, :published => published}
+      buildinfo = parse_rss_build(entry)
+      @builds << buildinfo
     end
 
-  rescue HudsonHttpError => error
-    render :text => "#{l(:notice_err_http_error, error.message)}"
+  rescue HudsonHttpException => error
+    render :text => error.message
   rescue HudsonNoSettingsException
     render :text => "#{l(:notice_err_no_settings, url_for(:controller => 'hudson_settings', :action => 'edit', :id => @project))}"
   rescue HudsonNoJobException
     render :text => "#{l(:notice_err_no_job, params[:name])}"
-  rescue URI::InvalidURIError
-    render :text => l(:notice_err_invalid_url)
   else
     render :partial => 'history'
   end
@@ -111,6 +108,11 @@ private
     @settings = HudsonSettings.load(@project)
   end
 
+  def find_hudson_jobs
+    @jobs = HudsonJob.find :all, :order => "#{HudsonJob.table_name}.name",
+                           :conditions => ["#{HudsonJob.table_name}.project_id = ?", @project.id]
+  end
+
   def clear_flash
     flash.clear
   end
@@ -119,74 +121,145 @@ private
     return @settings.job_include?(job)
   end
 
-  def make_job( element )
-    retval = {}
-    retval[:name] = get_element_value(element, "name")
-    retval[:description] = get_element_value(element, "description")
-    retval[:url] = get_element_value(element, "url")
-    retval[:state] = get_element_value(element, "color")
+  def update_all_jobs(doc)
+    doc.elements.each("hudson/job") do |element|
+      job_name = get_element_value(element, "name")
+      next unless is_target?(job_name)
 
-    retval[:healthReport] = []
-    element.elements.each("healthReport") do |hReport|
-      report = {}
-      report[:description] = get_element_value(hReport, "description")
-      report[:score] = get_element_value(hReport, "score")
-      report[:url] = get_health_report_url(retval[:name], report[:description])
-      retval[:healthReport] << report
+      job = get_job(job_name)
+      job = new_job(job_name) unless job
+
+      job.update_by_xml(element)
+      job.update_health_report_by_xml(element)
+      job.save
     end
-
-    retval[:latestBuild] = make_latest_build( retval[:name] )
-
-    return retval
   end
 
-  def get_health_report_url(name, description)
-    if description.index(l(:keyword_build_health_report)) != nil
-      return URI.escape("#{@settings.url}job/#{name}/lastBuild/")
+  def update_all_builds(doc)
+
+    # 更新が必要かどうかを確認する
+    doc.elements.each("hudson/job") do |element|
+      job_name = get_element_value(element, "name")
+      next unless is_target?(job_name)
+
+      job = get_job(job_name)
+      next unless job
+
+      latest_build = element.elements["lastBuild"]
+      next unless latest_build
+
+      latest_build_number = get_element_value(latest_build, "number")
+
+      if job.latest_build_number == latest_build_number
+        build = get_latest_build_from_db job, latest_build_number
+        job.builds << build if build
+      end
+
+      # 最新のビルドが変わっているようならビルドの情報を更新する
+      if job.latest_build_number != latest_build_number
+        builds = get_recent_builds_from_hudson job, latest_build_number
+        new_latest = ""
+        builds.each {|build|
+          job.builds << build
+          new_latest = build.number if !build.building and new_latest == ""
+        }
+        if new_latest != ""
+          job.latest_build_number = new_latest
+        end
+        job.save
+      end
     end
-    if description.index(l(:keyword_test_health_report)) != nil
-      return URI.escape("#{@settings.url}job/#{name}/lastBuild/testReport/")
-    end
-    return ""
   end
 
-  def make_latest_build( name )
+  def get_job(job_name)
+      job = @jobs.find{|job| job.name == job_name }
+      return job
+  end
 
-    retval = {}
-    retval[:number] = ""
-    retval[:result] = ""
-    retval[:url] = ""
-    retval[:timestamp] = ""
-    retval[:error] = "" # ビルド情報を取得する際に発生したエラー
+  def new_job(job_name)
+      retval = HudsonJob.new
+      retval.name = job_name
+      retval.project_id = @project.id
+      retval.hudson_id = @settings.id
+      @jobs << retval
+      return retval
+  end
 
-    api_url = "#{@settings.url}job/#{name}/lastBuild/api/xml"
-
+  def get_recent_builds_from_hudson( job, latest_build_number )
     begin
-      # Open the feed and parse it
+      # rssAll で取得できる範囲で。
+      api_url = "#{@settings.url}job/#{job.name}/rssAll"
       content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
-      doc = REXML::Document.new content
-    rescue HudsonHttpError => error
-      # 404 って、URLを間違えた場合にも発生しちゃうんだけど…
-      retval[:error] = l(:notice_err_http_error, error.message) if error.code != "404"
-      return retval
-    rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
-      retval[:error] = l(:notice_err_cant_connect)
-      return retval
-    rescue URI::InvalidURIError
-      retval[:error] = l(:notice_err_invalid_url)
-      return retval
+    rescue HudsonHttpException => error
+      flash.now[:error] = error.message
+      return
     end
 
-    if doc.root != nil
-      retval[:number] = get_element_value(doc.root, "number")
-      retval[:result] = get_element_value(doc.root, "result")
-      retval[:url] = get_element_value(doc.root, "url")
-      retval[:building] = get_element_value(doc.root, "building")
-      retval[:timestamp] = Time.at( get_element_value(doc.root, "timestamp").to_f / 1000 )
+    retval = []
+
+    doc = REXML::Document.new content
+    doc.elements.each("//entry") do |entry|
+      buildinfo = parse_rss_build(entry)
+      next if ( job.latest_build_number != nil and ( job.latest_build_number.to_i >= buildinfo[:number].to_i ) )
+      build = new_build(job, buildinfo)
+      #changesets = get_changesets_from_hudson(job, build)
+      #changesets.each{|changeset| build.changesets << changeset}
+      build.save
+      retval << build
+    end
+
+    # 最新のビルドが実行中の場合、rssAll にはエントリがない
+    if latest_build_number != nil and ( retval.length == 0 or retval[0].number.to_i < latest_build_number.to_i )
+      build = new_build(job, {:number=>latest_build_number, :result=>'', :published=> Time.now, :building=>true})
+      retval << build
     end
 
     return retval
-
   end
 
+  def get_latest_build_from_db( job, latest_build_number )
+    return if latest_build_number == nil || latest_build_number == ""
+    retval = HudsonBuild.find( :first,
+                               :conditions => ["#{HudsonBuild.table_name}.hudson_job_id = ? and #{HudsonBuild.table_name}.number = ?", job.id, latest_build_number] )
+    return retval
+  end
+
+  def new_build(job, buildinfo)
+    retval = HudsonBuild.new()
+    retval.hudson_job_id = job.id
+    retval.number = buildinfo[:number]
+    retval.result = buildinfo[:result]
+    retval.finished_at = buildinfo[:published]
+    retval.building = buildinfo[:building]
+    retval.error = ""
+    return retval
+  end
+
+  def new_changesets(job, build)
+    api_url = "#{@settings.url}job/#{job.name}/#{build.number}/api/xml"
+    content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
+
+    doc = REXML::Document.new content
+    doc.elements.each("//changeSet") do |element|
+      changesetinfo = parse_changeset(element)
+      changesetinfo[:revisions].each {|revision|
+        changeset = new_changeset(build, revision)
+        build.changesets << changeset
+      }
+    end
+  rescue HudsonHttpException => error
+    return
+  rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT
+    return
+  rescue URI::InvalidURIError
+    return
+  end
+
+  def new_changeset(build, revisioninfo)
+    retval = HudsonBuildChangeset.new
+    retval.hudson_build_id = build.id
+    retval.repository_id = @project.repository.id
+    retval.revision = revisioninfo[:revision]
+    return retval
+  end
 end

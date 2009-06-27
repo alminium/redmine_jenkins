@@ -10,23 +10,25 @@ end
 class HudsonNoSettingsException < Exception
 end
 
-class HudsonHttpError < Exception
+class HudsonHttpException < Exception
   attr_reader :message, :code
 
+  include GLoc
+  
   def initialize( object )
+    @code = ""
+    @message = ""
+
     case object
     when Net::HTTPResponse
-      @message = object.message
       @code = object.code
-    else
-      @message = "#{object.class.name} - #{object.message}"
-      @code = ""
+      @message = l(:notice_err_http_error, object.code)
+    when Errno::ECONNREFUSED
+      @message = l(:notice_err_cant_connect)
+    when Errno::ETIMEDOUT
+      @message = l(:notice_err_cant_connect)
+    when URI::InvalidURIError
+      @message = l(:notice_err_invalid_url)
     end
-  end
-  def message
-    return @message
-  end
-  def code
-    return @code
   end
 end

@@ -29,15 +29,46 @@ module HudsonHelper
     begin
       response = http.request(request)
     rescue Net::HTTPBadResponse => error
-      raise HudsonHttpError.new(error)
+      raise HudsonHttpException.new(error)
+    rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT => error
+      raise HudsonHttpException.new(error)
+    rescue URI::InvalidURIError => error
+      raise HudsonHttpException.new(error)
     end
 
     case response
     when Net::HTTPSuccess, Net::HTTPFound
       return response.body
     else
-      raise HudsonHttpError.new(response)
+      raise HudsonHttpException.new(response)
     end
+  end
+
+  def parse_rss_build(entry)
+    params = get_element_value(entry, "title").scan(/(.*)#(.*)\s\((.*)\)/)[0]
+    retval = {}
+    retval[:name] = params[0].strip
+    retval[:number] = params[1]
+    retval[:result] = params[2]
+    retval[:url] = "#{entry.elements['link'].attributes['href']}"
+    retval[:published] = Time.xmlschema(get_element_value(entry, "published")).localtime
+    retval[:building] = false
+    return retval
+  end
+
+  def parse_changeset(element)
+    retval = {}
+    retval[:kind] = get_element_value(element, "kind")
+    retval[:revisions] = []
+    element.children.each {|child|
+      if "revision" == child.name
+        revision = {}
+        revision[:module] = get_element_value(child, "module")
+        revision[:revision] = get_element_value(child, "revision")
+        retval[:revisions] << revision
+      end
+    }
+    return retval
   end
 
 end

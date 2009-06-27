@@ -35,24 +35,16 @@ class HudsonSettingsController < ApplicationController
     # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない
     find_hudson_jobs(@settings.url)
 
-  rescue HudsonHttpError => error
-    flash.now[:error] = l(:notice_err_http_error, error.message)
-  rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
-    flash.now[:error] = l(:notice_err_cant_connect)
-  rescue URI::InvalidURIError
-    flash.now[:error] = l(:notice_err_invalid_url)
+  rescue HudsonHttpException => error
+    flash.now[:error] = error.message
   end
 
   def joblist
     begin
       # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない
       find_hudson_jobs(params[:url])
-    rescue HudsonHttpError => error
-      flash.now[:error] = l(:notice_err_http_error, error.message)
-    rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT 
-      @error = l(:notice_err_cant_connect)
-    rescue URI::InvalidURIError
-      @error = l(:notice_err_invalid_url)
+    rescue HudsonHttpException => error
+      @error = error.message
     end
     render :layout => false, :template => 'hudson_settings/_joblist.rhtml'
   end

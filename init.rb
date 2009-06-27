@@ -1,5 +1,6 @@
 # $Id$
 require 'redmine'
+require 'hudson_application_hooks'
 
 Redmine::Plugin.register :redmine_hudson do
   name 'Redmine Hudson plugin'

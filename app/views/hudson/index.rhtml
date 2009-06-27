@@ -21,38 +21,38 @@
   <% @jobs.each do |job|%>
     <div class="contextual">
     <%= link_to_remote_if_authorized '[Build Now]',
-          :url => {:action => 'build', :id => @project, :name => job[:name]},
+          :url => {:action => 'build', :id => @project, :name => job.name},
           :update => {:success => 'remote-debug', :failure => 'remote-debug'},
           :success => "if(request.responseText.indexOf('build_accepted') > 0 ){Element.show('info');Element.hide('error');}else{Element.show('error');Element.hide('info');}",
           :failure => "Element.show('error');Element.hide('info');"
     %>
     </div>
 
-    <div class="contextual latest-build" id='latest-build-<%=job[:name]%>'>
-      <%=job[:latestBuild][:error] if "" != job[:latestBuild][:error]%>
-      <% if "" == job[:latestBuild][:error] %>
-        <% if "" != job[:latestBuild][:number] %>
-          <%=image_tag 'document.png', :class=>'icon-build-history', :id=>"build-history-#{job[:name]}"%>
-          <%=link_to "##{job[:latestBuild][:number]}", job[:latestBuild][:url]%>
-          <%=content_tag("span", job[:latestBuild][:result], :class => "result #{job[:latestBuild][:result].downcase}") if "true" != job[:latestBuild][:building] && "" != job[:latestBuild][:result]%>
-          <%=content_tag("span", l(:notice_building), :class => "result") if "true" == job[:latestBuild][:building] %>
-          <%=content_tag("span", job[:latestBuild][:timestamp].strftime("%Y/%m/%d %H:%M:%S")) %>
+    <div class="contextual latest-build" id='latest-build-<%=job.name%>'>
+      <%=job.latest_build.error if "" != job.latest_build.error%>
+      <% if "" == job.latest_build.error %>
+        <% if "" != job.latest_build.number %>
+          <%=image_tag 'document.png', :class=>'icon-build-history', :id=>"build-history-#{job.name}"%>
+          <%=link_to "##{job.latest_build.number}", job.latest_build.url%>
+          <%=content_tag("span", job.latest_build.result, :class => "result #{job.latest_build.result.downcase}") if true != job.latest_build.building && "" != job.latest_build.result%>
+          <%=content_tag("span", l(:notice_building), :class => "result") if true == job.latest_build.building %>
+          <%=content_tag("span", job.latest_build.finished_at.localtime.strftime("%Y/%m/%d %H:%M:%S")) %>
         <% end %>
-        <%=l(:notice_no_builds) if "" == job[:latestBuild][:number]%>
+        <%=l(:notice_no_builds) if "" == job.latest_build.number%>
       <% end %>
     </div>
 
     <div class="job-state">
-    <h3 class="icon icon-<%=job[:state]%>"><%=link_to job[:name], job[:url]%></h3>
+    <h3 class="icon icon-<%=job.state%>"><%=link_to job.name, job.url%></h3>
     <% if @settings[:show_compact] != true %>
       <div class="wiki">
-        <%= textilizable job[:description] -%>
+        <%= textilizable job.description -%>
       </div>
 
       <ul>
-        <% job[:healthReport].each do |report| %>
-          <%="<li>#{link_to(report[:description], report[:url])} #{report[:score]}%" if report[:url] != ""%>
-          <%="<li>#{report[:description]} #{report[:score]}%" if report[:url] == ""%>
+        <% job.health_reports.each do |report| %>
+          <%="<li>#{link_to(report.description, report.url)} #{report.score}%" if report.url != ""%>
+          <%="<li>#{report.description} #{report.score}%" if report.url == ""%>
         <% end %>
       </ul>
     <% end %>
