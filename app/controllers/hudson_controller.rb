@@ -231,6 +231,7 @@ private
     retval.result = buildinfo[:result]
     retval.finished_at = buildinfo[:published]
     retval.building = buildinfo[:building]
+    retval.caused_by = 1 # デフォルトのAdminを想定している
     retval.error = ""
     return retval
   end

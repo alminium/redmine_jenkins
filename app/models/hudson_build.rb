@@ -1,12 +1,38 @@
 # $Id$
 
 class HudsonBuild < ActiveRecord::Base
+  unloadable
   has_many :changesets, :class_name => 'HudsonBuildChangeset', :dependent => :destroy
   has_many :artifacts, :class_name => 'HudsonBuildArtifact', :dependent => :destroy
   belongs_to :job, :class_name => 'HudsonJob', :foreign_key => 'hudson_job_id'
+  belongs_to :author, :class_name => 'User', :foreign_key => 'caused_by'
+
+  # 空白を許さないもの
+  validates_presence_of :hudson_job_id, :number
+
+  # 重複を許さないもの
+  validates_uniqueness_of :number, :scope => :hudson_job_id
+
+  acts_as_event :title => Proc.new {|o| "#{l(:label_build)} #{o.job.name} #{o.number}: #{o.result}"},
+                :description => "",
+                :datetime => :finished_at
+
+  acts_as_activity_provider :type => 'hudson',
+                             :timestamp => "#{HudsonBuild.table_name}.finished_at",
+                             :author_key => "#{HudsonBuild.table_name}.caused_by",
+                             :find_options => {:include => {:job => :project}}
 
   def initialize
     super
+  end
+
+  def project
+    return "" unless job
+    return job.project
+  end
+
+  def event_url
+    return url
   end
 
   def url

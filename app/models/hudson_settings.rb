@@ -5,6 +5,8 @@
 require "digest/sha1"
 
 class HudsonSettings < ActiveRecord::Base
+  unloadable
+
   # 空白を許さないもの
   validates_presence_of :project_id, :url
 

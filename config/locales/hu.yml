@@ -1,6 +1,8 @@
 # $Id$
 hu:
   label_hudson: Hudson
+  label_hudson_plural: Hudson
+  label_build: Fordítás
   label_latest_build: Utolsó fordítás
   label_job_list: Feladatlista
   label_health_report:
@@ -10,6 +12,8 @@ hu:
   label_update_jobs: Frissítési feladatok
   label_build_history: Fordítási történet
   label_show_compact: Show Compact
+  label_health_report_build_stability: HealthReport:BuildStability
+  label_health_report_test_result: HealthReport:TestResult
 
   notice_no_jobs: Nincsenek feladatok
   notice_no_builds: Nincsenek fordított változatok
@@ -27,7 +31,3 @@ hu:
 
   notice_err_build_failed: 'Sikertelen fordítás %1s'
   notice_err_build_failed_no_job: 'Sikertelen fordítás. Feladatot nem találtam [%1s]'
-
-  keyword_build_health_report: Fordítás
-  keyword_test_health_report: Tesztelés
-

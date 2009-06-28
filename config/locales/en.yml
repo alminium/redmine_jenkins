@@ -2,6 +2,8 @@
 # English strings go here
 en:
   label_hudson: Hudson
+  label_hudson_plural: Hudson
+  label_build: Build
   label_latest_build: Latest Build
   label_job_list: Job List
   label_health_report: Health Report
@@ -11,6 +13,8 @@ en:
   label_update_jobs: Update Jobs
   label_build_history: Build History
   label_show_compact: Show Compact
+  label_health_report_build_stability: HealthReport:BuildStability
+  label_health_report_test_result: HealthReport:TestResult
 
   notice_no_jobs: No Jobs
   notice_no_builds: No Builds
@@ -28,7 +32,4 @@ en:
 
   notice_err_build_failed: 'Build failed %1s'
   notice_err_build_failed_no_job: 'Build failed. Job not found [%1s]'
-
-  keyword_build_health_report: Build
-  keyword_test_health_report: Test
 

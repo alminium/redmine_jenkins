@@ -1,6 +1,8 @@
 # $Id$
 # Japanise strings go here
 label_hudson: Hudson
+label_hudson_plural: Hudson
+label_build: ビルド
 label_latest_build: 最新のビルド
 label_job_list: ジョブの一覧
 label_health_report: ビルドの健康状態
@@ -10,6 +12,8 @@ label_jobs: 表示するジョブ
 label_update_jobs: ジョブの一覧を更新する
 label_build_history: ビルド履歴
 label_show_compact: 簡単表示
+label_health_report_build_stability: ヘルスレポート:安定したビルド
+label_health_report_test_result: ヘルスレポート:テスト結果
 
 notice_no_jobs: ジョブはありません。
 notice_no_builds: ビルドは実行されていません。

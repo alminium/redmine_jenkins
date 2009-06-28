@@ -12,12 +12,14 @@ Redmine::Plugin.register :redmine_hudson do
 
   project_module :hudson do
     # パーミッション設定。
-    permission :show_jobs, {:hudson => [:index, :history]}
-    permission :build_jobs, {:hudson => [:build]}, :require => :member
-    permission :edit_settings, {:hudson_settings => [:edit, :joblist]}
+    permission :view_hudson, {:hudson => [:index, :history]}
+    permission :build_hudson, {:hudson => [:build]}, :require => :member
+    permission :edit_hudson_settings, {:hudson_settings => [:edit, :joblist]}
   end
 
   menu :project_menu, :hudson, { :controller => :hudson, :action => :index }, :param => :id, :caption => :label_hudson
+
+  activity_provider :hudson, :class_name => 'HudsonBuild', :default => false
 
   Redmine::WikiFormatting::Macros.register do
     desc "This is my macro link to hudson"

@@ -2,6 +2,8 @@
 # for Redmine-Trunk Japanise strings go here
 ja:
   label_hudson: Hudson
+  label_hudson_plural: Hudson
+  label_build: ビルド
   label_latest_build: 最新のビルド
   label_job_list: ジョブの一覧
   label_health_report: ビルドの健康状態
@@ -11,6 +13,9 @@ ja:
   label_update_jobs: ジョブの一覧を更新する
   label_build_history: ビルド履歴
   label_show_compact: 簡単表示
+  label_health_report_build_stability: ヘルスレポート:安定したビルド
+  label_health_report_test_result: ヘルスレポート:テスト結果
+
 
   notice_no_jobs: ジョブはありません。
   notice_no_builds: ビルドは実行されていません。
@@ -27,8 +32,5 @@ ja:
   notice_err_no_job : 'Jobが見当たりません。[%1s]'
 
   notice_err_build_failed: 'ビルドに失敗しました。%1s'
-  notice_err_build_failed_no_job: 'ビルドに失敗しました。ジョブが見当たりません。[%1s]'
-
-  keyword_build_health_report: 安定したビルド
-  keyword_test_health_report: テスト結果
+  notice_err_build_failed_no_job: 'ビルドに失敗しました。Jobが見当たりません。[%1s]'
 

@@ -3,6 +3,8 @@
 require 'hudson_build'
 
 class HudsonJob < ActiveRecord::Base
+  unloadable
+  belongs_to :project, :foreign_key => 'project_id'
   belongs_to :settings, :class_name => 'HudsonSettings', :foreign_key => 'hudson_id'
 
   attr_accessor :description
@@ -13,6 +15,9 @@ class HudsonJob < ActiveRecord::Base
 
   include HudsonHelper
   include RexmlHelper
+
+  # 空白を許さないもの
+  validates_presence_of :project_id, :hudson_id, :name
 
   def initialize
     super

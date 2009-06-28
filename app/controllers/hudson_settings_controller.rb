@@ -26,6 +26,8 @@ class HudsonSettingsController < ApplicationController
       @settings.auth_password = params[:settings].fetch(:auth_password)
       @settings.show_compact = params[:settings].fetch(:show_compact) if params[:settings][:show_compact] != nil
       @settings.show_compact = false if params[:settings][:show_compact] == nil
+      @settings.health_report_build_stability = params[:settings].fetch(:health_report_build_stability)
+      @settings.health_report_test_result = params[:settings].fetch(:health_report_test_result)
 
       if ( @settings.save )
         flash[:notice] = l(:notice_successful_update)

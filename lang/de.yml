@@ -1,6 +1,8 @@
 # $Id$
 # German strings go here
 label_hudson: Hudson
+label_hudson_plural: Hudson
+label_build: Build
 label_latest_build: Letzer Build
 label_job_list: Jobliste
 label_health_report: Health Bericht
@@ -10,6 +12,8 @@ label_jobs: Jobs
 label_update_jobs: Jobs
 label_build_history: Build Verlauf
 label_show_compact: Kompaktdarstellung
+label_health_report_build_stability: HealthReport:BuildStability
+label_health_report_test_result: HealthReport:TestResult
 
 notice_no_jobs: Keine Jobs vorhanden
 notice_no_builds: Keine Builds vorhanden
@@ -27,7 +31,4 @@ notice_err_no_job : 'Der Job [%1s] wurde nicht gefunden.'
 
 notice_err_build_failed: 'Build fehlgeschlagen [%1s].'
 notice_err_build_failed_no_job: 'Build fehlgeschlagen. Der Job [%1s] wurde nicht gefunden.'
-
-keyword_build_health_report: Build
-keyword_test_health_report: Test
 
