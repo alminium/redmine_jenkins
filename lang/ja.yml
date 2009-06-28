@@ -14,6 +14,8 @@ label_build_history: ビルド履歴
 label_show_compact: 簡単表示
 label_health_report_build_stability: ヘルスレポート:安定したビルド
 label_health_report_test_result: ヘルスレポート:テスト結果
+label_database: DataBase
+button_delete_history: 履歴を削除
 
 notice_no_jobs: ジョブはありません。
 notice_no_builds: ビルドは実行されていません。

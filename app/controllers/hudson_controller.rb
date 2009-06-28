@@ -18,9 +18,11 @@ class HudsonController < ApplicationController
   before_filter :find_hudson_jobs
   before_filter :authorize
   before_filter :clear_flash
+  before_filter :clear_hudson_api_errors
 
   include HudsonHelper
   include RexmlHelper
+  include ERB::Util
 
   def index
     raise HudsonNoSettingsException if @settings.is_new?
@@ -52,6 +54,18 @@ class HudsonController < ApplicationController
 
   rescue HudsonNoSettingsException
     flash.now[:error] = l(:notice_err_no_settings, url_for(:controller => 'hudson_settings', :action => 'edit', :id => @project))
+  rescue HudsonHttpException => error
+    flash.now[:error] = h(error.message)
+  ensure
+    if @hudson_api_errors.length > 0
+      flash.now[:error] << "<br>" if flash.now[:error]
+      flash.now[:error] = "" unless flash.now[:error]
+      api_error_messages = []
+      @hudson_api_errors.each {|api_error|
+        api_error_messages << "HudsonAPI Error: #{api_error[:job_name]}::#{api_error[:operation]} - #{api_error[:error].message}"
+      }
+      flash.now[:error] << "#{api_error_messages.join('<br>')}"
+    end
   end
 
   def build
@@ -117,6 +131,14 @@ private
     flash.clear
   end
 
+  def clear_hudson_api_errors
+    @hudson_api_errors = []
+  end
+
+  def add_hudson_api_error(job_name, operation, error)
+    @hudson_api_errors << {:job_name=>job_name, :operation=>operation, :error=>error}
+  end
+
   def is_target?(job)
     return @settings.job_include?(job)
   end
@@ -157,7 +179,15 @@ private
 
       # 最新のビルドが変わっているようならビルドの情報を更新する
       if job.latest_build_number != latest_build_number
-        builds = get_recent_builds_from_hudson job, latest_build_number
+        begin
+         builds = get_recent_builds_from_hudson job, latest_build_number
+        rescue HudsonHttpException => error
+          add_hudson_api_error job.name, "get_recent_builds", error
+          next
+        end
+
+        # ビルド中である場合、ビルド結果(HudsonBuild)には保存されない。
+        # ので、ジョブの最新ビルド番号は、完了したビルドの中で最新のものになる。
         new_latest = ""
         builds.each {|build|
           job.builds << build
@@ -166,9 +196,114 @@ private
         if new_latest != ""
           job.latest_build_number = new_latest
         end
+
         job.save
+
+        # 詳細な情報(テスト結果や更新情報、成果物)
+        begin
+          get_recent_builds_detail_from_hudson(job, builds)
+        rescue HudsonHttpException => error
+          add_hudson_api_error job.name, "get_recent_builds_detail", error
+          next
+        end
+
       end
     end
+  rescue HudsonHttpException => error
+    raise error
+  end
+
+  def get_recent_builds_from_hudson( job, latest_build_number )
+    # rssAll で取得できる範囲でまずは取得する
+    api_url = "#{@settings.url}job/#{job.name}/rssAll"
+    begin
+      content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
+    rescue HudsonHttpException => error
+      raise error
+    end
+
+    retval = []
+
+    doc = REXML::Document.new content
+    doc.elements.each("//entry") do |entry|
+      buildinfo = parse_rss_build(entry)
+      next if ( job.latest_build_number != nil and ( job.latest_build_number.to_i >= buildinfo[:number].to_i ) )
+      build = new_build(job, buildinfo)
+      build.save
+      retval << build
+    end
+
+    # 最新のビルドが実行中の場合、rssAll にはエントリがない
+    if latest_build_number != nil and ( retval.length == 0 or retval[0].number.to_i < latest_build_number.to_i )
+      build = new_build(job, {:number=>latest_build_number, :result=>'', :published=> Time.now, :building=>true})
+      retval << build
+    end
+
+    return retval
+  end
+
+  def get_recent_builds_detail_from_hudson(job, builds)
+    api_url = "#{@settings.url}job/#{job.name}/api/xml?depth=1"
+    api_url << "&exclude=//build/changeSet/item/path"
+    api_url << "&exclude=//build/changeSet/item/addedPath"
+    api_url << "&exclude=//build/changeSet/item/modifiedPath"
+    api_url << "&exclude=//build/changeSet/item/deletedPath"
+    api_url << "&exclude=//build/culprit"
+    api_url << "&exclude=//module"
+    api_url << "&exclude=//firstBuild&exclude=//lastBuild"
+    api_url << "&exclude=//lastCompletedBuild"
+    api_url << "&exclude=//lastFailedBuild"
+    api_url << "&exclude=//lastStableBuild"
+    api_url << "&exclude=//lastSuccessfulBuild"
+    content = ""
+    begin
+      content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
+    rescue HudsonHttpException => error
+      raise error
+    end
+
+    begin
+      doc = REXML::Document.new content
+    rescue REXML::ParseException => error
+      raise HudsonHttpException.new(error)
+    end
+
+    doc.elements.each("//build") do |buildelem|
+      build_number = get_element_value(buildelem, "number")
+      build = get_build(builds, build_number)
+      next unless build
+
+      # テスト結果を取得する
+      test_result = nil
+      buildelem.children.each do |child|
+        next if "action" != child.name
+        next if "testReport" != get_element_value(child, "urlName")
+        test_result = new_test_result(build, child)
+        test_result.save
+        build.test_result = test_result
+        break
+      end
+
+      # チェンジセットを取得する
+      if @project.repository != nil
+        buildelem.children.each do |changeset|
+          next if "changeSet" != changeset.name
+          changeset.children.each do |item|
+            next if "item" != item.name
+            changeset = new_changeset(build, item)
+            changeset.save
+            build.changesets << changeset
+          end
+        end
+      end
+    end
+  end
+
+  def get_latest_build_from_db( job, latest_build_number )
+    return if latest_build_number == nil || latest_build_number == ""
+    retval = HudsonBuild.find( :first,
+                               :conditions => ["#{HudsonBuild.table_name}.hudson_job_id = ? and #{HudsonBuild.table_name}.number = ?", job.id, latest_build_number] )
+    return retval
   end
 
   def get_job(job_name)
@@ -185,42 +320,8 @@ private
       return retval
   end
 
-  def get_recent_builds_from_hudson( job, latest_build_number )
-    begin
-      # rssAll で取得できる範囲で。
-      api_url = "#{@settings.url}job/#{job.name}/rssAll"
-      content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
-    rescue HudsonHttpException => error
-      flash.now[:error] = error.message
-      return
-    end
-
-    retval = []
-
-    doc = REXML::Document.new content
-    doc.elements.each("//entry") do |entry|
-      buildinfo = parse_rss_build(entry)
-      next if ( job.latest_build_number != nil and ( job.latest_build_number.to_i >= buildinfo[:number].to_i ) )
-      build = new_build(job, buildinfo)
-      #changesets = get_changesets_from_hudson(job, build)
-      #changesets.each{|changeset| build.changesets << changeset}
-      build.save
-      retval << build
-    end
-
-    # 最新のビルドが実行中の場合、rssAll にはエントリがない
-    if latest_build_number != nil and ( retval.length == 0 or retval[0].number.to_i < latest_build_number.to_i )
-      build = new_build(job, {:number=>latest_build_number, :result=>'', :published=> Time.now, :building=>true})
-      retval << build
-    end
-
-    return retval
-  end
-
-  def get_latest_build_from_db( job, latest_build_number )
-    return if latest_build_number == nil || latest_build_number == ""
-    retval = HudsonBuild.find( :first,
-                               :conditions => ["#{HudsonBuild.table_name}.hudson_job_id = ? and #{HudsonBuild.table_name}.number = ?", job.id, latest_build_number] )
+  def get_build(builds, number)
+    retval = builds.find{|build| build.number == number }
     return retval
   end
 
@@ -236,31 +337,20 @@ private
     return retval
   end
 
-  def new_changesets(job, build)
-    api_url = "#{@settings.url}job/#{job.name}/#{build.number}/api/xml"
-    content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
-
-    doc = REXML::Document.new content
-    doc.elements.each("//changeSet") do |element|
-      changesetinfo = parse_changeset(element)
-      changesetinfo[:revisions].each {|revision|
-        changeset = new_changeset(build, revision)
-        build.changesets << changeset
-      }
-    end
-  rescue HudsonHttpException => error
-    return
-  rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT
-    return
-  rescue URI::InvalidURIError
-    return
+  def new_test_result(build, elem)
+    retval = HudsonBuildTestResult.new
+    retval.hudson_build_id = build.id
+    retval.fail_count = get_element_value(elem, "failCount")
+    retval.skip_count = get_element_value(elem, "skipCount")
+    retval.total_count = get_element_value(elem, "totalCount")
+    return retval
   end
 
-  def new_changeset(build, revisioninfo)
+  def new_changeset(build, elem)
     retval = HudsonBuildChangeset.new
     retval.hudson_build_id = build.id
     retval.repository_id = @project.repository.id
-    retval.revision = revisioninfo[:revision]
+    retval.revision = get_element_value(elem, "revision")
     return retval
   end
 end

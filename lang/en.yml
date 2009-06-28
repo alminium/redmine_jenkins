@@ -14,6 +14,8 @@ label_build_history: Build History
 label_show_compact: Show Compact
 label_health_report_build_stability: HealthReport:BuildStability
 label_health_report_test_result: HealthReport:TestResult
+label_database: DataBase
+button_delete_history: Delete History
 
 notice_no_jobs: No Jobs
 notice_no_builds: No Builds

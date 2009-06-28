@@ -3,7 +3,7 @@
 class HudsonBuild < ActiveRecord::Base
   unloadable
   has_many :changesets, :class_name => 'HudsonBuildChangeset', :dependent => :destroy
-  has_many :artifacts, :class_name => 'HudsonBuildArtifact', :dependent => :destroy
+  has_one :test_result, :class_name => 'HudsonBuildTestResult', :dependent => :destroy
   belongs_to :job, :class_name => 'HudsonJob', :foreign_key => 'hudson_job_id'
   belongs_to :author, :class_name => 'User', :foreign_key => 'caused_by'
 
@@ -14,7 +14,12 @@ class HudsonBuild < ActiveRecord::Base
   validates_uniqueness_of :number, :scope => :hudson_job_id
 
   acts_as_event :title => Proc.new {|o| "#{l(:label_build)} #{o.job.name} #{o.number}: #{o.result}"},
-                :description => "",
+                :description => Proc.new{|o|
+                                  items = []
+                                  items << o.test_result.description_for_activity if o.test_result != nil
+                                  items << HudsonBuildChangeset.description_for_activity(o.changesets) if o.changesets.length > 0
+                                  items.join("; ")
+                                },
                 :datetime => :finished_at
 
   acts_as_activity_provider :type => 'hudson',

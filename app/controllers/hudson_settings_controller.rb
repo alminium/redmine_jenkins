@@ -51,6 +51,25 @@ class HudsonSettingsController < ApplicationController
     render :layout => false, :template => 'hudson_settings/_joblist.rhtml'
   end
 
+  def delete_history
+    jobs = HudsonJob.find :all, :order => "#{HudsonJob.table_name}.name",
+                          :conditions => ["#{HudsonJob.table_name}.project_id = ?", @project.id]
+    jobs.each {|job|
+      ActiveRecord::Base::transaction() do
+        builds = HudsonBuild.find :all, :conditions => ["#{HudsonBuild.table_name}.hudson_job_id = ?", job.id]
+        builds.each {|build| build.destroy}
+        job.destroy
+      end
+    }
+
+    flash[:notice] = l(:notice_successful_delete)
+  rescue Exception => error
+    flash[:error] = error.message
+  ensure
+    find_hudson_jobs(@settings.url)
+    render(:action => "edit")
+  end
+
 private
   def find_project
     @project = Project.find(params[:id])
