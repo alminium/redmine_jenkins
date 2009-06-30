@@ -16,6 +16,7 @@ ja:
   label_health_report_build_stability: ヘルスレポート:安定したビルド
   label_health_report_test_result: ヘルスレポート:テスト結果
   label_database: DataBase
+  label_get_build_details: ビルドの詳細（変更とテスト結果）を取得する
   button_delete_history: Delete History
 
   notice_no_jobs: ジョブはありません。
@@ -23,6 +24,7 @@ ja:
 
   notice_building: ビルド中です。
   notice_hudson_url: 'http://, https:// から記述してください'
+  notice_get_build_details: 表示に時間がかかる場合は、チェックを外してください
 
   notice_err_cant_connect: Hudson に接続できませんでした（Hudson が起動していないかもしれません）
   notice_err_response_invalid: 'Hudson からの応答が何か変です。 %1s'

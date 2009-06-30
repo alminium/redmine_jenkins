@@ -13,6 +13,7 @@ label_show_compact: Show Compact
 label_health_report_build_stability: HealthReport:BuildStability
 label_health_report_test_result: HealthReport:TestResult
 label_database: DataBase
+label_get_build_details: Get Build Details (changesets and test-results)
 button_delete_history: Delete History
 
 notice_no_jobs: Nincsenek feladatok
@@ -20,6 +21,7 @@ notice_no_builds: Nincsenek fordított változatok
 
 notice_building: Most fordul...
 notice_hudson_url: 'with http://, https:// ...'
+notice_get_build_details: Take the checkmark off, if take a lot of time.
 
 notice_err_cant_connect: "Nem tudok csatlakozni a Hudson-hoz"
 notice_err_response_invalid: 'Érvénytelen válasz %1s'

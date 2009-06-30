@@ -15,6 +15,7 @@ label_show_compact: Show Compact
 label_health_report_build_stability: HealthReport:BuildStability
 label_health_report_test_result: HealthReport:TestResult
 label_database: DataBase
+label_get_build_details: Get Build Details (changesets and test-results)
 button_delete_history: Delete History
 
 notice_no_jobs: No Jobs
@@ -22,6 +23,7 @@ notice_no_builds: No Builds
 
 notice_building: Now Building...
 notice_hudson_url: 'with http://, https:// ...'
+notice_get_build_details: Take the checkmark off, if take a lot of time.
 
 notice_err_cant_connect: "Can't Connect Hudson"
 notice_err_response_invalid: 'Response Invalid %1s'

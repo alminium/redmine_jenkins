@@ -24,8 +24,8 @@ class HudsonSettingsController < ApplicationController
       @settings.job_filter = HudsonSettings.to_value(params[:settings].fetch(:jobs))
       @settings.auth_user = params[:settings].fetch(:auth_user)
       @settings.auth_password = params[:settings].fetch(:auth_password)
-      @settings.show_compact = params[:settings].fetch(:show_compact) if params[:settings][:show_compact] != nil
-      @settings.show_compact = false if params[:settings][:show_compact] == nil
+      @settings.get_build_details = check_box_to_boolean(params[:settings][:get_build_details])
+      @settings.show_compact = check_box_to_boolean(params[:settings][:show_compact])
       @settings.health_report_build_stability = params[:settings].fetch(:health_report_build_stability)
       @settings.health_report_test_result = params[:settings].fetch(:health_report_test_result)
 

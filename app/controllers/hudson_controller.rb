@@ -199,6 +199,9 @@ private
 
         job.save
 
+        # 詳細な情報を取得しない場合は次へ。
+        next unless @settings.get_build_details
+
         # 詳細な情報(テスト結果や更新情報、成果物)
         begin
           get_recent_builds_detail_from_hudson(job, builds)

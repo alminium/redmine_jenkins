@@ -71,4 +71,9 @@ module HudsonHelper
     return retval
   end
 
+  def check_box_to_boolean(item)
+    return item if item
+    return false unless item
+  end
+
 end
