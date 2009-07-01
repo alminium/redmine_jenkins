@@ -14,7 +14,7 @@ Redmine::Plugin.register :redmine_hudson do
     # パーミッション設定。
     permission :view_hudson, {:hudson => [:index, :history]}
     permission :build_hudson, {:hudson => [:build]}, :require => :member
-    permission :edit_hudson_settings, {:hudson_settings => [:edit, :joblist, :delete_history]}
+    permission :edit_hudson_settings, {:hudson_settings => [:edit, :joblist, :delete_history]}, :require => :member
   end
 
   menu :project_menu, :hudson, { :controller => :hudson, :action => :index }, :param => :id, :caption => :label_hudson
