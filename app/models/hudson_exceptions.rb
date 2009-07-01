@@ -10,10 +10,12 @@ end
 class HudsonNoSettingsException < Exception
 end
 
+require 'active_record'
+
 class HudsonHttpException < Exception
   attr_reader :message, :code
 
-  include GLoc
+  include ApplicationHelper
   include ActionView::Helpers::TextHelper
   
   def initialize( object )
