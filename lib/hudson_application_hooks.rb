@@ -66,7 +66,7 @@ class HudsonApplicationHooks < Redmine::Hook::ViewListener
     o << "  var keys = builds.keys();" + "\n"
     o << "  for( var index=0; index<keys.length; index++ ) {" + "\n"
     o << "    build = builds.get(keys[index]);" + "\n"
-    o << "    if ( message.innerHTML.indexOf('Revision ' + keys[index]) > 0 ) { message.innerHTML += '<br>' + build.message(); }" + "\n"
+    o << "    if ( message.innerHTML.indexOf('#{l(:label_revision)} ' + keys[index]) > 0 ) { message.innerHTML += '<br>' + build.message(); }" + "\n"
     o << "  }" + "\n"
     o << "}" + "\n"
     o << "</script>"
