@@ -10,14 +10,19 @@ ja:
   label_settings: 設定
   label_url: URL
   label_jobs: 表示するジョブ
-  label_update_jobs: ジョブの一覧を更新する
   label_build_history: ビルド履歴
+  label_update_jobs: ジョブの一覧を更新する
+  label_build_now: Build実行
+  label_show_build_history: ビルド履歴を表示する
   label_show_compact: 簡単表示
   label_health_report_build_stability: ヘルスレポート:安定したビルド
   label_health_report_test_result: ヘルスレポート:テスト結果
   label_database: DataBase
   label_get_build_details: ビルドの詳細（変更とテスト結果）を取得する
-  button_delete_history: Delete History
+  label_look_and_feel: 見た目 (アイコンが変わります)
+  label_look_and_feel_hudson: Hudson
+  label_look_and_feel_plugin: プラグイン風
+  button_delete_history: 履歴を削除
 
   notice_no_jobs: ジョブはありません。
   notice_no_builds: ビルドは実行されていません。
@@ -36,4 +41,3 @@ ja:
 
   notice_err_build_failed: 'ビルドに失敗しました。%1s'
   notice_err_build_failed_no_job: 'ビルドに失敗しました。Jobが見当たりません。[%1s]'
-

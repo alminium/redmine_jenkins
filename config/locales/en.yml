@@ -10,13 +10,18 @@ en:
   label_settings: Settings
   label_url: URL
   label_jobs: Jobs
-  label_update_jobs: Update Jobs
   label_build_history: Build History
+  label_update_jobs: Update Jobs
+  label_build_now: Build Now
+  label_show_build_history: Show Build History
   label_show_compact: Show Compact
   label_health_report_build_stability: HealthReport:BuildStability
   label_health_report_test_result: HealthReport:TestResult
   label_database: DataBase
   label_get_build_details: Get Build Details (changesets and test-results)
+  label_look_and_feel: Look and Feel (only icons)
+  label_look_and_feel_hudson: Hudson
+  label_look_and_feel_plugin: Plugin original
   button_delete_history: Delete History
 
   notice_no_jobs: No Jobs
@@ -36,4 +41,5 @@ en:
 
   notice_err_build_failed: 'Build failed %1s'
   notice_err_build_failed_no_job: 'Build failed. Job not found [%1s]'
+
 

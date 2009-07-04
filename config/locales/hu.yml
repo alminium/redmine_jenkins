@@ -5,17 +5,22 @@ hu:
   label_build: Fordítás
   label_latest_build: Utolsó fordítás
   label_job_list: Feladatlista
-  label_health_report:
+  label_health_report: 
   label_settings: Beállítások
   label_url: URL
   label_jobs: Feladatok
-  label_update_jobs: Frissítési feladatok
   label_build_history: Fordítási történet
+  label_update_jobs: Frissítési feladatok
+  label_build_now: Fordítás Now
+  label_show_build_history: Show Fordítási történet
   label_show_compact: Show Compact
   label_health_report_build_stability: HealthReport:BuildStability
   label_health_report_test_result: HealthReport:TestResult
   label_database: DataBase
   label_get_build_details: Get Build Details (changesets and test-results)
+  label_look_and_feel: Look and Feel (only icons)
+  label_look_and_feel_hudson: Hudson
+  label_look_and_feel_plugin: Plugin original
   button_delete_history: Delete History
 
   notice_no_jobs: Nincsenek feladatok
