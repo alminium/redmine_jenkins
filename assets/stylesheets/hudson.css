@@ -1,16 +1,12 @@
 /* $Id$ */
 
-.icon-blue { background-image: url(../images/blue.png); }
-.icon-red { background-image: url(../images/red.png); }
-.icon-grey { background-image: url(../images/grey.png); }
-.icon-yellow { background-image: url(../images/yellow.png); }
-.icon-disabled { background-image: url(../images/disabled.png); }
-
-.icon-blue_anime { background-image: url(../images/blue_anime.png); }
-.icon-red_anime { background-image: url(../images/red_anime.png); }
-.icon-grey_anime { background-image: url(../images/grey_anime.png); }
-.icon-yellow_anime { background-image: url(../images/yellow_anime.png); }
-
+.icon24 {
+background-position: 0% 40%;
+background-repeat: no-repeat;
+padding-left: 28px;
+line-height: 24px;
+vertical-align: middle;
+}
 .icon-build-history { cursor:pointer;}
 
 .result.failure {color:red;}
@@ -18,6 +14,13 @@
 .result {color:#999;}
 
 .latest-build { width:28em; }
+
+.contextual-icon24 {
+float:right;
+white-space: nowrap;
+margin-top:1px;
+padding-left: 10px;
+}
 
 #build-history { 
     position:absolute;

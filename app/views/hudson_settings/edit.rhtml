@@ -22,6 +22,10 @@
      <%=text_field :settings, :health_report_build_stability, :size=>20%>
   <p><label><%=l(:label_health_report_test_result)%></label>
      <%=text_field :settings, :health_report_test_result, :size=>20%>
+  <p><label><%=l(:label_look_and_feel)%></label>
+     <%=radio_button_tag 'settings[look_and_feel]', 'Hudson', @settings.look_and_feel == 'Hudson'%> <%=l(:label_look_and_feel_hudson)%><br>
+     <%=radio_button_tag 'settings[look_and_feel]', 'Plugin', @settings.look_and_feel == 'Plugin'%> <%=l(:label_look_and_feel_plugin)%>
+  </p>
 </div>
 
 <fieldset class="box"><legend><%=l(:label_jobs)%></legend>

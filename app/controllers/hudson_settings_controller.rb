@@ -28,6 +28,7 @@ class HudsonSettingsController < ApplicationController
       @settings.show_compact = check_box_to_boolean(params[:settings][:show_compact])
       @settings.health_report_build_stability = params[:settings].fetch(:health_report_build_stability)
       @settings.health_report_test_result = params[:settings].fetch(:health_report_test_result)
+      @settings.look_and_feel = params[:settings].fetch(:look_and_feel)
 
       if ( @settings.save )
         flash[:notice] = l(:notice_successful_update)
