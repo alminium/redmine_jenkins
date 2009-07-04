@@ -1,4 +1,83 @@
 # $Id$
-= hudson
+= Hudson Plugin 0.1.4
 
-Description goes here
+This is a plugin collaborates with Hudson for Redmine.
+
+== What's Hudson ?
+
+Huson is application for Continuous Integration.
+Easy install configuration, and good ui.
+
+More detail {Meet Hudson}[http://wiki.hudson-ci.org/display/HUDSON/Meet+Hudson]
+
+== Requirements
+* Require Redmine 0.8.x.
+* Recommend Hudson 1.313.
+
+== Feature
+=== Show Job List
+Show job details.
+
+* name, description, latest build ( build number, result, date ) and health report.
+* Bulid number linked to build result page.
+* Click clock-icon, request hudson to build.
+* Mr. hudson appears. ( sorry, not emotional )
+
+=== Show Build History
+Click note icon, show build history.
+
+* build number, result, date.
+* Bulid number linked to build result page.
+* Console icon linked to console page.
+
+=== Show build history on activity
+
+* jobname, build number, test-result(only number of items) and changesets.
+
+=== Show build result on issue
+
+* job-name, build-number, result and built date and time. when Hudson builds revisions associated issues.
+
+=== Settings
+
+* Hudson url (can use https)
+* auth user, password ( 0.1.1 higher )
+* can stop plugin getting test results and changesets. (Getting test results and changesets needs a good amount of time.)
+* choose job
+* compact mode ( show only job name and latest build)
+
+== Note
+
+=== Recommend Hudson 1.313
+If you use old version of Hudson, plugin may not get test results and changesets.
+Plugin store build information, if plugin can't get test results or changesets.
+But, If plugin fail, never get test results, changesets again.
+
+=== Plugin get build information when you access plugin (Hudson tab)
+Plugin has no exclusive control, so plugin doesn't work when redmine works on multi-process.
+I'll try next version.
+
+=== Plugin can get recent build infomation, more than a dozen.
+If Hudson has many build infomations, Plugin can't get all. sorry.
+
+=== Something is wrong with plugin, you should try to delete data from database.
+Use 'delete history' button in setting page.
+
+== Changelog
+
+[0.1.5] Show build result on issue. Use Hudson icons.
+[0.1.4] Show build history on activity. Save infomation on database.
+[0.1.3] Fixed BasicAuth bug.
+[0.1.2] Fixed https-connection bug.
+[0.1.1] Support basic-authentication and https-connection.
+[0.1.0] first release
+
+== Language contributors
+
+[de.yml] Jens Goldhammer, Florian Bartels
+[hu.yml] Péter Major
+
+== Contact info
+
+* Website  -> r-labs[http://www.r-labs.org/]
+* Email    -> couger@kt.rim.or.jp
