@@ -16,7 +16,7 @@ BuildResult.prototype = {
   message: function() {
       retval = ""
       retval += "<span class='result " + this.result.toLowerCase() + "' style='font-weight:bold;'>" + this.result + "</span>";
-      retval += " builded by <a href='" + this.url + "'>" + this.job_name + " #" + this.number + "</a>";
+      retval += " built by <a href='" + this.url + "'>" + this.job_name + " #" + this.number + "</a>";
       retval += " at " + this.finished_at_tag + " ago";
       return retval;
   }
