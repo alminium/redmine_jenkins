@@ -33,6 +33,8 @@ class HudsonSettingsController < ApplicationController
       if ( @settings.save )
         flash[:notice] = l(:notice_successful_update)
       end
+
+      destroy_garbage_jobs
     end
 
     # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない
@@ -57,8 +59,7 @@ class HudsonSettingsController < ApplicationController
                           :conditions => ["#{HudsonJob.table_name}.project_id = ?", @project.id]
     jobs.each {|job|
       ActiveRecord::Base::transaction() do
-        builds = HudsonBuild.find :all, :conditions => ["#{HudsonBuild.table_name}.hudson_job_id = ?", job.id]
-        builds.each {|build| build.destroy}
+        job.destory_builds
         job.destroy
       end
     }
@@ -99,6 +100,18 @@ private
     doc.elements.each("hudson/job") do |element|
       @jobs << get_element_value(element, "name")
     end
+  end
+
+  def destroy_garbage_jobs()
+    jobs = HudsonJob.find :all, :order => "#{HudsonJob.table_name}.name",
+                           :conditions => ["#{HudsonJob.table_name}.project_id = ?", @project.id]
+    jobs.each {|job|
+      next if @settings.job_include?(job.name)
+      ActiveRecord::Base::transaction() do
+        job.destory_builds
+        job.destroy
+      end
+    }
   end
 
 end

@@ -45,6 +45,10 @@ class HudsonJob < ActiveRecord::Base
     return @builds[0] if @builds.length > 0
   end
 
+  def destory_builds
+    HudsonBuild.destroy_all(["#{HudsonBuild.table_name}.hudson_job_id = ?", self.id])
+  end
+
   def update_by_xml(element)
     self.description = get_element_value(element, "description")
     self.state = get_element_value(element, "color")
