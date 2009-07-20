@@ -6,6 +6,7 @@ require "digest/sha1"
 
 class HudsonSettings < ActiveRecord::Base
   unloadable
+  has_many :health_report_settings, :class_name => 'HudsonSettingsHealthReport', :dependent => :destroy
 
   # 空白を許さないもの
   validates_presence_of :project_id, :url

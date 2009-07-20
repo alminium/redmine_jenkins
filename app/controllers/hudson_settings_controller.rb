@@ -26,9 +26,26 @@ class HudsonSettingsController < ApplicationController
       @settings.auth_password = params[:settings].fetch(:auth_password)
       @settings.get_build_details = check_box_to_boolean(params[:settings][:get_build_details])
       @settings.show_compact = check_box_to_boolean(params[:settings][:show_compact])
-      @settings.health_report_build_stability = params[:settings].fetch(:health_report_build_stability)
-      @settings.health_report_test_result = params[:settings].fetch(:health_report_test_result)
       @settings.look_and_feel = params[:settings].fetch(:look_and_feel)
+
+      if (params[:health_report_settings] != nil)
+        params[:health_report_settings].each do |id, hrs|
+          setting = @settings.health_report_settings.detect {|item| item.id == id.to_i}
+          next unless setting
+          setting.destroy if HudsonSettingsHealthReport.is_blank?(hrs)
+          unless HudsonSettingsHealthReport.is_blank?(hrs)
+            setting.update_from_hash(hrs)
+            setting.save
+          end
+        end
+      end
+
+      if (params[:new_health_report_settings] != nil)
+        params[:new_health_report_settings].each do |id, hrs|
+          next if HudsonSettingsHealthReport.is_blank?(hrs)
+          @settings.health_report_settings << HudsonSettingsHealthReport.new(hrs)
+        end
+      end
 
       if ( @settings.save )
         flash[:notice] = l(:notice_successful_update)

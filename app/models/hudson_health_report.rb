@@ -23,11 +23,10 @@ class HudsonHealthReport
   end
 
   def get_health_report_url(job)
-    if self.description.index(job.settings.health_report_build_stability) != nil
-      return URI.escape("#{job.settings.url}job/#{job.name}/lastBuild/")
-    end
-    if self.description.index(job.settings.health_report_test_result) != nil
-      return URI.escape("#{job.settings.url}job/#{job.name}/lastBuild/testReport/")
+    job.settings.health_report_settings.each do |hr_settings|
+      if hr_settings.contained_in?(self.description)
+        return URI.escape(hr_settings.get_url(job))
+      end
     end
     return ""
   end

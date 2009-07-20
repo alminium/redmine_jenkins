@@ -7,8 +7,7 @@
 
 <%= error_messages_for 'settings' %>
 
-<% form_tag({:action => 'edit', :id => @project}) do %>
-
+<% form_for @settings, :url => {:action => 'edit', :id => @project}, :html => {:method=>:put} do |setting_form| %>
 <div class="box tabular">
   <p><label><%=l(:label_url)%></label>
      <%=text_field :settings, :url, :size=>50%> <%=l(:notice_hudson_url)%></p>
@@ -16,17 +15,35 @@
      <%=text_field :settings, :auth_user, :size=>20 %></p>
   <p><label><%=l(:field_password)%></label>
      <%=password_field :settings, :auth_password, :size=>20%></p>
-  <p><label><%=l(:label_get_build_details)%></label><%=check_box_tag 'settings[get_build_details]', 'true', @settings.get_build_details == true%> <%=l(:notice_get_build_details)%></p>
-  <p><label><%=l(:label_show_compact)%></label><%=check_box_tag 'settings[show_compact]', 'true', @settings.show_compact == true%></p>
-  <p><label><%=l(:label_health_report_build_stability)%></label>
-     <%=text_field :settings, :health_report_build_stability, :size=>20%>
-  <p><label><%=l(:label_health_report_test_result)%></label>
-     <%=text_field :settings, :health_report_test_result, :size=>20%>
+  <p><label><%=l(:label_get_build_details)%></label><%=check_box :settings, :get_build_details, {}, 'true'%> <%=l(:notice_get_build_details)%></p>
+  <p><label><%=l(:label_show_compact)%></label><%=check_box :settings, :show_compact, {}, 'true'%></p>
   <p><label><%=l(:label_look_and_feel)%></label>
-     <%=radio_button_tag 'settings[look_and_feel]', 'Hudson', @settings.look_and_feel == 'Hudson'%> <%=l(:label_look_and_feel_hudson)%><br>
-     <%=radio_button_tag 'settings[look_and_feel]', 'Plugin', @settings.look_and_feel == 'Plugin'%> <%=l(:label_look_and_feel_plugin)%>
+     <%=radio_button :settings, :look_and_feel, 'Hudson'%> <%=l(:label_look_and_feel_hudson)%><br>
+     <%=radio_button :settings,:look_and_feel,  'Plugin'%> <%=l(:label_look_and_feel_plugin)%>
   </p>
 </div>
+
+<fieldset class="box"><legend><%=l(:label_health_report)%></legend>
+  <%=l(:notice_health_report)%>
+  <div id="health_report_fields" style="margin-left:10px;">
+  <% @settings.health_report_settings.each do |hrs| %>
+    <% fields_for "health_report_settings[]", hrs do |hrs_f| %>
+      <% fields = "If plugin found keyword - ${keyword} in HealthReport, Provide a link to Hudson - ${url_format}" %>
+      <% field_keyword = hrs_f.text_field :keyword, :size=>20 %>
+      <% field_url_format = hrs_f.text_field :url_format, :size=>60 %>
+      <% fields = fields.gsub('${keyword}', field_keyword) %>
+      <% fields = fields.gsub('${url_format}', field_url_format) %>
+      <p><%= fields  %></p>
+    <% end %>
+  <% end %>
+  </div>
+  <span style="font-size:smaller;"><%= link_to l(:label_add_health_report), '#', :onclick => 'appender.add(); return false;' %></span>
+  <script type="text/javascript">
+  //<!--
+  var appender = new HealthReportFieldAppender("If plugin found keyword - ${keyword} in HealthReport, Provide a link to Hudson - ${url_format}");
+  //-->
+  </script>
+</fieldset>
 
 <fieldset class="box"><legend><%=l(:label_jobs)%></legend>
     <%=render :partial => 'joblist'%>
@@ -38,7 +55,15 @@
 <h2 style="margin-top:20px;"><%=l(:label_database)%></h2>
 
 <% form_tag({:action => 'delete_history', :id => @project}) do %>
-
   <%= submit_tag l(:button_delete_history) %>
+<% end %>
 
+<style type="text/css">
+<!--
+.health_report_explain { font-weight:bold;}
+-->
+</style>
+
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'hudson_settings', :plugin => "redmine_hudson" %>
 <% end %>
