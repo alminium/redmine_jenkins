@@ -20,7 +20,7 @@ label_get_build_details: ビルドの詳細（変更とテスト結果）を取�
 label_look_and_feel: 見た目 (アイコンが変わります)
 label_look_and_feel_hudson: Hudson
 label_look_and_feel_plugin: プラグイン風
-label_health_report: ビルドの健康状態
+label_health_report: ヘルスレポート
 label_add_health_report: ヘルスレポートの設定を追加
 label_health_report_settings: ヘルスレポートの設定
 button_delete_history: 履歴を削除
