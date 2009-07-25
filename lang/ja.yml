@@ -5,7 +5,6 @@ label_hudson_plural: Hudson
 label_build: ビルド
 label_latest_build: 最新のビルド
 label_job_list: ジョブの一覧
-label_health_report: ビルドの健康状態
 label_settings: 設定
 label_url: URL
 label_jobs: 表示するジョブ
@@ -21,6 +20,9 @@ label_get_build_details: ビルドの詳細（変更とテスト結果）を取�
 label_look_and_feel: 見た目 (アイコンが変わります)
 label_look_and_feel_hudson: Hudson
 label_look_and_feel_plugin: プラグイン風
+label_health_report: ビルドの健康状態
+label_add_health_report: ヘルスレポートの設定を追加
+label_health_report_settings: ヘルスレポートの設定
 button_delete_history: 履歴を削除
 
 notice_no_jobs: ジョブはありません。
@@ -29,6 +31,8 @@ notice_no_builds: ビルドは実行されていません。
 notice_building: ビルド中です。
 notice_hudson_url: 'http://, https:// から記述してください'
 notice_get_build_details: 表示に時間がかかる場合は、チェックを外してください
+notice_health_report: ヘルスレポートの中に指定した文字を見つけたら、Hudson へのリンクを作成します
+notice_health_report_setting: 'ヘルスレポートの中に ${keyword} を見つけたら, Hudson へのリンク ${url_format} を作成します'
 
 notice_err_cant_connect: Hudson に接続できませんでした（Hudson が起動していないかもしれません）
 notice_err_response_invalid: 'Hudson からの応答が何か変です。 %1s'

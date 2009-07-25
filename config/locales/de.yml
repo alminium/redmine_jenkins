@@ -22,6 +22,9 @@ de:
   label_look_and_feel: Look and Feel (only icons)
   label_look_and_feel_hudson: Hudson
   label_look_and_feel_plugin: Plugin original
+  label_health_report: Health Report
+  label_add_health_report: Add HealthReport Setting
+  label_health_report_settings: Health Report Settings
   button_delete_history: Delete History
 
   notice_no_jobs: Keine Jobs vorhanden
@@ -30,6 +33,8 @@ de:
   notice_building: Baue jetzt...
   notice_hudson_url: 'mit http://, https:// ...'
   notice_get_build_details: Take the checkmark off, if take a lot of time.
+  notice_health_report: Provide a link to Hudson, if plugin found keyword in Health Report.
+  notice_health_report_setting: 'If plugin found keyword - ${keyword} in HealthReport, Provide a link to Hudson - ${url_format}'
 
   notice_err_cant_connect: "Es kann keine Verbindung zu Hudson aufgebaut werden."
   notice_err_response_invalid: 'Antwort nicht valide [%1s]'
@@ -41,3 +46,4 @@ de:
 
   notice_err_build_failed: 'Build fehlgeschlagen [%1s].'
   notice_err_build_failed_no_job: 'Build fehlgeschlagen. Der Job [%1s] wurde nicht gefunden.'
+

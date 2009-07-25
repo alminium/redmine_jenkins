@@ -5,7 +5,7 @@ hu:
   label_build: Fordítás
   label_latest_build: Utolsó fordítás
   label_job_list: Feladatlista
-  label_health_report: 
+  label_health_report:
   label_settings: Beállítások
   label_url: URL
   label_jobs: Feladatok
@@ -21,6 +21,9 @@ hu:
   label_look_and_feel: Look and Feel (only icons)
   label_look_and_feel_hudson: Hudson
   label_look_and_feel_plugin: Plugin original
+  label_health_report: Health Report
+  label_add_health_report: Add HealthReport Setting
+  label_health_report_settings: Health Report Settings
   button_delete_history: Delete History
 
   notice_no_jobs: Nincsenek feladatok
@@ -29,6 +32,8 @@ hu:
   notice_building: Most fordul...
   notice_hudson_url: 'with http://, https:// ...'
   notice_get_build_details: Take the checkmark off, if take a lot of time.
+  notice_health_report: Provide a link to Hudson, if plugin found keyword in Health Report.
+  notice_health_report_setting: 'If plugin found keyword - ${keyword} in HealthReport, Provide a link to Hudson - ${url_format}'
 
   notice_err_cant_connect: "Nem tudok csatlakozni a Hudson-hoz"
   notice_err_response_invalid: 'Érvénytelen válasz %1s'

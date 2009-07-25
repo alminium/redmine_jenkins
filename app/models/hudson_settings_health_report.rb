@@ -7,7 +7,7 @@ class HudsonSettingsHealthReport < ActiveRecord::Base
 
   def HudsonSettingsHealthReport.is_blank?(hash)
     return true if hash[:keyword] == nil and hash[:url_format] == nil
-    return true if hash[:keyword] == "" and hash[:url_format] = ""
+    return true if hash[:keyword] == "" and hash[:url_format] == ""
     return false
   end
 

@@ -2,8 +2,6 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 
-require "digest/sha1"
-
 class HudsonSettings < ActiveRecord::Base
   unloadable
   has_many :health_report_settings, :class_name => 'HudsonSettingsHealthReport', :dependent => :destroy
@@ -27,6 +25,15 @@ class HudsonSettings < ActiveRecord::Base
     return value.include?(other.to_s)
   end
 
+  # エラーメッセージに表示されるbegin, end を日本語名にするために追加。
+  @@HUMANIZED_ATTRIBUTE_KEY_NAMES = {
+    "health_report_settings" => l(:label_health_report_settings)
+  }
+
+  # attribute_key_name を人が分かる言葉にするためのメソッド。ActiveRecord がそもそも持っているものをカスタマイズ
+  def HudsonSettings.human_attribute_name(attribute_key_name)
+    @@HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
+  end
 end
 
 def HudsonSettings.load(project)

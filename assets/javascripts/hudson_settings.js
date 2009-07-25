@@ -5,8 +5,8 @@
 
 HealthReportFieldAppender = Class.create();
 HealthReportFieldAppender.prototype = {
-  initialize: function (message) {
-    this.healthReportFieldCount = 0;
+  initialize: function (message, initial_count) {
+    this.healthReportFieldCount = initial_count;
     this.message = message;
   },
   add:  function()  {

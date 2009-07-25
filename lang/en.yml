@@ -5,7 +5,6 @@ label_hudson_plural: Hudson
 label_build: Build
 label_latest_build: Latest Build
 label_job_list: Job List
-label_health_report: Health Report
 label_settings: Settings
 label_url: URL
 label_jobs: Jobs
@@ -22,6 +21,8 @@ label_look_and_feel: Look and Feel (only icons)
 label_look_and_feel_hudson: Hudson
 label_look_and_feel_plugin: Plugin original
 label_add_health_report: Add HealthReport Setting
+label_health_report: Health Report
+label_health_report_settings: Health Report Settings
 button_delete_history: Delete History
 
 notice_no_jobs: No Jobs
@@ -31,6 +32,7 @@ notice_building: Now Building...
 notice_hudson_url: 'with http://, https:// ...'
 notice_get_build_details: Take the checkmark off, if take a lot of time.
 notice_health_report: Provide a link to Hudson, if plugin found keyword in Health Report.
+notice_health_report_setting: 'If plugin found keyword - ${keyword} in HealthReport, Provide a link to Hudson - ${url_format}'
 
 notice_err_cant_connect: "Can't Connect Hudson"
 notice_err_response_invalid: 'Response Invalid %1s'

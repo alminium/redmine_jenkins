@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+
+  name: MyString
+
+  keyword: MyString
+
+  uri: MyString
+
+two:
+  id: 2
+
+  name: MyString
+
+  keyword: MyString
+
+  uri: MyString
+

@@ -32,11 +32,14 @@ class HudsonSettingsController < ApplicationController
         params[:health_report_settings].each do |id, hrs|
           setting = @settings.health_report_settings.detect {|item| item.id == id.to_i}
           next unless setting
-          setting.destroy if HudsonSettingsHealthReport.is_blank?(hrs)
-          unless HudsonSettingsHealthReport.is_blank?(hrs)
-            setting.update_from_hash(hrs)
-            setting.save
+
+          if HudsonSettingsHealthReport.is_blank?(hrs)
+            setting.destroy
+            next
           end
+
+          setting.update_from_hash(hrs)
+          setting.save
         end
       end
 
@@ -49,6 +52,7 @@ class HudsonSettingsController < ApplicationController
 
       if ( @settings.save )
         flash[:notice] = l(:notice_successful_update)
+        find_settings # 一度設定を読み直さないと、destory したものが残るので ( delete_if の方が分かりやすい？ )
       end
 
       destroy_garbage_jobs
