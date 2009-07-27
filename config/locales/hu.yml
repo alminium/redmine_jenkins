@@ -32,8 +32,8 @@ hu:
   notice_building: Most fordul...
   notice_hudson_url: 'with http://, https:// ...'
   notice_get_build_details: Take the checkmark off, if take a lot of time.
-  notice_health_report: Provide a link to Hudson, if plugin found keyword in Health Report.
-  notice_health_report_setting: 'If plugin found keyword - ${keyword} in HealthReport, Provide a link to Hudson - ${url_format}'
+  notice_health_report: Provide a link to Hudson, if plugin find keyword in Health Report.
+  notice_health_report_setting: 'If plugin find keyword - ${keyword} in HealthReport, Provide a link to Hudson - ${url_format}'
 
   notice_err_cant_connect: "Nem tudok csatlakozni a Hudson-hoz"
   notice_err_response_invalid: 'Érvénytelen válasz %1s'
