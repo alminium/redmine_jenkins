@@ -28,6 +28,10 @@ class HudsonSettingsController < ApplicationController
       @settings.show_compact = check_box_to_boolean(params[:settings][:show_compact])
       @settings.look_and_feel = params[:settings].fetch(:look_and_feel)
 
+      if @settings.url
+        @settings.url += "/" unless @settings.url.index(/\/$/)
+      end
+
       if (params[:health_report_settings] != nil)
         params[:health_report_settings].each do |id, hrs|
           setting = @settings.health_report_settings.detect {|item| item.id == id.to_i}
