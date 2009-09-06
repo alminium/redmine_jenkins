@@ -14,11 +14,11 @@ class HudsonApplicationHooks < Redmine::Hook::ViewListener
     return '' unless action_name
 
     if (controller.class.name == 'ProjectsController' and action_name == 'activity')
-      settings = HudsonSettings.load(project)
-      return '' unless settings
+      hudson = Hudson.find_by_project_id(project.id)
+      return '' unless hudson
       o = ""
       o << "<style type='text/css'>"
-      o << ".hudson-build { background-image: url(#{settings.url}favicon.ico); }"
+      o << ".hudson-build { background-image: url(#{hudson.settings.url}favicon.ico); }"
       o << "</style>\n"
       return o
     end

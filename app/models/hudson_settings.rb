@@ -19,6 +19,12 @@ class HudsonSettings < ActiveRecord::Base
     return false
   end
 
+  def use_authentication?
+    return false unless self.auth_user
+    return false unless self.auth_user.length > 0
+    return true
+  end
+
   def job_include?(other)
     return false if self.job_filter == nil
     value = HudsonSettings.to_array( self.job_filter )
@@ -36,8 +42,8 @@ class HudsonSettings < ActiveRecord::Base
   end
 end
 
-def HudsonSettings.load(project)
-  retval = HudsonSettings.find(:first,  :conditions => "project_id = #{project.id}") if project != nil
+def HudsonSettings.find_by_project_id(project_id)
+  retval = HudsonSettings.find(:first,  :conditions => "project_id = #{project_id}")
   retval = HudsonSettings.new() if retval == nil
   return retval
 end

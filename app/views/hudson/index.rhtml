@@ -4,27 +4,27 @@
 %>
 <style type="text/css">
 <!-- div#content {
-  background-image: url("<%="#{@settings.url}images/hudson.png"%>");
+  background-image: url("<%="#{@hudson.settings.url}images/hudson.png"%>");
   background-position: left bottom;
   background-repeat: no-repeat;
 }
-<%= render :partial => 'icon_style_hudson' if @settings.look_and_feel == 'Hudson' %>
-<%= render :partial => 'icon_style_plugin' if @settings.look_and_feel == 'Plugin' %>
+<%= render :partial => 'icon_style_hudson' if @hudson.settings.look_and_feel == 'Hudson' %>
+<%= render :partial => 'icon_style_plugin' if @hudson.settings.look_and_feel == 'Plugin' %>
 -->
 </style>
 <h2><%=l(:label_job_list)%></h2>
 
-<% if @jobs.length == 0 %>
+<% if @hudson.jobs.length == 0 %>
   <div class="nodata"><%=l(:notice_no_jobs)%></div>
 <% else %>
   <div class="flash notice" id="info" style="display:none;">build accepted</div>
   <div class="flash error" id="error" style="display:none;">build failure</div>
   <div id="remote-debug" style="display:none;"></div>
 
-  <% @jobs.each do |job|%>
-    <div class="contextual<%='-icon24' if @settings.look_and_feel == 'Hudson'%>">
-    <% build_icon = image_tag("#{@settings.url}images/24x24/clock.gif", :alt => 'build', :title => l(:label_build_now)) if @settings.look_and_feel == 'Hudson' %>
-    <% build_icon = "[#{l(:label_build_now)}]" if @settings.look_and_feel == 'Plugin' %>
+  <% @hudson.jobs.each do |job|%>
+    <div class="contextual<%='-icon24' if @hudson.settings.look_and_feel == 'Hudson'%>">
+    <% build_icon = image_tag("#{@hudson.settings.url}images/24x24/clock.gif", :alt => 'build', :title => l(:label_build_now)) if @hudson.settings.look_and_feel == 'Hudson' %>
+    <% build_icon = "[#{l(:label_build_now)}]" if @hudson.settings.look_and_feel == 'Plugin' %>
     <%= link_to_remote_if_authorized build_icon,
           :url => {:action => 'build', :id => @project, :name => job.name},
           :update => {:success => 'remote-debug', :failure => 'remote-debug'},
@@ -48,10 +48,10 @@
     </div>
 
     <div class="job-state">
-    <% icon_base_class = "icon24" if @settings.look_and_feel == 'Hudson' %>
-    <% icon_base_class = "icon" if @settings.look_and_feel == 'Plugin' %>
+    <% icon_base_class = "icon24" if @hudson.settings.look_and_feel == 'Hudson' %>
+    <% icon_base_class = "icon" if @hudson.settings.look_and_feel == 'Plugin' %>
     <h3 class="<%=icon_base_class%> icon-<%=job.state%>"><%=link_to job.name, job.url%></h3>
-    <% if @settings[:show_compact] != true %>
+    <% if @hudson.settings[:show_compact] != true %>
       <div class="wiki">
         <%= textilizable job.description -%>
       </div>

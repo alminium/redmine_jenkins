@@ -7,6 +7,7 @@
 
 <%= error_messages_for 'settings' %>
 
+<% @settings = @hudson.settings %>
 <% form_for @settings, :url => {:action => 'edit', :id => @project}, :html => {:method=>:put} do |setting_form| %>
 <div class="box tabular">
   <p><label><%=l(:label_url)%></label>
@@ -26,12 +27,12 @@
 <fieldset class="box"><legend><%=l(:label_health_report)%></legend>
   <%=l(:notice_health_report)%>
   <div id="health_report_fields" style="margin-left:10px;">
-  <% @settings.health_report_settings.each do |hrs| -%>
+  <% @hudson.settings.health_report_settings.each do |hrs| -%>
     <% next if hrs.new_record? -%>
     <%=render :partial => 'health_report_setting', :locals => {:field_name => "health_report_settings[]", :hrs => hrs}  %>
   <% end -%>
   <% new_hrs_count = 0 -%>
-  <%  @settings.health_report_settings.each do |hrs| -%>
+  <%  @hudson.settings.health_report_settings.each do |hrs| -%>
     <% next unless hrs.new_record? -%>
     <% new_hrs_count += 1 -%>
     <%=render :partial => 'health_report_setting', :locals => {:field_name => "new_health_report_settings[#{new_hrs_count}]", :hrs => hrs}  %>

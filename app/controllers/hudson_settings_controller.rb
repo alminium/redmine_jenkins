@@ -10,7 +10,7 @@ class HudsonSettingsController < ApplicationController
   layout 'base'
 
   before_filter :find_project
-  before_filter :find_settings
+  before_filter :find_hudson
   before_filter :authorize
   before_filter :clear_flash
 
@@ -19,22 +19,22 @@ class HudsonSettingsController < ApplicationController
 
   def edit
     if (params[:settings] != nil)
-      @settings.project_id = @project.id
-      @settings.url = params[:settings].fetch(:url)
-      @settings.job_filter = HudsonSettings.to_value(params[:settings].fetch(:jobs))
-      @settings.auth_user = params[:settings].fetch(:auth_user)
-      @settings.auth_password = params[:settings].fetch(:auth_password)
-      @settings.get_build_details = check_box_to_boolean(params[:settings][:get_build_details])
-      @settings.show_compact = check_box_to_boolean(params[:settings][:show_compact])
-      @settings.look_and_feel = params[:settings].fetch(:look_and_feel)
+      @hudson.settings.project_id = @project.id
+      @hudson.settings.url = params[:settings].fetch(:url)
+      @hudson.settings.job_filter = HudsonSettings.to_value(params[:settings].fetch(:jobs))
+      @hudson.settings.auth_user = params[:settings].fetch(:auth_user)
+      @hudson.settings.auth_password = params[:settings].fetch(:auth_password)
+      @hudson.settings.get_build_details = check_box_to_boolean(params[:settings][:get_build_details])
+      @hudson.settings.show_compact = check_box_to_boolean(params[:settings][:show_compact])
+      @hudson.settings.look_and_feel = params[:settings].fetch(:look_and_feel)
 
-      if @settings.url
-        @settings.url += "/" unless @settings.url.index(/\/$/)
+      if @hudson.settings.url
+        @hudson.settings.url += "/" unless @hudson.settings.url.index(/\/$/)
       end
 
       if (params[:health_report_settings] != nil)
         params[:health_report_settings].each do |id, hrs|
-          setting = @settings.health_report_settings.detect {|item| item.id == id.to_i}
+          setting = @hudson.settings.health_report_settings.detect {|item| item.id == id.to_i}
           next unless setting
 
           if HudsonSettingsHealthReport.is_blank?(hrs)
@@ -50,20 +50,20 @@ class HudsonSettingsController < ApplicationController
       if (params[:new_health_report_settings] != nil)
         params[:new_health_report_settings].each do |id, hrs|
           next if HudsonSettingsHealthReport.is_blank?(hrs)
-          @settings.health_report_settings << HudsonSettingsHealthReport.new(hrs)
+          @hudson.settings.health_report_settings << HudsonSettingsHealthReport.new(hrs)
         end
       end
 
-      if ( @settings.save )
+      if ( @hudson.settings.save )
         flash[:notice] = l(:notice_successful_update)
-        find_settings # 一度設定を読み直さないと、destory したものが残るので ( delete_if の方が分かりやすい？ )
+        find_hudson # 一度設定を読み直さないと、destory したものが残るので ( delete_if の方が分かりやすい？ )
       end
 
       destroy_garbage_jobs
     end
 
     # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない
-    find_hudson_jobs(@settings.url)
+    find_hudson_jobs(@hudson.settings.url)
 
   rescue HudsonHttpException => error
     flash.now[:error] = error.message
@@ -93,7 +93,7 @@ class HudsonSettingsController < ApplicationController
   rescue Exception => error
     flash[:error] = error.message
   ensure
-    find_hudson_jobs(@settings.url)
+    find_hudson_jobs(@hudson.settings.url)
     render(:action => "edit")
   end
 
@@ -104,8 +104,8 @@ private
     render_404
   end
 
-  def find_settings
-    @settings = HudsonSettings.load(@project)
+  def find_hudson
+    @hudson = Hudson.find_by_project_id(@project.id)
   end
 
   def clear_flash
@@ -120,7 +120,7 @@ private
     api_url = "#{url}api/xml?depth=0"
 
     # Open the feed and parse it
-    content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
+    content = @hudson.open(api_url)
     doc = REXML::Document.new content
     doc.elements.each("hudson/job") do |element|
       @jobs << get_element_value(element, "name")
@@ -131,7 +131,7 @@ private
     jobs = HudsonJob.find :all, :order => "#{HudsonJob.table_name}.name",
                            :conditions => ["#{HudsonJob.table_name}.project_id = ?", @project.id]
     jobs.each {|job|
-      next if @settings.job_include?(job.name)
+      next if @hudson.settings.job_include?(job.name)
       ActiveRecord::Base::transaction() do
         job.destory_builds
         job.destroy

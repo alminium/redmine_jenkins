@@ -4,14 +4,14 @@
 %>
 <div class="floating" id="joblist">
 <%=link_to_remote "[#{l(:label_update_jobs)}]", :update=>'joblist', :url=>{:action => 'joblist', :id=>@project}, :with=>"'url=' + $('settings_url').value"%><br>
-<% if @jobs.length == 0 %>
+<% if @hudson.jobs.length == 0 %>
   <%=@error if @error != nil%>
   <%=l(:notice_err_no_jobs) unless @error != nil%>
 <% else %>
-  <% @jobs.each do |job| %>
+  <% @hudson.jobs.each do |job| %>
     <label>
-    <%= check_box_tag 'settings[jobs][]', job, @settings.job_include?(job) %>
-    <%= job %>
+    <%= check_box_tag 'settings[jobs][]', job.name, @hudson.settings.job_include?(job.name) %>
+    <%= job.name %>
     </label><br>
   <% end %>
 <% end %>

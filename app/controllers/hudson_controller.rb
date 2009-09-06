@@ -14,8 +14,7 @@ class HudsonController < ApplicationController
   layout 'base'
 
   before_filter :find_project
-  before_filter :find_settings
-  before_filter :find_hudson_jobs
+  before_filter :find_hudson
   before_filter :authorize
   before_filter :clear_flash
   before_filter :clear_hudson_api_errors
@@ -25,12 +24,12 @@ class HudsonController < ApplicationController
   include ERB::Util
 
   def index
-    raise HudsonNoSettingsException if @settings.is_new?
+    raise HudsonNoSettingsException if @hudson.settings.is_new?
 
     content = ""
     begin
       # job/build, view, primaryView は省く
-      api_url = "#{@settings.url}api/xml?depth=1" +
+      api_url = "#{@hudson.settings.url}api/xml?depth=1" +
                 "&xpath=/hudson" +
                 "&exclude=/hudson/view" +
                 "&exclude=/hudson/primaryView" +
@@ -38,7 +37,7 @@ class HudsonController < ApplicationController
                 "&exclude=/hudson/job/lastCompletedBuild" +
                 "&exclude=/hudson/job/lastStableBuild" +
                 "&exclude=/hudson/job/lastSuccessfulBuild"
-      content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
+      content = @hudson.open(api_url)
     rescue HudsonHttpException => error
       flash.now[:error] = error.message
       return
@@ -69,12 +68,12 @@ class HudsonController < ApplicationController
   end
 
   def build
-    raise HudsonNoSettingsException if @settings.is_new?
+    raise HudsonNoSettingsException if @hudson.settings.is_new?
     raise HudsonNoJobException if params[:name] == nil
 
-    build_url = "#{@settings.url}job/#{params[:name]}/build"
+    build_url = "#{@hudson.settings.url}job/#{params[:name]}/build"
 
-    content = open_hudson(build_url, @settings.auth_user, @settings.auth_password)
+    content = @hudson.open(build_url)
 
   rescue HudsonHttpException => error
     render :text => error.message
@@ -87,13 +86,13 @@ class HudsonController < ApplicationController
   end
 
   def history
-    raise HudsonNoSettingsException if @settings.is_new?
+    raise HudsonNoSettingsException if @hudson.settings.is_new?
     raise HudsonNoJobException if params[:name] == nil
     raise HudsonNoJobException unless is_target?(params[:name]) # ちょっと強引だけど、見えない設定のジョブはないものとみなす
 
     @name = params[:name]
-    api_uri = "#{@settings.url}job/#{params[:name]}/rssAll"
-    content = open_hudson(api_uri, @settings.auth_user, @settings.auth_password)
+    api_uri = "#{@hudson.settings.url}job/#{params[:name]}/rssAll"
+    content = @hudson.open(api_uri)
     doc = REXML::Document.new content
     @builds = []
     doc.elements.each("//entry") do |entry|
@@ -118,13 +117,8 @@ private
     render_404
   end
 
-  def find_settings
-    @settings = HudsonSettings.load(@project)
-  end
-
-  def find_hudson_jobs
-    @jobs = HudsonJob.find :all, :order => "#{HudsonJob.table_name}.name",
-                           :conditions => ["#{HudsonJob.table_name}.project_id = ?", @project.id]
+  def find_hudson
+    @hudson = Hudson.find_by_project_id(@project.id)
   end
 
   def clear_flash
@@ -140,7 +134,7 @@ private
   end
 
   def is_target?(job)
-    return @settings.job_include?(job)
+    return @hudson.settings.job_include?(job)
   end
 
   def update_all_jobs(doc)
@@ -148,8 +142,8 @@ private
       job_name = get_element_value(element, "name")
       next unless is_target?(job_name)
 
-      job = get_job(job_name)
-      job = new_job(job_name) unless job
+      job = @hudson.get_job(job_name)
+      job = @hudson.new_job(job_name) unless job
 
       job.update_by_xml(element)
       job.update_health_report_by_xml(element)
@@ -164,7 +158,7 @@ private
       job_name = get_element_value(element, "name")
       next unless is_target?(job_name)
 
-      job = get_job(job_name)
+      job = @hudson.get_job(job_name)
       next unless job
 
       latest_build = element.elements["lastBuild"]
@@ -200,7 +194,7 @@ private
         job.save
 
         # 詳細な情報を取得しない場合は次へ。
-        next unless @settings.get_build_details
+        next unless @hudson.settings.get_build_details
 
         # 詳細な情報(テスト結果や更新情報、成果物)
         begin
@@ -218,9 +212,9 @@ private
 
   def get_recent_builds_from_hudson( job, latest_build_number )
     # rssAll で取得できる範囲でまずは取得する
-    api_url = "#{@settings.url}job/#{job.name}/rssAll"
+    api_url = "#{@hudson.settings.url}job/#{job.name}/rssAll"
     begin
-      content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
+      content = @hudson.open(api_url)
     rescue HudsonHttpException => error
       raise error
     end
@@ -246,7 +240,7 @@ private
   end
 
   def get_recent_builds_detail_from_hudson(job, builds)
-    api_url = "#{@settings.url}job/#{job.name}/api/xml?depth=1"
+    api_url = "#{@hudson.settings.url}job/#{job.name}/api/xml?depth=1"
     api_url << "&exclude=//build/changeSet/item/path"
     api_url << "&exclude=//build/changeSet/item/addedPath"
     api_url << "&exclude=//build/changeSet/item/modifiedPath"
@@ -260,7 +254,7 @@ private
     api_url << "&exclude=//lastSuccessfulBuild"
     content = ""
     begin
-      content = open_hudson(api_url, @settings.auth_user, @settings.auth_password)
+      content = @hudson.open(api_url)
     rescue HudsonHttpException => error
       raise error
     end
@@ -307,20 +301,6 @@ private
     retval = HudsonBuild.find( :first,
                                :conditions => ["#{HudsonBuild.table_name}.hudson_job_id = ? and #{HudsonBuild.table_name}.number = ?", job.id, latest_build_number] )
     return retval
-  end
-
-  def get_job(job_name)
-      job = @jobs.find{|job| job.name == job_name }
-      return job
-  end
-
-  def new_job(job_name)
-      retval = HudsonJob.new
-      retval.name = job_name
-      retval.project_id = @project.id
-      retval.hudson_id = @settings.id
-      @jobs << retval
-      return retval
   end
 
   def get_build(builds, number)
