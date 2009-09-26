@@ -1,0 +1,118 @@
+<freeStyleProject>
+<action/>
+<description>Ruby Small Application</description>
+<displayName>simple-ruby-application</displayName>
+<name>simple-ruby-application</name>
+
+<url>
+http://noauth.onejob.nohealthreport.local:9090/job/simple-ruby-application/
+</url>
+<buildable>true</buildable>
+
+<build>
+
+<action>
+
+<cause>
+<shortDescription>ユーザーadminが実行</shortDescription>
+</cause>
+</action>
+<action/>
+<building>false</building>
+<duration>2683</duration>
+<fullDisplayName>simple-ruby-application #2</fullDisplayName>
+<keepLog>false</keepLog>
+<number>2</number>
+<result>SUCCESS</result>
+<timestamp>1248003315000</timestamp>
+
+<url>
+http://noauth.onejob.nohealthreport.local:9090/job/simple-ruby-application/2/
+</url>
+<builtOn/>
+
+<changeSet>
+
+<item>
+<date>2009-07-19T11:35:10.923408Z</date>
+<msg>fixes #22
+add rspec for HelloEveryone</msg>
+<revision>17</revision>
+<user>t-andou</user>
+</item>
+<kind>svn</kind>
+
+<revision>
+<revision>17</revision>
+</revision>
+</changeSet>
+</build>
+
+<build>
+
+<action>
+
+<cause>
+<shortDescription>ユーザーadminが実行</shortDescription>
+</cause>
+</action>
+<action/>
+<action>
+<failCount>0</failCount>
+<skipCount>0</skipCount>
+<totalCount>3</totalCount>
+<urlName>testReport</urlName>
+</action>
+<building>false</building>
+<duration>2173</duration>
+<fullDisplayName>simple-ruby-application #1</fullDisplayName>
+<keepLog>false</keepLog>
+<number>1</number>
+<result>FAILURE</result>
+<timestamp>1248003215000</timestamp>
+
+<url>
+http://noauth.onejob.nohealthreport.local:9090/job/simple-ruby-application/9/
+</url>
+<builtOn/>
+
+<changeSet>
+
+<item>
+<date>2009-07-19T11:33:21.526102Z</date>
+<msg>fixes #22
+add class HelloEveryone</msg>
+<revision>16</revision>
+<user>t-andou</user>
+</item>
+
+<item>
+<date>2009-07-19T10:33:21.526102Z</date>
+<msg>fixes #21
+add class Helloworld</msg>
+<revision>15</revision>
+<user>t-andou</user>
+</item>
+<kind>svn</kind>
+
+<revision>
+<revision>16</revision>
+</revision>
+</changeSet>
+</build>
+
+<healthReport>
+<description>安定したビルド: 最近の5個中、2個ビルドに失敗しました。</description>
+<iconUrl>health-40to59.gif</iconUrl>
+<score>59</score>
+</healthReport>
+
+<healthReport>
+<description>Rcov coverage: Code coverage 70.0%(70.0)</description>
+<iconUrl>health-80plus.gif</iconUrl>
+<score>87</score>
+</healthReport>
+<inQueue>false</inQueue>
+<keepDependencies>false</keepDependencies>
+<nextBuildNumber>11</nextBuildNumber>
+</freeStyleProject>

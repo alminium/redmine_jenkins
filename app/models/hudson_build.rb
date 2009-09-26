@@ -27,6 +27,9 @@ class HudsonBuild < ActiveRecord::Base
                              :author_key => "#{HudsonBuild.table_name}.caused_by",
                              :find_options => {:include => {:job => :project}}
 
+  include HudsonHelper
+  include RexmlHelper
+
   def initialize
     super
   end
@@ -45,25 +48,80 @@ class HudsonBuild < ActiveRecord::Base
     return "#{self.job.settings.url}job/#{self.job.name}/#{self.number}"
   end
 
+  def building?
+    return true if "t" == self.building
+    return false
+  end
+
+  def add_changesets_from_xml(element)
+    element.children.each do |child|
+      next if child.is_a?(REXML::Text)
+      next if "changeSet" != child.name
+      child.children.each do |item|
+        next if item.is_a?(REXML::Text)
+        next if "item" != item.name
+        changeset = new_changeset(item)
+        changeset.save
+        self.changesets << changeset
+      end
+    end
+  end
+
+  def add_testresult_from_xml(element)
+    test_result = nil
+    element.children.each do |child|
+      next if child.is_a?(REXML::Text)
+      next if "action" != child.name
+      next if "testReport" != get_element_value(child, "urlName")
+      test_result = new_test_result(child)
+      test_result.save
+      self.test_result = test_result
+      break
+    end
+  end
+
+  def new_test_result(elem)
+    retval = HudsonBuildTestResult.new
+    retval.hudson_build_id = self.id
+    retval.fail_count = get_element_value(elem, "failCount")
+    retval.skip_count = get_element_value(elem, "skipCount")
+    retval.total_count = get_element_value(elem, "totalCount")
+    return retval
+  end
+
+  def new_changeset(elem)
+    retval = HudsonBuildChangeset.new
+    retval.hudson_build_id = self.id
+    retval.repository_id = self.project.repository.id
+    retval.revision = get_element_value(elem, "revision")
+    return retval
+  end
+
+end
+
+def HudsonBuild.exists?(job_id, number)
+
+  return false unless job_id
+  return false unless number
+
+  return HudsonBuild.exists?(["#{HudsonBuild.table_name}.hudson_job_id = ? AND #{HudsonBuild.table_name}.number = ?", job_id, number])
+
 end
 
 class HudsonNoBuild
-  def hudson_job_id
-    return ""
+  attr_reader :hudson_job_id, :number, :error, :building, :url, :result
+
+  def initialize
+    @hudson_job_id = ""
+    @number = ""
+    @error = ""
+    @building = ""
+    @url = ""
+    @result = ""
   end
-  def number
-    return ""
+
+  def building?
+    return false
   end
-  def error
-    return ""
-  end
-  def building
-    return ""
-  end
-  def url
-    return ""
-  end
-  def result
-    return ""
-  end
+
 end

@@ -1,0 +1,13 @@
+# $Id$
+project_1:
+  id: 1
+  name: TestProject
+  description:
+  homepage:
+  is_public: true
+  parent_id:
+  projects_count: 0
+  created_on: 2008-11-03 18:37:03
+  updated_on: 2008-11-03 18:37:03
+  identifier: test-project
+  status: 1

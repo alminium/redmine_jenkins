@@ -1,0 +1,19 @@
+<hudson>
+
+<job>
+<name>New Job</name>
+<url>http://noauth_onenewjob_twohealthreport:9090/job/New%20Job/</url>
+<color>blue</color>
+</job>
+
+<primaryView>
+<name>すべて</name>
+<url>http://noauth.nojob.nohealthreport.local:9090/</url>
+</primaryView>
+<slaveAgentPort>0</slaveAgentPort>
+
+<view>
+<name>すべて</name>
+<url>http://noauth.nojob.nohealthreport.local:9090/</url>
+</view>
+</hudson>

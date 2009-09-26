@@ -1,0 +1,9 @@
+# $Id$
+project_1_repository:
+  id: 1
+  project_id: 1
+  url: http://noauth.onejob.nohealthreport.local/svn/
+  login:
+  password:
+  root_url: http://noauth.onejob.nohealthreport.local/svn
+  type: Subversion

@@ -1,19 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-one:
-  id: 1
+hasauth_threejob_twohealthreport_build_stability:
+  id: 101
+  hudson_settings_id: 2
+  keyword: Build stability
+  url_format: ${hudson.url}job/${job.name}/lastBuild/
 
-  name: MyString
-
-  keyword: MyString
-
-  uri: MyString
-
-two:
-  id: 2
-
-  name: MyString
-
-  keyword: MyString
-
-  uri: MyString
+hasauth_threejob_twohealthreport_test_result:
+  id: 102
+  hudson_settings_id: 2
+  keyword: Test Result
+  url_format: ${hudson.url}job/${job.name}/lastBuild/testReport/
 

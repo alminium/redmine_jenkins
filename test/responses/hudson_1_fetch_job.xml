@@ -1,0 +1,38 @@
+<hudson>
+
+<job>
+    <action/>
+    <displayName>simple-ruby-application</displayName>
+    <description>Ruby Small Application</description>
+    <name>simple-ruby-application</name>
+    <url>http://noauth.onejob.nohealthreport.local:9090/job/simple-ruby-application/</url>
+    <buildable>true</buildable>
+    <color>red</color>
+    <lastBuild>
+        <number>3</number>
+        <url>http://noauth.onejob.nohealthreport.local:9090/job/simple-ruby-application/10/</url>
+    </lastBuild>
+    <healthReport>
+    <description>安定したビルド: 最近の5個中、2個ビルドに失敗しました。</description>
+    <iconUrl>health-40to59.gif</iconUrl>
+    <score>59</score>
+    </healthReport>
+
+    <healthReport>
+    <description>Rcov coverage: Code coverage 70.0%(70.0)</description>
+    <iconUrl>health-80plus.gif</iconUrl>
+    <score>87</score>
+    </healthReport>
+</job>
+
+<primaryView>
+<name>すべて</name>
+<url>http://noauth.onejob.nohealthreport.local:9090/</url>
+</primaryView>
+<slaveAgentPort>0</slaveAgentPort>
+
+<view>
+<name>すべて</name>
+<url>http://noauth.onejob.nohealthreport.local:9090/</url>
+</view>
+</hudson>

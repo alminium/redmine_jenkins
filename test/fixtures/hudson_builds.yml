@@ -1,0 +1,10 @@
+#$Id$
+noauth_onejob_nohealthreport_No1:
+  id: 1
+  hudson_job_id: 1
+  number: 1
+  result: ""
+  finished_at:
+  building: t
+  error:
+  caused_by: 1

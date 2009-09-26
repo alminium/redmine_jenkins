@@ -1,29 +1,21 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 
-class HudsonHealthReport
+class HudsonHealthReport < ActiveRecord::Base
   unloadable
-  attr_accessor :job, :description, :score, :url
+  belongs_to :job, :class_name => 'HudsonJob', :foreign_key => 'hudson_job_id'
 
   include HudsonHelper
   include RexmlHelper
 
-  def initialize
-    @description = ""
-    @score = ""
-    @url = ""
-    @job = nil
-  end
-
-  def initialize(job, element)
-    self.job = job
+  def update_by_xml(element)
     self.description = get_element_value(element, "description")
     self.score = get_element_value(element, "score")
-    self.url = get_health_report_url(job)
+    self.url = self.get_health_report_url(self.job)
   end
 
   def get_health_report_url(job)
-    job.settings.health_report_settings.each do |hr_settings|
+    self.job.settings.health_report_settings.each do |hr_settings|
       if hr_settings.contained_in?(self.description)
         return URI.escape(hr_settings.get_url(job))
       end

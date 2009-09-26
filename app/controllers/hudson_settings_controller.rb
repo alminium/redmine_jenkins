@@ -65,7 +65,7 @@ class HudsonSettingsController < ApplicationController
     # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない
     find_hudson_jobs(@hudson.settings.url)
 
-  rescue HudsonHttpException => error
+  rescue HudsonApiException => error
     flash.now[:error] = error.message
   end
 
@@ -73,7 +73,7 @@ class HudsonSettingsController < ApplicationController
     begin
       # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない
       find_hudson_jobs(params[:url])
-    rescue HudsonHttpException => error
+    rescue HudsonApiException => error
       @error = error.message
     end
     render :layout => false, :template => 'hudson_settings/_joblist.rhtml'
@@ -120,7 +120,7 @@ private
     api_url = "#{url}api/xml?depth=0"
 
     # Open the feed and parse it
-    content = @hudson.open(api_url)
+    content = open_hudson_api(api_url, @hudson.settings.auth_user, @hudson.settings.auth_password)
     doc = REXML::Document.new content
     doc.elements.each("hudson/job") do |element|
       @jobs << get_element_value(element, "name")

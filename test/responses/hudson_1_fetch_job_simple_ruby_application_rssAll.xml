@@ -1,0 +1,21 @@
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>simple-ruby-application all builds</title>
+	<link type="text/html" rel="alternate" href="http://noauth.onejob.nohealthreport.local:9090/job/simple-ruby-application/"></link>
+	<updated>2009-07-19T11:35:15Z</updated>
+	<author><name>Hudson Server</name></author>
+	<id>urn:uuid:903deee0-7bfa-11db-9fe1-0800200c9a66</id>
+	<entry>
+		<title>simple-ruby-application #2 (SUCCESS)</title>
+		<link type="text/html" rel="alternate" href="http://192.168.0.51:8080/job/simple-ruby-application/2/"></link>
+		<id>tag:hudson.dev.java.net,2009:simple-ruby-application:2009-07-19_20-35-15</id>
+		<published>2009-07-19T11:35:15Z</published>
+		<updated>2009-07-19T11:35:15Z</updated>
+	</entry>
+	<entry>
+		<title>simple-ruby-application #1 (FAILURE)</title>
+		<link type="text/html" rel="alternate" href="http://192.168.0.51:8080/job/simple-ruby-application/1/"></link>
+		<id>tag:hudson.dev.java.net,2009:simple-ruby-application:2009-07-19_19-35-15</id>
+		<published>2009-07-19T10:35:15Z</published>
+		<updated>2009-07-19T10:35:15Z</updated>
+	</entry>
+</feed>

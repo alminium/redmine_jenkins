@@ -1,0 +1,45 @@
+#$Id$
+
+noauth_onejob_nohealthreport:
+  id: 1
+  project_id: 1
+  hudson_id: 1
+  name: simple-ruby-application
+  latest_build_number:
+  created_at: 2009-06-28 22:06:08
+  updated_at: 2009-06-28 22:06:08
+  description: ---
+  state: ---
+
+hasauth_threejob_twohealthreport_one:
+  id: 2
+  project_id: 2
+  hudson_id: 2
+  name: Have White Space
+  latest_build_number:
+  created_at: 2009-06-28 23:06:08
+  updated_at: 2009-06-28 23:06:08
+  description: ---
+  state: ---
+
+hasauth_threejob_twohealthreport_two:
+  id: 3
+  project_id: 2
+  hudson_id: 2
+  name: maven-application
+  latest_build_number: 5
+  created_at: 2009-06-28 23:06:08
+  updated_at: 2009-06-28 23:06:08
+  description: ---
+  state: ---
+
+hasauth_threejob_twohealthreport_three:
+  id: 4
+  project_id: 2
+  hudson_id: 2
+  name: Disabled
+  latest_build_number:
+  created_at: 2009-06-28 23:06:08
+  updated_at: 2009-06-28 23:06:08
+  description: ---
+  state: ---

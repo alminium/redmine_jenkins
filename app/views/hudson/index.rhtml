@@ -17,20 +17,15 @@
 <% if @hudson.jobs.length == 0 %>
   <div class="nodata"><%=l(:notice_no_jobs)%></div>
 <% else %>
-  <div class="flash notice" id="info" style="display:none;">build accepted</div>
-  <div class="flash error" id="error" style="display:none;">build failure</div>
+  <div class="flash notice" id="info" style="display:none;"></div>
+  <div class="flash error" id="error" style="display:none;"></div>
   <div id="remote-debug" style="display:none;"></div>
 
   <% @hudson.jobs.each do |job|%>
     <div class="contextual<%='-icon24' if @hudson.settings.look_and_feel == 'Hudson'%>">
-    <% build_icon = image_tag("#{@hudson.settings.url}images/24x24/clock.gif", :alt => 'build', :title => l(:label_build_now)) if @hudson.settings.look_and_feel == 'Hudson' %>
+    <% build_icon = image_tag("#{@hudson.settings.url}images/24x24/clock.gif", :alt => 'build', :class=>'icon-build-request', :id=>"build-request-#{job.name}", :title => l(:label_build_now)) if @hudson.settings.look_and_feel == 'Hudson' %>
     <% build_icon = "[#{l(:label_build_now)}]" if @hudson.settings.look_and_feel == 'Plugin' %>
-    <%= link_to_remote_if_authorized build_icon,
-          :url => {:action => 'build', :id => @project, :name => job.name},
-          :update => {:success => 'remote-debug', :failure => 'remote-debug'},
-          :success => "if(request.responseText.indexOf('build_accepted') > 0 ){Element.show('info');Element.hide('error');}else{Element.show('error');Element.hide('info');}",
-          :failure => "Element.show('error');Element.hide('info');"
-    %>
+    <%= build_icon if authorize_for( "hudson", "build" ) %>
     </div>
 
     <div class="contextual latest-build" id='latest-build-<%=job.name%>'>
@@ -39,9 +34,9 @@
         <% if "" != job.latest_build.number %>
           <%=image_tag 'document.png', :class=>'icon-build-history', :id=>"build-history-#{job.name}", :title=>l(:label_show_build_history)%>
           <%=link_to "##{job.latest_build.number}", job.latest_build.url%>
-          <%=content_tag("span", job.latest_build.result, :class => "result #{job.latest_build.result.downcase}") if true != job.latest_build.building && "" != job.latest_build.result%>
-          <%=content_tag("span", l(:notice_building), :class => "result") if true == job.latest_build.building %>
-          <%=content_tag("span", job.latest_build.finished_at.localtime.strftime("%Y/%m/%d %H:%M:%S")) %>
+          <%=content_tag("span", job.latest_build.result, :class => "result #{job.latest_build.result.downcase}") if true != job.latest_build.building? && "" != job.latest_build.result%>
+          <%=content_tag("span", l(:notice_building), :class => "result") if job.latest_build.building? %>
+          <%=content_tag("span", job.latest_build.finished_at.localtime.strftime("%Y/%m/%d %H:%M:%S")) if job.latest_build.finished_at %>
         <% end %>
         <%=l(:notice_no_builds) if "" == job.latest_build.number%>
       <% end %>
@@ -68,6 +63,7 @@
 
   <div id="build-history" style="display:none;"></div>
   <%= javascript_tag "new BuildHistory('#{url_for(:controller => 'hudson', :action => 'history', :id=>@project)}')" %>
+  <%= javascript_tag "new BuildRequest('#{url_for(:controller => 'hudson', :action => 'build', :id=>@project)}', 'build accepted - ${job_name}', 'build failure - ${job_name}')" if authorize_for( "hudson", "build" ) %>
 <% end %>
 
 <% content_for :sidebar do %>
@@ -79,4 +75,5 @@
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag "hudson.css", :plugin => "redmine_hudson", :media => "screen" %>
   <%= javascript_include_tag 'build_history', :plugin => "redmine_hudson" %>
+  <%= javascript_include_tag 'build_request', :plugin => "redmine_hudson" %>
 <% end %>

@@ -1,0 +1,44 @@
+# $Id$
+noauth_onejob_nohealthreport:
+  id: 1
+  project_id: 1
+  url: http://noauth.onejob.nohealthreport.local:9090/
+  job_filter: simple-ruby-application
+  show_compact: false
+  auth_user:
+  auth_password: 
+  get_build_details: true
+  look_and_feel: hudson
+
+hasauth_threejob_twohealthreport:
+  id: 2
+  project_id: 2
+  url: http://hasauth.twojob.twohealthreport.local:9090/
+  job_filter: Have White Space,maven-application,Disabled
+  show_compact: false
+  auth_user: admin
+  auth_password: adminpass
+  get_build_details: true
+  look_and_feel: hudson
+
+noauth_nojob_nohealthreport:
+  id: 3
+  project_id: 3
+  url: http://noauth.nojob.nohealthreport.local:9090/
+  job_filter:
+  show_compact: false
+  auth_user:
+  auth_password:
+  get_build_details: true
+  look_and_feel: hudson
+
+noauth_onenewjob_twohealthreport:
+  id: 4
+  project_id: 4
+  url: http://noauth.onenewjob.twohealthreport.local:9090/
+  job_filter: New Job
+  show_compact: false
+  auth_user:
+  auth_password:
+  get_build_details: true
+  look_and_feel: hudson

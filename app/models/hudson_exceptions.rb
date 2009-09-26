@@ -10,9 +10,7 @@ end
 class HudsonNoSettingsException < Exception
 end
 
-require 'active_record'
-
-class HudsonHttpException < Exception
+class HudsonApiException < Exception
   attr_reader :message, :code
 
   include ApplicationHelper
@@ -26,6 +24,8 @@ class HudsonHttpException < Exception
     when Net::HTTPResponse
       @code = object.code
       @message = l(:notice_err_http_error, object.code)
+    when SocketError
+      @message = l(:notice_err_cant_connect, object.message)
     when Errno::ECONNREFUSED
       @message = l(:notice_err_cant_connect)
     when Errno::ETIMEDOUT

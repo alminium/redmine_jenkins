@@ -14,11 +14,6 @@ class HudsonSettings < ActiveRecord::Base
 
   DELIMITER = ','
 
-  def is_new?
-    return true if self.project_id == nil
-    return false
-  end
-
   def use_authentication?
     return false unless self.auth_user
     return false unless self.auth_user.length > 0
