@@ -25,7 +25,7 @@ class HudsonController < ApplicationController
   def index
     raise HudsonNoSettingsException if @hudson.settings.new_record?
 
-    @hudson.fetch
+    @hudson.fetch if Hudson.autofetch?
 
   rescue HudsonNoSettingsException
     flash.now[:error] = l(:notice_err_no_settings, url_for(:controller => 'hudson_settings', :action => 'edit', :id => @project))

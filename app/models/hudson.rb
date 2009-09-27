@@ -139,3 +139,9 @@ def Hudson.fetch
     end
   end
 end
+
+def Hudson.autofetch?
+  return false unless Setting.plugin_redmine_hudson['autofetch']
+  return false if Setting.plugin_redmine_hudson['autofetch'] == ""
+  return true
+end

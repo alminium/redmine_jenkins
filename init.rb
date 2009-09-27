@@ -21,6 +21,11 @@ Redmine::Plugin.register :redmine_hudson do
 
   activity_provider :hudson, :class_name => 'HudsonBuild', :default => false
 
+  settings(:default => {
+             'autofetch' => "on"
+            },
+           :partial => 'hudson_settings/redmine_hudson_settings')
+
   Redmine::WikiFormatting::Macros.register do
     desc "This is my macro link to hudson"
     macro :build do |obj, args|

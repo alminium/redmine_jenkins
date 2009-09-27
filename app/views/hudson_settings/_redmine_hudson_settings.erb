@@ -1,0 +1,6 @@
+<%# $Id$ %>
+<p>
+  <%= content_tag(:label, l(:label_autofetch)) %>
+  <%= check_box_tag 'settings[autofetch]', true, @settings['autofetch'] %><br>
+  <%=l(:notice_autofetch)%>
+</p>

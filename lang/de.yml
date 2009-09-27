@@ -24,6 +24,8 @@ label_look_and_feel_plugin: Plugin original
 label_health_report: Health Report
 label_add_health_report: Add HealthReport Setting
 label_health_report_settings: Health Report Settings
+label_autofetch: AutoFetch
+
 button_delete_history: Delete History
 
 notice_no_jobs: Keine Jobs vorhanden
@@ -34,6 +36,7 @@ notice_hudson_url: 'mit http://, https:// ...'
 notice_get_build_details: Take the checkmark off, if take a lot of time.
 notice_health_report: Provide a link to Hudson, if plugin find keyword in Health Report.
 notice_health_report_setting: 'If plugin find keyword - ${keyword} in HealthReport, Provide a link to Hudson - ${url_format}'
+notice_autofetch: Fetch information from Hudson during action 'index'. <br> You can call rake-task "redmine_hudson:fetch" by an external script.
 
 notice_err_cant_connect: "Es kann keine Verbindung zu Hudson aufgebaut werden."
 notice_err_response_invalid: 'Antwort nicht valide [%1s]'
