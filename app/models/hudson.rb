@@ -145,3 +145,9 @@ def Hudson.autofetch?
   return false if Setting.plugin_redmine_hudson['autofetch'] == ""
   return true
 end
+
+def Hudson.job_description_format
+  return "hudson" unless Setting.plugin_redmine_hudson['job_description_format']
+  return "hudson" if Setting.plugin_redmine_hudson['job_description_format'] == ""
+  return Setting.plugin_redmine_hudson['job_description_format']
+end

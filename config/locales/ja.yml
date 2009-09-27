@@ -25,6 +25,7 @@ ja:
   label_add_health_report: ヘルスレポートの設定を追加
   label_health_report_settings: ヘルスレポートの設定
   label_autofetch: AutoFetch
+  label_job_description_format: ジョブの説明に使う書式
 
   button_delete_history: 履歴を削除
 

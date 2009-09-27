@@ -22,7 +22,8 @@ Redmine::Plugin.register :redmine_hudson do
   activity_provider :hudson, :class_name => 'HudsonBuild', :default => false
 
   settings(:default => {
-             'autofetch' => "on"
+             'autofetch' => "true",
+             'job_description_format' => "hudson"
             },
            :partial => 'hudson_settings/redmine_hudson_settings')
 

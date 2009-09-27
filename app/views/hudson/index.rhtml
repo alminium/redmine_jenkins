@@ -48,7 +48,8 @@
     <h3 class="<%=icon_base_class%> icon-<%=job.state%>"><%=link_to job.name, job.url%></h3>
     <% if @hudson.settings[:show_compact] != true %>
       <div class="wiki">
-        <%= textilizable job.description -%>
+        <%= textilizable job.description if Hudson.job_description_format == "textile"%>
+        <%= job.description unless Hudson.job_description_format == "textile" %>
       </div>
 
       <ul>
