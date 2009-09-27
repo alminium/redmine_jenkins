@@ -8,6 +8,17 @@ class HudsonTest < Test::Unit::TestCase
   fixtures :projects, :repositories, :hudson_settings, :hudson_settings_health_reports, :hudson_jobs, :hudson_builds
   set_fixture_class :hudson_settings => HudsonSettings
 
+  def test_project_should_be_eCookbook
+    
+    data_settings = hudson_settings(:noauth_onejob_nohealthreport)
+    hudson = Hudson.find(data_settings.project_id)
+
+    data_project = projects(:projects_001)
+
+    assert_equal data_project.name, hudson.project.name
+    
+  end
+
   def test_get_job_should_hudson_no_job
     
     data_settings = hudson_settings(:noauth_onejob_nohealthreport)

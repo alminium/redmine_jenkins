@@ -10,10 +10,11 @@ class Hudson
   include RexmlHelper
 
   attr_accessor :project_id, :settings, :jobs
-  attr_reader :hudson_api_errors
+  attr_reader :project, :hudson_api_errors
 
   def initialize(project_id)
     @project_id = project_id
+    @project = Project.find(project_id)
     @settings = HudsonSettings.find_by_project_id(@project_id)
     find_jobs
     clear_hudson_api_errors
@@ -129,5 +130,12 @@ def Hudson.find_by_project_id(project_id)
 end
 
 def Hudson.fetch
-  find(:all).each(&:fetch)
+  hudsons = find(:all)
+  hudsons.each do |hudson|
+    hudson.fetch
+    next if hudson.hudson_api_errors.empty?
+    hudson.hudson_api_errors.each do |error|
+      $stderr.print "redmine_hudson: #{hudson.project.name}(#{hudson.settings.url}) #{error.class_name}:#{error.method_name} #{error.exception.message}\n"
+    end
+  end
 end
