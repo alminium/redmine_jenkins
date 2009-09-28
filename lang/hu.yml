@@ -1,10 +1,10 @@
 # $Id$
+# Hungarian strings go here
 label_hudson: Hudson
 label_hudson_plural: Hudson
 label_build: Fordítás
 label_latest_build: Utolsó fordítás
 label_job_list: Feladatlista
-label_health_report: 
 label_settings: Beállítások
 label_url: URL
 label_jobs: Feladatok
@@ -20,11 +20,13 @@ label_get_build_details: Get Build Details (changesets and test-results)
 label_look_and_feel: Look and Feel (only icons)
 label_look_and_feel_hudson: Hudson
 label_look_and_feel_plugin: Plugin original
-label_health_report: Health Report
 label_add_health_report: Add HealthReport Setting
+label_health_report: Health Report
 label_health_report_settings: Health Report Settings
 label_autofetch: AutoFetch
 label_job_description_format: Format for Hudson-Job Description
+label_show_description: Show Description
+label_hide_description: Hide Description
 
 button_delete_history: Delete History
 

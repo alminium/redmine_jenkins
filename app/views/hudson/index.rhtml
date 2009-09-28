@@ -12,6 +12,9 @@
 <%= render :partial => 'icon_style_plugin' if @hudson.settings.look_and_feel == 'Plugin' %>
 -->
 </style>
+<div class="contextual">
+  <span class="icon icon-switch-description-visibility" id="switch-description-visibility"></span>
+</div>
 <h2><%=l(:label_job_list)%></h2>
 
 <% if @hudson.jobs.length == 0 %>
@@ -46,25 +49,24 @@
     <% icon_base_class = "icon24" if @hudson.settings.look_and_feel == 'Hudson' %>
     <% icon_base_class = "icon" if @hudson.settings.look_and_feel == 'Plugin' %>
     <h3 class="<%=icon_base_class%> icon-<%=job.state%>"><%=link_to job.name, job.url%></h3>
-    <% if @hudson.settings[:show_compact] != true %>
-      <div class="wiki">
+      <div class="wiki job-description">
         <%= textilizable job.description if Hudson.job_description_format == "textile"%>
         <%= job.description unless Hudson.job_description_format == "textile" %>
       </div>
 
-      <ul>
+      <ul class="job-health-reports">
         <% job.health_reports.each do |report| %>
           <%="<li>#{link_to(report.description, report.url)} #{report.score}%" if report.url != ""%>
           <%="<li>#{report.description} #{report.score}%" if report.url == ""%>
         <% end %>
       </ul>
-    <% end %>
     </div>
   <% end %>
 
   <div id="build-history" style="display:none;"></div>
   <%= javascript_tag "new BuildHistory('#{url_for(:controller => 'hudson', :action => 'history', :id=>@project)}')" %>
   <%= javascript_tag "new BuildRequest('#{url_for(:controller => 'hudson', :action => 'build', :id=>@project)}', 'build accepted - ${job_name}', 'build failure - ${job_name}')" if authorize_for( "hudson", "build" ) %>
+  <%= javascript_tag "new DescriptionVisibilityController(#{!@hudson.settings[:show_compact]}, '#{l(:label_show_description)}', '#{l(:label_hide_description)}')"%>
 <% end %>
 
 <% content_for :sidebar do %>
@@ -77,4 +79,5 @@
   <%= stylesheet_link_tag "hudson.css", :plugin => "redmine_hudson", :media => "screen" %>
   <%= javascript_include_tag 'build_history', :plugin => "redmine_hudson" %>
   <%= javascript_include_tag 'build_request', :plugin => "redmine_hudson" %>
+  <%= javascript_include_tag 'description_visibility_controller', :plugin => "redmine_hudson" %>
 <% end %>

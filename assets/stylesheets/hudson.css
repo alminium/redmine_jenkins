@@ -9,6 +9,7 @@ vertical-align: middle;
 }
 .icon-build-request { cursor:pointer;}
 .icon-build-history { cursor:pointer;}
+.icon-switch-description-visibility { cursor:pointer;}
 
 .result.failure {color:red;}
 .result.success {color:blue;}

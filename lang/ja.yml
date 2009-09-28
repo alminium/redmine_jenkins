@@ -20,11 +20,13 @@ label_get_build_details: ビルドの詳細（変更とテスト結果）を取�
 label_look_and_feel: 見た目 (アイコンが変わります)
 label_look_and_feel_hudson: Hudson
 label_look_and_feel_plugin: プラグイン風
-label_health_report: ヘルスレポート
 label_add_health_report: ヘルスレポートの設定を追加
+label_health_report: ヘルスレポート
 label_health_report_settings: ヘルスレポートの設定
 label_autofetch: AutoFetch
 label_job_description_format: ジョブの説明に使う書式
+label_show_description: 詳細を表示する
+label_hide_description: 詳細を隠す
 
 button_delete_history: 履歴を削除
 

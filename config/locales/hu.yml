@@ -26,6 +26,8 @@ hu:
   label_health_report_settings: Health Report Settings
   label_autofetch: AutoFetch
   label_job_description_format: Format for Hudson-Job Description
+  label_show_description: Show Description
+  label_hide_description: Hide Description
 
   button_delete_history: Delete History
 
