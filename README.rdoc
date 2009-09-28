@@ -1,5 +1,5 @@
 # $Id$
-= Hudson Plugin 0.1.6
+= Hudson Plugin 1.0.0
 
 This is a plugin collaborates with Hudson for Redmine.
 
@@ -19,6 +19,7 @@ More detail {Meet Hudson}[http://wiki.hudson-ci.org/display/HUDSON/Meet+Hudson]
 Show job details.
 
 * Name, Description, Latest Build ( Build number, Result, Date ) and health report.
+* You can change description visibility dynamically.
 * Provide a link to Hudson, if plugin found keyword in Health Report.
 * Bulid number linked to build result page.
 * Click clock-icon, request hudson to build.
@@ -39,7 +40,13 @@ Click note icon, show build history.
 
 * job-name, build-number, result and built date and time. when Hudson builds revisions associated issues.
 
-=== Settings
+=== rake task 'redmine_hudson:fetch'
+
+You can get build results using rake task 'redmine_hudson:fetch'.
+If you use rake task, please uncheck 'AutoFetch' setting.
+You can change 'AutoFetch' setting on settings/plugin/redmine_hudson.
+
+=== Settings for each projects
 
 * Hudson url (can use https)
 * auth user, password ( 0.1.1 higher )
@@ -48,25 +55,42 @@ Click note icon, show build history.
 * compact mode ( show only job name and latest build)
 * keyword and url for health report
 
+=== Settings for plugins (all projects)
+
+Go  Administration -> Plugins -> 'Redmine Hudson Plugin' Configure.
+
+* You can choose format to write job description. HTML or Textile.
+* AutoFetch Mode. Plugin fetches information from Hudson during action 'index'.
+
+
 == Note
 
 === Recommend Hudson 1.313
+
 If you use old version of Hudson, plugin may not get test results and changesets.
 Plugin store build information, if plugin can't get test results or changesets.
 But, If plugin fail, never get test results, changesets again.
 
-=== Plugin get build information when you access plugin (Hudson tab)
+=== Using IE8
+
+Please use Compatibility View in IE8.
+
+=== Exclusive Control
+
 Plugin has no exclusive control, so plugin doesn't work when redmine works on multi-process.
 I'll try next version.
 
 === Plugin can get recent build infomation, more than a dozen.
+
 If Hudson has many build infomations, Plugin can't get all. sorry.
 
 === Something is wrong with plugin, you should try to delete data from database.
+
 Use 'delete history' button in setting page.
 
 == Changelog
 
+[1.0.0] You can get build results using rake task 'redmine_hudson:fetch', and choose format to write job description. HTML or Textile. You can also change description visibility dynamically.
 [0.1.6] Health report settings comes in useful.
 [0.1.5] Show build result on issue. Use Hudson icons.
 [0.1.4] Show build history on activity. Save infomation on database.
@@ -79,6 +103,7 @@ Use 'delete history' button in setting page.
 
 [de.yml] Jens Goldhammer, Florian Bartels
 [hu.yml] Péter Major
+[es.yml] juancayetano.delgado
 
 == Contact info
 
