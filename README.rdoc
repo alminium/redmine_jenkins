@@ -80,12 +80,9 @@ Please use Compatibility View in IE8.
 Plugin has no exclusive control, so plugin doesn't work when redmine works on multi-process.
 I'll try next version.
 
-=== Plugin can get recent build infomation, more than a dozen.
+=== Something is wrong with plugin
 
-If Hudson has many build infomations, Plugin can't get all. sorry.
-
-=== Something is wrong with plugin, you should try to delete data from database.
-
+you should try to delete data from database.
 Use 'delete history' button in setting page.
 
 == Changelog
