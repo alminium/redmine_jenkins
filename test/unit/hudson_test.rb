@@ -77,6 +77,28 @@ class HudsonTest < Test::Unit::TestCase
 
   end
 
+  def test_hudson_api_errors_should_has_error
+
+    @response_jobs = Net::HTTPServiceUnavailable.new(Net::HTTP.version_1_2, "503", "NG")
+    @response_jobs.stubs(:content_type).returns("text/html")
+    @response_jobs.stubs(:body).returns("503 error")
+
+    Net::HTTP.any_instance.stubs(:request).returns(@response_jobs)
+
+    data_settings = hudson_settings(:noauth_onejob_nohealthreport)
+    hudson = Hudson.find(data_settings.project_id)
+
+    hudson.fetch
+
+    assert_equal 1, hudson.hudson_api_errors.length
+    error = hudson.hudson_api_errors[0]
+    assert error.is_a?(HudsonApiError)
+    assert_equal "Hudson", error.class_name
+    assert_equal "fetch", error.method_name
+    assert error.exception.is_a?(HudsonApiException)
+
+  end
+
   def test_fetch_hudson_1
 
     @response_jobs = Net::HTTPSuccess.new(Net::HTTP.version_1_2, '200', 'OK')
