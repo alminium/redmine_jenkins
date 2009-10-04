@@ -37,6 +37,14 @@ class HudsonSettings < ActiveRecord::Base
   end
 end
 
+def HudsonSettings.add_last_slash_to_url(url)
+  retval = url
+  if retval
+    retval += "/" unless retval.index(/\/$/)
+  end
+  return retval
+end
+
 def HudsonSettings.find_by_project_id(project_id)
   retval = HudsonSettings.find(:first,  :conditions => "project_id = #{project_id}")
   retval = HudsonSettings.new() if retval == nil

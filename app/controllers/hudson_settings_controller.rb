@@ -20,7 +20,7 @@ class HudsonSettingsController < ApplicationController
   def edit
     if (params[:settings] != nil)
       @hudson.settings.project_id = @project.id
-      @hudson.settings.url = params[:settings].fetch(:url)
+      @hudson.settings.url = HudsonSettings.add_last_slash_to_url(params[:settings].fetch(:url))
       @hudson.settings.job_filter = HudsonSettings.to_value(params[:settings].fetch(:jobs))
       @hudson.settings.auth_user = params[:settings].fetch(:auth_user)
       @hudson.settings.auth_password = params[:settings].fetch(:auth_password)
@@ -28,9 +28,6 @@ class HudsonSettingsController < ApplicationController
       @hudson.settings.show_compact = check_box_to_boolean(params[:settings][:show_compact])
       @hudson.settings.look_and_feel = params[:settings].fetch(:look_and_feel)
 
-      if @hudson.settings.url
-        @hudson.settings.url += "/" unless @hudson.settings.url.index(/\/$/)
-      end
 
       if (params[:health_report_settings] != nil)
         params[:health_report_settings].each do |id, hrs|
@@ -72,7 +69,7 @@ class HudsonSettingsController < ApplicationController
   def joblist
     begin
       # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない
-      find_hudson_jobs(params[:url])
+      find_hudson_jobs(HudsonSettings.add_last_slash_to_url(params[:url]))
     rescue HudsonApiException => error
       @error = error.message
     end

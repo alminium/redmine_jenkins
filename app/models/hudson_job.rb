@@ -159,6 +159,8 @@ private
     api_url << "&exclude=//lastFailedBuild"
     api_url << "&exclude=//lastStableBuild"
     api_url << "&exclude=//lastSuccessfulBuild"
+    api_url << "&exclude=//downstreamProject"
+    api_url << "&exclude=//upstreamProject"
     content = ""
     begin
       content = open_hudson_api(api_url, self.settings.auth_user, self.settings.auth_password)
