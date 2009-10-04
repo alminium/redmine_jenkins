@@ -78,7 +78,7 @@ Please use Compatibility View in IE8.
 === Exclusive Control
 
 Plugin has no exclusive control, so plugin doesn't work when redmine works on multi-process.
-I'll try next version.
+Hopefully i fix it.
 
 === Something is wrong with plugin
 
