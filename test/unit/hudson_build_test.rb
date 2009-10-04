@@ -34,7 +34,7 @@ class HudsonBuildTest < Test::Unit::TestCase
     changeset.commit_date = "2007-04-12"
     changeset.committed_on = "2007-04-12 15:14:44 +02:00"
     changeset.revision = "110"
-    changeset.comments = "This commit fixes #1, #2 and references #1 & #3"
+    changeset.comments = ""
     changeset.repository_id = 40
     changeset.committer = "Smith"
     changeset.user_id = 2
