@@ -1,0 +1,8 @@
+#$Id$
+noauth_onenewjob_twohealthreport_one_No1:
+  id: 1
+  hudson_build_id: 2
+  repository_id: 40
+  revision: 110
+  error: ""
+  

@@ -108,6 +108,15 @@ def HudsonBuild.exists?(job_id, number)
 
 end
 
+def HudsonBuild.find_by_changeset(changeset)
+  return HudsonNoBuild.new() unless changeset
+  retval = HudsonBuild.find(:all,
+                            :order=>"#{HudsonBuild.table_name}.number",
+                            :conditions=> ["#{HudsonBuildChangeset.table_name}.repository_id = ? and #{HudsonBuildChangeset.table_name}.revision = ?", changeset.repository.id, changeset.revision],
+                            :joins=> "INNER JOIN #{HudsonBuildChangeset.table_name} ON #{HudsonBuildChangeset.table_name}.hudson_build_id = #{HudsonBuild.table_name}.id")
+  return retval
+end
+
 class HudsonNoBuild
   attr_reader :hudson_job_id, :number, :error, :building, :url, :result
 

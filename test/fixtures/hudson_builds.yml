@@ -8,3 +8,14 @@ noauth_onejob_nohealthreport_No1:
   building: t
   error:
   caused_by: 1
+
+noauth_onenewjob_twohealthreport_one_No1:
+  id: 2
+  hudson_job_id: 5
+  number: 1
+  result: "SUCCESS"
+  finished_at:
+  building: f
+  error:
+  caused_by: 1
+  

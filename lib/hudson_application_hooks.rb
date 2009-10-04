@@ -42,9 +42,7 @@ class HudsonApplicationHooks < Redmine::Hook::ViewListener
     o << "<script type='text/javascript'>" + "\n"
     o << "builds = $H();" + "\n"
     issue.changesets.each {|changeset|
-      builds = HudsonBuild.find(:all, :order=>"#{HudsonBuild.table_name}.number",
-                                :conditions=> ["#{HudsonBuildChangeset.table_name}.repository_id = ? and #{HudsonBuildChangeset.table_name}.revision = ?", issue.project.repository.id, changeset.revision],
-                                :include=>:changesets)
+      builds = HudsonBuild.find_by_changeset(changeset)
       next if builds.length == 0
 	    o << "results = new RevisionBuildResults('#{changeset.revision}');" + "\n"
       builds.each{|build|
