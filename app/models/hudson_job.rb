@@ -106,9 +106,15 @@ class HudsonJob < ActiveRecord::Base
 
   def fetch_builds
     clear_hudson_api_errors
+    
     return unless do_fetch?
-    fetch_summary
+
+    fetch_summary unless self.settings.get_build_details
     fetch_detail if self.settings.get_build_details
+
+    latest_build = get_build(self.latest_build_number)
+    add_latest_build if latest_build.is_a? HudsonNoBuild
+
   rescue HudsonApiException => error
     @hudson_api_errors << HudsonApiError.new(self.class.name, "fetch_builds", error)
   end
@@ -132,17 +138,20 @@ private
 
     doc = REXML::Document.new content
     doc.elements.each("//entry") do |entry|
-      buildinfo = parse_rss_build(entry)
+      buildinfo = HudsonBuild.parse_rss(entry)
+
+      next unless HudsonBuild.to_be_updated?(self.id, buildinfo[:number])
+
       build = get_build(buildinfo[:number])
-      next if build.is_a? HudsonBuild and false == build.building?
-      build = update_build(build, buildinfo) if build.is_a? HudsonBuild and build.building?
-      build = new_build(buildinfo) if build.is_a? HudsonNoBuild
+
+      if build.is_a?(HudsonNoBuild)
+        build = new_build
+      end
+
+      build.update_by_rss(entry)
       build.save
+
     end
-
-    latest_build = get_build(self.latest_build_number)
-
-    add_latest_build if latest_build.is_a? HudsonNoBuild
   end
 
   def fetch_detail
@@ -176,14 +185,17 @@ private
 
     doc.elements.each("//build") do |buildelem|
       build_number = get_element_value(buildelem, "number")
+
+      next unless HudsonBuild.to_be_updated?(self.id, build_number)
+
       build = get_build(build_number)
-      next unless build
 
       if build.is_a?(HudsonNoBuild)
-        buildinfo = parse_xml_build(buildelem)
-        build = new_build(buildinfo)
-        build.save
+        build = new_build
       end
+      
+      build.update_by_api(buildelem)
+      build.save
 
       # チェンジセットを取得する
       build.add_changesets_from_xml buildelem if self.project.repository != nil
@@ -203,36 +215,20 @@ private
     return false
   end
 
-  def new_build(buildinfo)
-    retval = HudsonBuild.new()
-    retval.hudson_job_id = self.id
-    retval.number = buildinfo[:number]
-    retval.result = buildinfo[:result]
-    retval.finished_at = buildinfo[:published]
-    retval.building = buildinfo[:building]
-    retval.caused_by = 1 # デフォルトのAdminを想定している
-    retval.error = ""
-    return retval
-  end
-
-  def update_build(build, buildinfo)
-    build.result = buildinfo[:result]
-    build.finished_at = buildinfo[:published]
-    build.building = buildinfo[:building]
-    build.caused_by = 1 # デフォルトのAdminを想定している
-    build.error = ""
-    return build
-  end
-
   def add_latest_build
-    buildinfo = {}
-    buildinfo[:number] = self.latest_build_number
-    buildinfo[:result] = ""
-    buildinfo[:published] = ""
-    buildinfo[:building] = true
-
-    build = new_build(buildinfo)
+    build = new_build
+    build.number = self.latest_build_number
+    build.result = ""
+    build.finished_at = ""
+    build.building = "true"
     build.save
+  end
+
+  def new_build
+    retval = HudsonBuild.new()
+    retval.job = self
+    retval.hudson_job_id = self.id
+    return retval
   end
 
 end

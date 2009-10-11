@@ -1,3 +1,5 @@
+# $Id$
+
 require File.dirname(__FILE__) + '/../test_helper'
 
 class HudsonSettingsHealthReportTest < Test::Unit::TestCase

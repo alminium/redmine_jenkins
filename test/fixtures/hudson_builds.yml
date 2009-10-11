@@ -5,7 +5,7 @@ noauth_onejob_nohealthreport_No1:
   number: 1
   result: ""
   finished_at:
-  building: t
+  building: "true"
   error:
   caused_by: 1
 
@@ -15,7 +15,7 @@ noauth_onenewjob_twohealthreport_one_No1:
   number: 1
   result: "SUCCESS"
   finished_at:
-  building: f
+  building: "false"
   error:
   caused_by: 1
   

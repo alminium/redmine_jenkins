@@ -46,28 +46,6 @@ module HudsonHelper
     end
   end
 
-  def parse_rss_build(entry)
-    params = get_element_value(entry, "title").scan(/(.*)#(.*)\s\((.*)\)/)[0]
-    retval = {}
-    retval[:name] = params[0].strip
-    retval[:number] = params[1]
-    retval[:result] = params[2]
-    retval[:url] = "#{entry.elements['link'].attributes['href']}"
-    retval[:published] = Time.xmlschema(get_element_value(entry, "published")).localtime
-    retval[:building] = "f"
-    return retval
-  end
-
-  def parse_xml_build(elem)
-    retval = {}
-    retval[:name] = get_element_value(elem, "name")
-    retval[:number] = get_element_value(elem, "number")
-    retval[:result] = get_element_value(elem, "result")
-    retval[:url] = get_element_value(elem, "url")
-    retval[:published] = Time.at(get_element_value(elem, "timestamp").to_f / 1000)
-    retval[:building] = get_element_value(elem, "building")
-    return retval
-  end
 
   def parse_changeset(element)
     retval = {}

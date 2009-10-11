@@ -105,15 +105,11 @@ class HudsonTest < Test::Unit::TestCase
     @response_jobs.stubs(:content_type).returns("text/html")
     @response_jobs.stubs(:body).returns(get_response(:hudson_1_fetch_job))
 
-    @response_job_rss = Net::HTTPSuccess.new(Net::HTTP.version_1_2, '200', 'OK')
-    @response_job_rss.stubs(:content_type).returns("text/html")
-    @response_job_rss.stubs(:body).returns(get_response(:hudson_1_fetch_job_simple_ruby_application_rssAll))
-
     @response_job_build_detail = Net::HTTPSuccess.new(Net::HTTP.version_1_2, '200', 'OK')
     @response_job_build_detail.stubs(:content_type).returns("text/html")
     @response_job_build_detail.stubs(:body).returns(get_response(:hudson_1_fetch_job_simple_ruby_application_build_detail))
 
-    Net::HTTP.any_instance.stubs(:request).returns(@response_jobs, @response_job_rss, @response_job_build_detail)
+    Net::HTTP.any_instance.stubs(:request).returns(@response_jobs, @response_job_build_detail)
 
     data_settings = hudson_settings(:noauth_onejob_nohealthreport)
 

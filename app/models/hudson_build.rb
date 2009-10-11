@@ -1,5 +1,10 @@
 # $Id$
 
+require 'hudson_api_error'
+require 'hudson_exceptions'
+require 'rexml_helper'
+include RexmlHelper
+
 class HudsonBuild < ActiveRecord::Base
   unloadable
   has_many :changesets, :class_name => 'HudsonBuildChangeset', :dependent => :destroy
@@ -28,14 +33,10 @@ class HudsonBuild < ActiveRecord::Base
                              :find_options => {:include => {:job => :project}}
 
   include HudsonHelper
-  include RexmlHelper
-
-  def initialize
-    super
-  end
+  extend RexmlHelper
 
   def project
-    return "" unless job
+    return nil unless job
     return job.project
   end
 
@@ -49,8 +50,27 @@ class HudsonBuild < ActiveRecord::Base
   end
 
   def building?
-    return true if "t" == self.building
+    return true if "true" == self.building
     return false
+  end
+
+  def update_by_api(elem)
+    return unless elem
+    self.number = get_element_value(elem, "number")
+    self.result = get_element_value(elem, "result")
+    self.finished_at = Time.at(get_element_value(elem, "timestamp").to_f / 1000)
+    self.building = get_element_value(elem, "building")
+    self.caused_by = 1 # Redmine Admin
+    self.error = ""
+  end
+
+  def update_by_rss(elem)
+    info = HudsonBuild.parse_rss(elem)
+    self.number = info[:number] unless (self.number and self.number.length > 0)
+    return unless info[:number] == self.number
+    self.result = info[:result]
+    self.finished_at = info[:published]
+    self.building = info[:building]
   end
 
   def add_changesets_from_xml(element)
@@ -99,13 +119,29 @@ class HudsonBuild < ActiveRecord::Base
 
 end
 
-def HudsonBuild.exists?(job_id, number)
+def HudsonBuild.parse_rss(entry)
+  params = get_element_value(entry, "title").scan(/(.*)#(.*)\s\((.*)\)/)[0]
+  retval = {}
+  retval[:name] = params[0].strip
+  retval[:number] = params[1]
+  retval[:result] = params[2]
+  retval[:url] = "#{entry.elements['link'].attributes['href']}"
+  retval[:published] = Time.xmlschema(get_element_value(entry, "published")).localtime
+  retval[:building] = "false"
+  return retval
+end
+
+def HudsonBuild.exists_number?(job_id, number)
 
   return false unless job_id
   return false unless number
 
   return HudsonBuild.exists?(["#{HudsonBuild.table_name}.hudson_job_id = ? AND #{HudsonBuild.table_name}.number = ?", job_id, number])
 
+end
+
+def HudsonBuild.to_be_updated?(job_id, number)
+  return !HudsonBuild.exists?(["#{HudsonBuild.table_name}.hudson_job_id = ? AND #{HudsonBuild.table_name}.number = ? AND #{HudsonBuild.table_name}.building = 'false'", job_id, number])
 end
 
 def HudsonBuild.find_by_changeset(changeset)
