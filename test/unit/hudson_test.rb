@@ -1,5 +1,6 @@
 # $Id$
 require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/../../../../../app/models/setting'
 require 'uri'
 require 'net/http'
 require 'mocha'
@@ -10,7 +11,7 @@ class HudsonTest < Test::Unit::TestCase
 
   def test_project_should_be_eCookbook
     
-    data_settings = hudson_settings(:noauth_onejob_nohealthreport)
+    data_settings = hudson_settings(:one)
     hudson = Hudson.find(data_settings.project_id)
 
     data_project = projects(:projects_001)
@@ -21,7 +22,7 @@ class HudsonTest < Test::Unit::TestCase
 
   def test_get_job_should_hudson_no_job
     
-    data_settings = hudson_settings(:noauth_onejob_nohealthreport)
+    data_settings = hudson_settings(:one)
     hudson = Hudson.find(data_settings.project_id)
     
     job = hudson.get_job(nil)
@@ -32,7 +33,7 @@ class HudsonTest < Test::Unit::TestCase
 
   def test_hudson_api_errors_should_be_empty
 
-    data_settings = hudson_settings(:noauth_onejob_nohealthreport)
+    data_settings = hudson_settings(:one)
     hudson = Hudson.find(data_settings.project_id)
 
     assert_equal true, hudson.hudson_api_errors.empty?
@@ -41,7 +42,7 @@ class HudsonTest < Test::Unit::TestCase
 
   def test_hudson_api_errors_should_has_hudson_error
 
-    data_settings = hudson_settings(:noauth_onejob_nohealthreport)
+    data_settings = hudson_settings(:one)
     hudson = Hudson.find(data_settings.project_id)
 
     hudson.fetch
@@ -63,7 +64,7 @@ class HudsonTest < Test::Unit::TestCase
 
     Net::HTTP.any_instance.stubs(:request).returns(@response_jobs).then.raises(SocketError)
 
-    data_settings = hudson_settings(:noauth_onejob_nohealthreport)
+    data_settings = hudson_settings(:one)
     hudson = Hudson.find(data_settings.project_id)
 
     hudson.fetch
@@ -85,7 +86,7 @@ class HudsonTest < Test::Unit::TestCase
 
     Net::HTTP.any_instance.stubs(:request).returns(@response_jobs)
 
-    data_settings = hudson_settings(:noauth_onejob_nohealthreport)
+    data_settings = hudson_settings(:one)
     hudson = Hudson.find(data_settings.project_id)
 
     hudson.fetch
@@ -111,7 +112,7 @@ class HudsonTest < Test::Unit::TestCase
 
     Net::HTTP.any_instance.stubs(:request).returns(@response_jobs, @response_job_build_detail)
 
-    data_settings = hudson_settings(:noauth_onejob_nohealthreport)
+    data_settings = hudson_settings(:one)
 
     hudson = Hudson.find(data_settings.project_id)
     data_job = hudson_jobs(:noauth_onejob_nohealthreport)
@@ -174,24 +175,94 @@ class HudsonTest < Test::Unit::TestCase
 
   end
 
-  def test_find_all
+  def test_add_job
+
+    @response_jobs = Net::HTTPSuccess.new(Net::HTTP.version_1_2, '200', 'OK')
+    @response_jobs.stubs(:content_type).returns("text/html")
+    @response_jobs.stubs(:body).returns(get_response(:hudson_5_fetch_job))
+
+    Net::HTTP.any_instance.stubs(:request).returns(@response_jobs)
+
+    data_settings = hudson_settings(:five) # has no hudson-jobs records
+
+    hudson = Hudson.find(data_settings.project_id)
+
+    hudson.fetch
+
+    assert_equal 2, hudson.jobs.length
+
+    myjob = hudson.jobs.detect {|job| job.name == "One Job" }
+    assert myjob != nil
+
+    myjob = hudson.jobs.detect {|job| job.name == "Two Job" }
+    assert myjob != nil
+
+  end
+
+  def test_hudson_find_by_project_id
+
+    data_settings = hudson_settings(:five)
+
+    target = Hudson.find_by_project_id(data_settings.project_id)
+
+    assert_equal data_settings.project_id, target.settings.project_id
+    assert_equal data_settings.url, target.settings.url
+
+  end
+
+  def test_hudson_auto_fetch_should_return_false
+
+    Setting.plugin_redmine_hudson['autofetch'] = nil
+    assert_equal false, Hudson.autofetch?
+
+    Setting.plugin_redmine_hudson['autofetch'] = ""
+    assert_equal false, Hudson.autofetch?
+
+  end
+
+  def test_hudson_auto_fetch_should_return_true
+    Setting.plugin_redmine_hudson['autofetch'] = "t"
+    assert_equal true, Hudson.autofetch?
+  end
+
+  def test_hudson_job_description_format_should_return_hudson
+    Setting.plugin_redmine_hudson['job_description_format'] = nil
+    assert_equal "hudson", Hudson.job_description_format
+
+    Setting.plugin_redmine_hudson['job_description_format'] = ""
+    assert_equal "hudson", Hudson.job_description_format
+
+    Setting.plugin_redmine_hudson['job_description_format'] = "hudson"
+    assert_equal "hudson", Hudson.job_description_format
+  end
+
+  def test_hudson_job_description_format_should_return_any
+    Setting.plugin_redmine_hudson['job_description_format'] = "textile"
+    assert_equal "textile", Hudson.job_description_format
+  end
+
+  def test_hudson_find_all
     items = Hudson.find(:all)
 
-    assert_equal items.length, 4
+    assert_equal items.length, 5
     
-    data_settings = hudson_settings(:noauth_onejob_nohealthreport)
+    data_settings = hudson_settings(:one)
     detect_one = items.detect {|item| item.settings.url == data_settings.url}
     assert_equal data_settings.id, detect_one.settings.id
 
-    data_settings = hudson_settings(:hasauth_threejob_twohealthreport)
+    data_settings = hudson_settings(:two)
     detect_one = items.detect {|item| item.settings.url == data_settings.url}
     assert_equal data_settings.id, detect_one.settings.id
 
-    data_settings = hudson_settings(:noauth_nojob_nohealthreport)
+    data_settings = hudson_settings(:three)
     detect_one = items.detect {|item| item.settings.url == data_settings.url}
     assert_equal data_settings.id, detect_one.settings.id
 
-    data_settings = hudson_settings(:noauth_onenewjob_twohealthreport)
+    data_settings = hudson_settings(:four)
+    detect_one = items.detect {|item| item.settings.url == data_settings.url}
+    assert_equal data_settings.id, detect_one.settings.id
+
+    data_settings = hudson_settings(:five)
     detect_one = items.detect {|item| item.settings.url == data_settings.url}
     assert_equal data_settings.id, detect_one.settings.id
   end

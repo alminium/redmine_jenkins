@@ -1,5 +1,6 @@
 # $Id$
-noauth_onejob_nohealthreport:
+#noauth_onejob_nohealthreport
+one:
   id: 1
   project_id: 1
   url: http://noauth.onejob.nohealthreport.local:9090/
@@ -10,7 +11,8 @@ noauth_onejob_nohealthreport:
   get_build_details: true
   look_and_feel: hudson
 
-hasauth_threejob_twohealthreport:
+#hasauth_threejob_twohealthreport
+two:
   id: 2
   project_id: 2
   url: http://hasauth.twojob.twohealthreport.local:9090/
@@ -21,7 +23,8 @@ hasauth_threejob_twohealthreport:
   get_build_details: true
   look_and_feel: hudson
 
-noauth_nojob_nohealthreport:
+#noauth_nojob_nohealthreport:
+three:
   id: 3
   project_id: 3
   url: http://noauth.nojob.nohealthreport.local:9090/
@@ -32,7 +35,8 @@ noauth_nojob_nohealthreport:
   get_build_details: true
   look_and_feel: hudson
 
-noauth_onenewjob_twohealthreport:
+#noauth_onenewjob_twohealthreport:
+four:
   id: 4
   project_id: 4
   url: http://noauth.onenewjob.twohealthreport.local:9090/
@@ -41,4 +45,16 @@ noauth_onenewjob_twohealthreport:
   auth_user:
   auth_password:
   get_build_details: true
+  look_and_feel: hudson
+
+#noauth_onenewjob_nohealthreport - no hudson_jobs
+five:
+  id: 5
+  project_id: 5
+  url: http://noauth.onenewjob.nohealthreport.no-hudson-jobs.local:9090/
+  job_filter: One Job,Two Job
+  show_compact: false
+  auth_user:
+  auth_password:
+  get_build_details: false
   look_and_feel: hudson

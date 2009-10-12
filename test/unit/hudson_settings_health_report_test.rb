@@ -27,7 +27,7 @@ class HudsonSettingsHealthReportTest < Test::Unit::TestCase
     data_job = hudson_jobs(:hasauth_threejob_twohealthreport_one)
     job = HudsonJob.find(data_job.id)
 
-    settings = hudson_settings(:hasauth_threejob_twohealthreport)
+    settings = hudson_settings(:two)
 
     url = settings.url + "job/#{job.name}/lastBuild/"
     assert_equal url, target.get_url(job)

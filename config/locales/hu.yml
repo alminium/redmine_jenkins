@@ -41,13 +41,14 @@ hu:
   notice_health_report_setting: 'If plugin find keyword - ${keyword} in HealthReport, Provide a link to Hudson - ${url_format}'
   notice_autofetch: Fetch information from Hudson during action 'index'. <br> You can call rake-task "redmine_hudson:fetch" by an external script.
 
-  notice_err_cant_connect: "Nem tudok csatlakozni a Hudson-hoz"
+  notice_err_cant_connect: "Nem tudok csatlakozni a Hudson-hoz %1s"
   notice_err_response_invalid: 'Érvénytelen válasz %1s'
   notice_err_http_error: 'Http hiba %1s'
   notice_err_no_settings: "Ehhez a projekthez nincsenek megadva beállítások-. Kérlek <a href='%1s'>fogadd el a beállításokat</a>"
   notice_err_no_jobs: Nincsen feladat
   notice_err_invalid_url: Érvénytelen URL
   notice_err_no_job : 'feladatot nem találom [%1s]'
+  notice_err_unknown: 'hiba %1s'
 
   notice_err_build_failed: 'Sikertelen fordítás %1s'
   notice_err_build_failed_no_job: 'Sikertelen fordítás. Feladatot nem találtam [%1s]'

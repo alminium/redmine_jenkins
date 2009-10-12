@@ -8,7 +8,7 @@ class HudsonSettingsTest < Test::Unit::TestCase
 
   def test_url
     data = hudson_jobs(:noauth_onejob_nohealthreport)
-    settings = hudson_settings(:noauth_onejob_nohealthreport)
+    settings = hudson_settings(:one)
     target = HudsonJob.find(data.id)
     assert_equal "#{settings.url}job/#{data.name}", target.url
   end

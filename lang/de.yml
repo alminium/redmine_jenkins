@@ -40,13 +40,14 @@ notice_health_report: Provide a link to Hudson, if plugin find keyword in Health
 notice_health_report_setting: 'If plugin find keyword - ${keyword} in HealthReport, Provide a link to Hudson - ${url_format}'
 notice_autofetch: Fetch information from Hudson during action 'index'. <br> You can call rake-task "redmine_hudson:fetch" by an external script.
 
-notice_err_cant_connect: "Es kann keine Verbindung zu Hudson aufgebaut werden."
+notice_err_cant_connect: "Es kann keine Verbindung zu Hudson aufgebaut werden. %1s"
 notice_err_response_invalid: 'Antwort nicht valide [%1s]'
 notice_err_http_error: 'Http-Fehler [%1s]'
 notice_err_no_settings: "Keine Einstellungen für dieses Projekt. Bitte überprüfen Sie die <a href='%1s'>Einstellungen</a>."
 notice_err_no_jobs: In Hudson wurde kein Job konfiguriert.
 notice_err_invalid_url: Nicht valide URL
 notice_err_no_job : 'Der Job [%1s] wurde nicht gefunden.'
+notice_err_unknown: 'Unknown Fehler %1s'
 
 notice_err_build_failed: 'Build fehlgeschlagen [%1s].'
 notice_err_build_failed_no_job: 'Build fehlgeschlagen. Der Job [%1s] wurde nicht gefunden.'

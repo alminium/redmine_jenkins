@@ -159,7 +159,9 @@ class HudsonBuildTest < Test::Unit::TestCase
     rss << "<updated>2009-07-19T11:35:15Z</updated>"
     rss << "</entry>"
     doc = REXML::Document.new rss
+    
     buildinfo = HudsonBuild.parse_rss(doc.elements["//entry"])
+
     assert_equal "simple-ruby-application", buildinfo[:name]
     assert_equal "2", buildinfo[:number]
     assert_equal "SUCCESS", buildinfo[:result]

@@ -1,0 +1,25 @@
+<hudson>
+
+<job>
+<name>One Job</name>
+<url>http://noauth.onenewjob.nohealthreport.no-hudson-jobs.local:9090/job/One%20Job/</url>
+<color>blue</color>
+</job>
+
+<job>
+<name>Two Job</name>
+<url>http://noauth.onenewjob.nohealthreport.no-hudson-jobs.local:9090/job/Two%20Job/</url>
+<color>blue</color>
+</job>
+
+<primaryView>
+<name>すべて</name>
+<url>http://noauth.onenewjob.nohealthreport.no-hudson-jobs.local:9090/</url>
+</primaryView>
+<slaveAgentPort>0</slaveAgentPort>
+
+<view>
+<name>すべて</name>
+<url>http://noauth.onenewjob.nohealthreport.no-hudson-jobs.local:9090/</url>
+</view>
+</hudson>
