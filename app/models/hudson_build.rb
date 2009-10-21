@@ -71,6 +71,8 @@ class HudsonBuild < ActiveRecord::Base
     self.result = info[:result]
     self.finished_at = info[:published]
     self.building = info[:building]
+    self.caused_by = 1
+    self.error = ""
   end
 
   def add_changesets_from_xml(element)

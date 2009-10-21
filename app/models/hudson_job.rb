@@ -47,7 +47,7 @@ class HudsonJob < ActiveRecord::Base
     return latest_build
   end
 
-  def destory_builds
+  def destroy_builds
     HudsonBuild.destroy_all(["#{HudsonBuild.table_name}.hudson_job_id = ?", self.id])
   end
 
@@ -96,7 +96,7 @@ class HudsonJob < ActiveRecord::Base
     doc = REXML::Document.new content
     retval = []
     doc.elements.each("//entry") do |entry|
-      buildinfo = parse_rss_build(entry)
+      buildinfo = HudsonBuild.parse_rss(entry)
       retval << buildinfo
     end
     return retval
@@ -221,6 +221,8 @@ private
     build.result = ""
     build.finished_at = ""
     build.building = "true"
+    build.caused_by = 1
+    build.error = ""
     build.save
   end
 
