@@ -182,4 +182,5 @@ class HudsonBuildTest < Test::Unit::TestCase
 
     assert_equal true, HudsonBuild.exists_number?(100,10)
   end
+
 end

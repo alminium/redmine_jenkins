@@ -15,7 +15,7 @@ class HudsonApplicationHooks < Redmine::Hook::ViewListener
 
     if (controller.class.name == 'ProjectsController' and action_name == 'activity')
       hudson = Hudson.find_by_project_id(project.id)
-      return '' unless hudson
+      return '' unless hudson.settings.url
       o = ""
       o << "<style type='text/css'>"
       o << ".hudson-build { background-image: url(#{hudson.settings.url}favicon.ico); }"

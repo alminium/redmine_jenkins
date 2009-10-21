@@ -26,23 +26,8 @@ module HudsonHelper
     end
   end
 
-  def parse_changeset(element)
-    retval = {}
-    retval[:kind] = get_element_value(element, "kind")
-    retval[:revisions] = []
-    element.children.each {|child|
-      if "revision" == child.name
-        revision = {}
-        revision[:module] = get_element_value(child, "module")
-        revision[:revision] = get_element_value(child, "revision")
-        retval[:revisions] << revision
-      end
-    }
-    return retval
-  end
-
   def check_box_to_boolean(item)
-    return item if item
+    return true if item
     return false unless item
   end
 

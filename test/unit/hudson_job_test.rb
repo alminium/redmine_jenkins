@@ -49,4 +49,49 @@ class HudsonSettingsTest < Test::Unit::TestCase
     assert_equal data.building, target.building
   end
 
+  def test_request_build
+    @response = Net::HTTPSuccess.new(Net::HTTP.version_1_2, '200', 'OK')
+    @response.stubs(:content_type).returns("text/html")
+    @response.stubs(:body).returns("")
+
+    Net::HTTP.any_instance.stubs(:request).returns(@response)
+
+    data = hudson_jobs(:noauth_onejob_nohealthreport)
+    job = HudsonJob.find(data.id)
+    job.expects(:open_hudson_api).with("http://noauth.onejob.nohealthreport.local:9090/job/simple-ruby-application/build", nil, nil)
+
+    job.request_build
+  end
+
+  def test_fetch_recent_builds
+
+    @response = Net::HTTPSuccess.new(Net::HTTP.version_1_2, '200', 'OK')
+    @response.stubs(:content_type).returns("text/html")
+    @response.stubs(:body).returns(get_response(:hudson_1_fetch_job_simple_ruby_application_rssAll))
+
+    Net::HTTP.any_instance.stubs(:request).returns(@response)
+
+    data = hudson_jobs(:noauth_onejob_nohealthreport)
+    job = HudsonJob.find(data.id)
+    target = job.fetch_recent_builds
+
+    assert_equal 2, target.length
+
+  end
+
+  def test_destory_builds
+
+    data_job = hudson_jobs(:noauth_onejob_nohealthreport)
+    job = HudsonJob.find(data_job.id)
+
+    job.destroy_builds
+
+    target = HudsonBuild.find(:all)
+
+    assert_equal 1, target.length
+    assert_equal 2, target[0].id
+    assert_equal 5, target[0].hudson_job_id
+
+  end
+
 end

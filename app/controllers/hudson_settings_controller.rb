@@ -81,7 +81,7 @@ class HudsonSettingsController < ApplicationController
                           :conditions => ["#{HudsonJob.table_name}.project_id = ?", @project.id]
     jobs.each {|job|
       ActiveRecord::Base::transaction() do
-        job.destory_builds
+        job.destroy_builds
         job.destroy
       end
     }
@@ -130,7 +130,7 @@ private
     jobs.each {|job|
       next if @hudson.settings.job_include?(job.name)
       ActiveRecord::Base::transaction() do
-        job.destory_builds
+        job.destroy_builds
         job.destroy
       end
     }

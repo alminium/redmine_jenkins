@@ -60,4 +60,17 @@ class HudsonHelperTest < Test::Unit::TestCase
 
   end
 
+  def test_check_box_to_boolean_should_return_true
+    item = "true"
+    assert_equal true, check_box_to_boolean(item)
+
+    item = ""
+    assert_equal true, check_box_to_boolean(item)
+  end
+
+  def test_check_box_to_boolean_should_return_false
+    item = nil
+    assert_equal false, check_box_to_boolean(item)
+  end
+
 end
