@@ -30,7 +30,8 @@ class HudsonBuild < ActiveRecord::Base
   acts_as_activity_provider :type => 'hudson',
                              :timestamp => "#{HudsonBuild.table_name}.finished_at",
                              :author_key => "#{HudsonBuild.table_name}.caused_by",
-                             :find_options => {:include => {:job => :project}}
+                             :find_options => {:include => {:job => :project}},
+                             :permission => :view_hudson
 
   include HudsonHelper
   extend RexmlHelper
