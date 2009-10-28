@@ -18,14 +18,18 @@ class HudsonBuild < ActiveRecord::Base
   # 重複を許さないもの
   validates_uniqueness_of :number, :scope => :hudson_job_id
 
-  acts_as_event :title => Proc.new {|o| "#{l(:label_build)} #{o.job.name} #{o.number}: #{o.result}"},
-                :description => Proc.new{|o|
+  acts_as_event :title => Proc.new {|o| 
+                                  retval = "#{l(:label_build)} #{o.job.name} #{o.number}: #{o.result}" unless o.building?
+                                  retval = "#{l(:label_build)} #{o.job.name} #{o.number}: #{l(:notice_building)}" if o.building?
+                                  retval
+                                },
+                  :description => Proc.new{|o|
                                   items = []
                                   items << o.test_result.description_for_activity if o.test_result != nil
                                   items << HudsonBuildChangeset.description_for_activity(o.changesets) if o.changesets.length > 0
                                   items.join("; ")
                                 },
-                :datetime => :finished_at
+                  :datetime => :finished_at
 
   acts_as_activity_provider :type => 'hudson',
                              :timestamp => "#{HudsonBuild.table_name}.finished_at",
@@ -41,7 +45,7 @@ class HudsonBuild < ActiveRecord::Base
     return job.project
   end
 
-  def event_url
+  def event_url(options ={})
     return url
   end
 
