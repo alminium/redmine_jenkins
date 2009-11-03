@@ -27,8 +27,9 @@ module HudsonHelper
   end
 
   def check_box_to_boolean(item)
-    return true if item
     return false unless item
+    return false if "0" == item
+    return true
   end
 
   def create_http_connection(uri)

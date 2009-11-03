@@ -85,7 +85,7 @@ class HudsonJob < ActiveRecord::Base
     api_url = "#{self.settings.url}job/#{self.name}/build"
     open_hudson_api(api_url, self.settings.auth_user, self.settings.auth_password)
   rescue HudsonApiException => error
-    @hudson_api_errors << HudsonApiError.new(self.class.name, "request_build", error)
+    @hudson_api_errors << HudsonApiError.new(self.class.name, "request_build '#{self.name}'", error)
   end
 
   def fetch_recent_builds
@@ -101,7 +101,7 @@ class HudsonJob < ActiveRecord::Base
     end
     return retval
   rescue HudsonApiException => error
-    @hudson_api_errors << HudsonApiError.new(self.class.name, "fetch_recent_builds", error)
+    @hudson_api_errors << HudsonApiError.new(self.class.name, "fetch_recent_builds '#{self.name}'", error)
   end
 
   def fetch_builds
@@ -116,7 +116,7 @@ class HudsonJob < ActiveRecord::Base
     add_latest_build if latest_build.is_a? HudsonNoBuild
 
   rescue HudsonApiException => error
-    @hudson_api_errors << HudsonApiError.new(self.class.name, "fetch_builds", error)
+    @hudson_api_errors << HudsonApiError.new(self.class.name, "fetch_builds '#{self.name}'", error)
   end
 
 private
