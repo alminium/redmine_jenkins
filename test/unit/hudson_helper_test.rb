@@ -76,4 +76,26 @@ class HudsonHelperTest < Test::Unit::TestCase
     assert_equal false, check_box_to_boolean(item)
   end
 
+  def test_is_today_should_return_true
+    value = Time.now
+    assert_equal true, is_today?(value)
+
+    value = Date.today
+    assert_equal true, is_today?(value)
+  end
+
+  def test_is_today_should_return_false
+    assert_equal false, is_today?(nil)
+
+    assert_equal false, is_today?("")
+
+    assert_equal false, is_today?("a")
+
+    today = Date.today + 1
+    assert_equal false, is_today?(today + 1)
+
+    today = Date.today
+    assert_equal false, is_today?(today - 1)
+  end
+
 end

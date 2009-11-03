@@ -32,6 +32,16 @@ module HudsonHelper
     return true
   end
 
+  def is_today?(value)
+    return false unless value
+    
+    value_time = Time.parse(value.to_s, 0) rescue nil
+    return false unless value_time
+ 
+    today = Time.now
+    return today.strftime("%Y/%m/%d") == value_time.strftime("%Y/%m/%d")
+  end
+
   def create_http_connection(uri)
 
     param = URI.parse( URI.escape(uri) )
