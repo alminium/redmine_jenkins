@@ -27,6 +27,7 @@ label_autofetch: Autobúsqueda
 label_job_description_format: Formato de la descripción de la tarea en Hudson
 label_show_description: Mostrar descripción
 label_hide_description: Esconder descripción
+label_todays_build: Today's Build
 
 button_delete_history: Borrar historial
 

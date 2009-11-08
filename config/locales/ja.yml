@@ -28,6 +28,7 @@ ja:
   label_job_description_format: ジョブの説明に使う書式
   label_show_description: 詳細を表示する
   label_hide_description: 詳細を隠す
+  label_todays_build: 今日のビルド
 
   button_delete_history: 履歴を削除
 
