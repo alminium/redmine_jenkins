@@ -4,7 +4,7 @@ Feature: index
 
   Scenario: If 'Developer' don't have 'view_hudson' permission, Redmine don't show hudson tab on the menu
     Given Project "eCookbook" uses "hudson" Plugin
-      And Myname is "toshiyuki", log on as a User
+      And I log on as a User
       And I select "English" as language
       And I join "eCookbook" Project as a "Developer"
 
@@ -15,10 +15,21 @@ Feature: index
   Scenario: If 'Developer' have 'view_hudson' permission, Redmine show hudson tab on the menu
     Given Project "eCookbook" uses "hudson" Plugin
       And "Developer" has a permission "view_hudson"
-      And Myname is "haru", log on as a User
+      And I log on as a User
       And I select "English" as language
       And I join "eCookbook" Project as a "Developer"
 
     When I go to "eCookbook" Project
 
     Then I should see "Hudson" within "#main-menu"
+
+  Scenario: If project has no Hudson settings, plugin show message
+    Given Project "eCookbook" uses "hudson" Plugin
+      And "Developer" has a permission "view_hudson"
+      And I log on as a User
+      And I select "English" as language
+      And I join "eCookbook" Project as a "Developer"
+
+   When I go to Hudson at "eCookbook" Project
+
+   Then I should see "No settings for this project. Please confirm settings"

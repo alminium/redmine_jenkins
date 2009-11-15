@@ -12,12 +12,9 @@ module NavigationHelpers
     when /^"(.*)" Project$/
       "/projects/show/#{$1.downcase}"
 
-    when /Hudson/
-      '/hudson/index/ecookbook'
+    when /Hudson at "(.*)" Project/
+      "/hudson/index/#{$1.downcase}"
 
-    when /the home\s?page/
-      '/'
-    
     # Add more mappings here.
     # Here is a more fancy example:
     #

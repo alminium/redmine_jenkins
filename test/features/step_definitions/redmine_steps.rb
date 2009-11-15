@@ -1,8 +1,8 @@
 # $Id$
 
-Given /^Myname is "(.*)", log on as a User$/ do |firstname|
-  @current_user = User.new(:mail => 'test@example.com', :firstname => firstname, :lastname => 'Test')
-  @current_user.login = "#{firstname.downcase}_test"
+Given /^I log on as a User$/ do
+  @current_user = User.new(:mail => 'test@example.com', :firstname => 'Couger', :lastname => 'Test')
+  @current_user.login = "couger_test"
   @current_user.save!
   
   User.stubs(:current).returns(@current_user)
