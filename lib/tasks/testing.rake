@@ -6,16 +6,25 @@ begin
   rcov_options = "-I ../../../lib -x redmine"
 
   namespace :redmine_hudson do
-    task :testing => [:environment, :init_fixtures] do
-      desc 'Rcov for Hudson Plugin'
+    namespace :test do
+      task :unit => [:environment, :init_fixtures] do
+        desc 'unittest for Hudson Plugin'
 
-      Dir.chdir("vendor/plugins/redmine_hudson")
-      system "rcov #{rcov_options} test/*/*_test.rb"
-    end
+        Dir.chdir("vendor/plugins/redmine_hudson")
+        system "rcov #{rcov_options} test/unit/*_test.rb"
+      end
 
-    task :init_fixtures do
-      desc "Init Fixtures"
-      Rake::Task["test:plugins:setup_plugin_fixtures"].invoke
+      task :feature => [] do
+        desc 'features for Hudson Plugin'
+
+        Dir.chdir("vendor/plugins/redmine_hudson")
+        system "cucumber test/features -S"
+      end
+
+      task :init_fixtures do
+        desc "Init Fixtures"
+        Rake::Task["test:plugins:setup_plugin_fixtures"].invoke
+      end
     end
   end
 rescue LoadError => e
