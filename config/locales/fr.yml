@@ -1,0 +1,56 @@
+# $Id$
+# French strings go here
+fr:
+  label_hudson: Hudson
+  label_hudson_plural: Hudson
+  label_build: Constructions
+  label_latest_build: Derniere Construction
+  label_job_list: Liste des Tâches
+  label_settings: Configuration
+  label_url: URL
+  label_jobs: Taches
+  label_build_history: Historique des Constructions
+  label_update_jobs: Mise à jour Liste des Tâches
+  label_build_now: Construire Maintenant
+  label_show_build_history: Montrer Historique des Constructions
+  label_show_compact: Montrer Vue Compacte
+  label_health_report_build_stability: HealthReport:BuildStability
+  label_health_report_test_result: HealthReport:TestResult
+  label_database: Base de Données
+  label_get_build_details: Details de la Construction (changements et résultats de test)
+  label_look_and_feel: Look and Feel (only icons)
+  label_look_and_feel_hudson: Hudson
+  label_look_and_feel_plugin: Plugin
+  label_add_health_report: Ajouter une Configuration pour un Rapport de Santé
+  label_health_report: Rapport de Santé
+  label_health_report_settings: Configuration des Rapports de Santé
+  label_autofetch: Récupérer Automatiquement
+  label_job_description_format: Format de la Description des Taches Hudson
+  label_show_description: Montrer Description
+  label_hide_description: Cacher Description
+  label_todays_build: Constructions d'aujourd'hui
+
+  button_delete_history: Effacer Historique
+
+  notice_no_jobs: Aucune Tâche
+  notice_no_builds: Aucune Execution
+
+  notice_building: Execution en cours...
+  notice_hudson_url: 'avec http://, https:// ...'
+  notice_get_build_details: A Désactiver, si cela prend trop de temps.
+  notice_health_report: Construit un liens vers Hudson, si le Plugin trouve un Mot Clef dans le Rapport de Santé.
+  notice_health_report_setting: 'Si le plugin trouve le mot clef - ${keyword} dans le rapport de santé, contruit un lien vers Hudson - ${url_format}'
+  notice_autofetch: Récupère les informations depuis Hudson pendant l'action. <br> Une tache de Rake peut etre appelée "redmine_hudson:fetch" par un script externe.
+
+  notice_err_cant_connect: "Ne peut pas se connecter à Hudson"
+  notice_err_response_invalid: 'Réponce Invalide %1s'
+  notice_err_http_error: 'Erreur Http %1s'
+  notice_err_no_settings: "Pas de Configuration pour ce Projet. SVP <a href='%1s'>Confirmer les settings</a>"
+  notice_err_no_jobs: Pas de Tâches dans Hudson
+  notice_err_invalid_url: URL Invalide
+  notice_err_no_job : 'Tâche introuvable [%1s]'
+  notice_err_unknown: 'Inconnu erreur %1s'
+
+  notice_err_build_failed: 'Construction Echouée %1s'
+  notice_err_build_failed_no_job: 'Construction Echouée. Tâche Introuvable [%1s]'
+
