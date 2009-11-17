@@ -110,6 +110,11 @@ Use 'delete history' button in setting page.
 
 == Changelog
 
+=== 1.0.1.1
+
+* ##244 "rake db:migrate_plugins" doesn't work without rcov
+* ##242 Build job and Build history doesn't work on Redmine 0.8.7
+
 === 1.0.1
 
 * ##228 Install Instructions
