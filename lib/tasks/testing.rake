@@ -1,8 +1,6 @@
 # $Id$
 desc 'Test Redmine Hudson Plugin'
 begin
-  require "rcov/rcovtask"
-
   rcov_options = "-I ../../../lib -x redmine"
 
   namespace :redmine_hudson do
