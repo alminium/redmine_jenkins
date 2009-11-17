@@ -30,6 +30,7 @@ BuildHistory.prototype = {
       {asynchronous:true,
        evalScripts:true,
        parameters:"name=" + name,
+       method:'get',
        onComplete:function(request){
          dialog = $('build-history');
          dialog.style.top = (elmBuildHistory.positionedOffset().top + Element.getHeight(elmBuildHistory) + 5 ) + 'px';

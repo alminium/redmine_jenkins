@@ -26,6 +26,7 @@ BuildRequest.prototype = {
       {asynchronous:true,
        evalScripts:true,
        parameters:"name=" + name,
+       method:'get',
        onComplete:function(request){
          var message = "";
          if( request.responseText.indexOf('build_accepted') > 0 ) {
