@@ -13,6 +13,8 @@ class HudsonApplicationHooks < Redmine::Hook::ViewListener
     action_name = controller.action_name
     return '' unless action_name
 
+    baseurl = url_for(:controller => 'hudson', :action => 'index', :id => project) + '/../../..'
+
     if (controller.class.name == 'ProjectsController' and action_name == 'activity')
       hudson = Hudson.find_by_project_id(project.id)
       return '' unless hudson.settings.url
@@ -20,10 +22,14 @@ class HudsonApplicationHooks < Redmine::Hook::ViewListener
       o << "<style type='text/css'>"
       o << ".hudson-build { background-image: url(#{hudson.settings.url}favicon.ico); }"
       o << "</style>\n"
+      o << "<!--[if IE]>"
+      o << "<style type='text/css'>"
+      o << ".hudson-build { background-image: url(#{baseurl}/plugin_assets/redmine_hudson/images/hudson_icon.png); }"
+      o << "</style>\n"
+      o << "<![endif]-->"
       return o
     end
 
-    baseurl = url_for(:controller => 'hudson', :action => 'index', :id => project) + '/../../..'
     if (controller.class.name == 'IssuesController' and action_name == 'show')
       o = ""
       o << stylesheet_link_tag(baseurl + "/plugin_assets/redmine_hudson/stylesheets/hudson.css") + "\n"
