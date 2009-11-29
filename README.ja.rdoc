@@ -160,8 +160,9 @@ rake タスクを使って情報を取得する場合は、必ず 自動取得�
 == 言語ファイル作成者（ありがとうございます）
 
 [de.yml] Jens Goldhammer, Florian Bartels
-[hu.yml] Péter Major
 [es.yml] juancayetano.delgado
+[fr.yml] Francois-Xavier CAUVIN
+[hu.yml] Péter Major
 
 == お問い合わせ
 

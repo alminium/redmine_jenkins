@@ -161,8 +161,9 @@ Use 'delete history' button in setting page.
 == Language contributors
 
 [de.yml] Jens Goldhammer, Florian Bartels
-[hu.yml] Péter Major
 [es.yml] juancayetano.delgado
+[fr.yml] Francois-Xavier CAUVIN
+[hu.yml] Péter Major
 
 == Contact info
 
