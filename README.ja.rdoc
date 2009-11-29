@@ -1,5 +1,5 @@
 # $Id$
-= Hudson Plugin 1.0.1
+= Hudson Plugin 1.0.1.1
 
 Redmie を Hudson と連携させるためのプラグインです。
 

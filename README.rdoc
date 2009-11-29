@@ -1,5 +1,5 @@
 # $Id$
-= Hudson Plugin 1.0.1
+= Hudson Plugin 1.0.1.1
 
 This is a plugin collaborates with Hudson for Redmine.
 
