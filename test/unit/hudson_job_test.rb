@@ -7,27 +7,27 @@ class HudsonSettingsTest < Test::Unit::TestCase
   set_fixture_class :hudson_settings => HudsonSettings
 
   def test_url
-    data = hudson_jobs(:noauth_onejob_nohealthreport)
+    data = hudson_jobs(:simple_ruby_application)
     settings = hudson_settings(:one)
     target = HudsonJob.find(data.id)
     assert_equal "#{settings.url}job/#{data.name}", target.url
   end
 
   def test_latest_build_should_be_nobuild
-    data = hudson_jobs(:noauth_onejob_nohealthreport)
+    data = hudson_jobs(:simple_ruby_application)
     target = HudsonJob.find(data.id)
     assert target.latest_build.is_a?(HudsonNoBuild)
   end
 
   def test_hudson_api_errors_should_be_empty
-    data = hudson_jobs(:noauth_onejob_nohealthreport)
+    data = hudson_jobs(:simple_ruby_application)
     target = HudsonJob.find(data.id)
 
     assert target.hudson_api_errors.empty?
   end
 
   def test_hudson_api_errors_should_has_socketerror
-    data = hudson_jobs(:noauth_onejob_nohealthreport)
+    data = hudson_jobs(:simple_ruby_application)
     target = HudsonJob.find(data.id)
 
     target.fetch_builds
@@ -42,7 +42,7 @@ class HudsonSettingsTest < Test::Unit::TestCase
   end
 
   def test_get_build
-    data = hudson_builds(:noauth_onejob_nohealthreport_No1)
+    data = hudson_builds(:one_simple_ruby_application_build1)
     job = HudsonJob.find(data.hudson_job_id)
     target = job.get_build(data.number)
     assert_equal data.number, target.number
@@ -56,7 +56,7 @@ class HudsonSettingsTest < Test::Unit::TestCase
 
     Net::HTTP.any_instance.stubs(:request).returns(@response)
 
-    data = hudson_jobs(:noauth_onejob_nohealthreport)
+    data = hudson_jobs(:simple_ruby_application)
     job = HudsonJob.find(data.id)
     job.expects(:open_hudson_api).with("http://noauth.onejob.nohealthreport.local:9090/job/simple-ruby-application/build", nil, nil)
 
@@ -71,7 +71,7 @@ class HudsonSettingsTest < Test::Unit::TestCase
 
     Net::HTTP.any_instance.stubs(:request).returns(@response)
 
-    data = hudson_jobs(:noauth_onejob_nohealthreport)
+    data = hudson_jobs(:simple_ruby_application)
     job = HudsonJob.find(data.id)
     target = job.fetch_recent_builds
 
@@ -81,7 +81,7 @@ class HudsonSettingsTest < Test::Unit::TestCase
 
   def test_destory_builds
 
-    data_job = hudson_jobs(:noauth_onejob_nohealthreport)
+    data_job = hudson_jobs(:simple_ruby_application)
     job = HudsonJob.find(data_job.id)
 
     job.destroy_builds

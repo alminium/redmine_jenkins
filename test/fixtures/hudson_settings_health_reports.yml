@@ -1,11 +1,19 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-hasauth_threejob_twohealthreport_build_stability:
+# $Id$
+
+# one   - (none)
+# two   - Build stability
+#       - Test Result
+# three - (none)
+# four  - (none)
+# five  - (none)
+
+two_build_stablity:
   id: 101
   hudson_settings_id: 2
   keyword: Build stability
   url_format: ${hudson.url}job/${job.name}/lastBuild/
 
-hasauth_threejob_twohealthreport_test_result:
+two_build_test_result:
   id: 102
   hudson_settings_id: 2
   keyword: Test Result

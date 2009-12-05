@@ -7,24 +7,24 @@ class HudsonSettingsHealthReportTest < Test::Unit::TestCase
   set_fixture_class :hudson_settings => HudsonSettings
 
   def test_containd_in_should_be_true
-    data = hudson_settings_health_reports(:hasauth_threejob_twohealthreport_build_stability)
+    data = hudson_settings_health_reports(:two_build_stablity)
     target = HudsonSettingsHealthReport.find(data.id)
     
     assert_equal true, target.contained_in?("test message #{data.keyword} --" )
   end
 
   def test_containd_in_should_be_false
-    data = hudson_settings_health_reports(:hasauth_threejob_twohealthreport_build_stability)
+    data = hudson_settings_health_reports(:two_build_stablity)
     target = HudsonSettingsHealthReport.find(data.id)
 
     assert_equal false, target.contained_in?("test message" )
   end
 
   def test_get_url
-    data = hudson_settings_health_reports(:hasauth_threejob_twohealthreport_build_stability)
+    data = hudson_settings_health_reports(:two_build_stablity)
     target = HudsonSettingsHealthReport.find(data.id)
 
-    data_job = hudson_jobs(:hasauth_threejob_twohealthreport_one)
+    data_job = hudson_jobs(:have_white_space)
     job = HudsonJob.find(data_job.id)
 
     settings = hudson_settings(:two)
@@ -51,7 +51,7 @@ class HudsonSettingsHealthReportTest < Test::Unit::TestCase
 
   def test_update_from_hash
     hash = {}
-    data = hudson_settings_health_reports(:hasauth_threejob_twohealthreport_build_stability)
+    data = hudson_settings_health_reports(:two_build_stablity)
     hash[:keyword] = data.keyword
     hash[:url_format] = data.url_format
     target = HudsonSettingsHealthReport.new

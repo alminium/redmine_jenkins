@@ -1,6 +1,14 @@
 #$Id$
 
-noauth_onejob_nohealthreport:
+# one   - simple_ruby_application
+# two   - have_white_space
+#       - maven_application
+#       - disabled
+# three - (none)
+# four  - nunit
+# five  - (none)
+
+simple_ruby_application:
   id: 1
   project_id: 1
   hudson_id: 1
@@ -11,7 +19,7 @@ noauth_onejob_nohealthreport:
   description: ---
   state: ---
 
-hasauth_threejob_twohealthreport_one:
+have_white_space:
   id: 2
   project_id: 2
   hudson_id: 2
@@ -22,7 +30,7 @@ hasauth_threejob_twohealthreport_one:
   description: ---
   state: ---
 
-hasauth_threejob_twohealthreport_two:
+maven_application:
   id: 3
   project_id: 2
   hudson_id: 2
@@ -33,7 +41,7 @@ hasauth_threejob_twohealthreport_two:
   description: ---
   state: ---
 
-hasauth_threejob_twohealthreport_three:
+disabled:
   id: 4
   project_id: 2
   hudson_id: 2
@@ -44,7 +52,7 @@ hasauth_threejob_twohealthreport_three:
   description: ---
   state: ---
 
-noauth_onenewjob_twohealthreport_one:
+nunit:
   id: 5
   project_id: 4
   hudson_id: 4

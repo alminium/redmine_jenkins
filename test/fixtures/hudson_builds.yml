@@ -1,5 +1,5 @@
 #$Id$
-noauth_onejob_nohealthreport_No1:
+one_simple_ruby_application_build1:
   id: 1
   hudson_job_id: 1
   number: 1
@@ -9,7 +9,7 @@ noauth_onejob_nohealthreport_No1:
   error:
   caused_by: 1
 
-noauth_onenewjob_twohealthreport_one_No1:
+four_nunit_build1:
   id: 2
   hudson_job_id: 5
   number: 1

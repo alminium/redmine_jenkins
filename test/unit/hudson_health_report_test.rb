@@ -15,7 +15,7 @@ class HudsonHealthReportTest < Test::Unit::TestCase
 
     doc = REXML::Document.new xml
 
-    job_data = hudson_jobs(:hasauth_threejob_twohealthreport_one)
+    job_data = hudson_jobs(:have_white_space)
     job = HudsonJob.find(job_data.id)
 
     target = HudsonHealthReport.new

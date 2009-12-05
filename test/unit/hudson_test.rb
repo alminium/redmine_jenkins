@@ -115,7 +115,7 @@ class HudsonTest < Test::Unit::TestCase
     data_settings = hudson_settings(:one)
 
     hudson = Hudson.find(data_settings.project_id)
-    data_job = hudson_jobs(:noauth_onejob_nohealthreport)
+    data_job = hudson_jobs(:simple_ruby_application)
     job = hudson.get_job(data_job.name)
     build = job.get_build("1")
     assert_equal "", build.result
@@ -126,7 +126,7 @@ class HudsonTest < Test::Unit::TestCase
     hudson = Hudson.find(data_settings.project_id)
     assert hudson != nil
 
-    data_job = hudson_jobs(:noauth_onejob_nohealthreport)
+    data_job = hudson_jobs(:simple_ruby_application)
     job = hudson.get_job(data_job.name)
     assert_equal data_job.name, job.name
     assert_equal "red", job.state
