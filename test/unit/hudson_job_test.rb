@@ -42,7 +42,7 @@ class HudsonSettingsTest < Test::Unit::TestCase
   end
 
   def test_get_build
-    data = hudson_builds(:one_simple_ruby_application_build1)
+    data = hudson_builds(:simple_ruby_application_build1)
     job = HudsonJob.find(data.hudson_job_id)
     target = job.get_build(data.number)
     assert_equal data.number, target.number

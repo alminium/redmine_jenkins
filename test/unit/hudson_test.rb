@@ -157,6 +157,20 @@ class HudsonTest < Test::Unit::TestCase
     assert_equal 0, testresult.skip_count
     assert_equal 3, testresult.total_count
 
+    artifacts = build.artifacts
+    assert_equal 2, artifacts.length
+
+    artifact = artifacts[0]
+    assert_equal "app", artifact.display_path
+    assert_equal "app.rb", artifact.file_name
+    assert_equal "RubySimpleApplication/source/app.rb", artifact.relative_path
+
+    artifact = artifacts[1]
+    assert_equal "readme", artifact.display_path
+    assert_equal "readme.rdoc", artifact.file_name
+    assert_equal "RubySimpleApplication/readme.rdoc", artifact.relative_path
+
+
     build = job.get_build("2")
     assert_equal "SUCCESS", build.result
     assert_equal false, build.building?
@@ -168,6 +182,9 @@ class HudsonTest < Test::Unit::TestCase
     testresult = build.test_result
 
     assert testresult == nil
+
+    artifacts = build.artifacts
+    assert_equal 0, artifacts.length
 
     build = job.get_build("3")
     assert_equal "", build.result

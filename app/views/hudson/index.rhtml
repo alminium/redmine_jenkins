@@ -36,6 +36,7 @@
       <% if "" == job.latest_build.error %>
         <% if "" != job.latest_build.number %>
           <%=image_tag 'document.png', :class=>'icon-build-history', :id=>"build-history-#{job.name}", :title=>l(:label_show_build_history)%>
+          <%= image_tag("#{@hudson.settings.url}images/16x16/package.gif", :class=>'icon-build-history') %>
           <%=link_to "##{job.latest_build.number}", job.latest_build.url%>
           <%=content_tag("span", job.latest_build.result, :class => "result #{job.latest_build.result.downcase}") if true != job.latest_build.building? && "" != job.latest_build.result%>
           <%=content_tag("span", l(:notice_building), :class => "result") if job.latest_build.building? %>

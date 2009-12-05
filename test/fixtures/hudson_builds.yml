@@ -1,5 +1,5 @@
 #$Id$
-one_simple_ruby_application_build1:
+simple_ruby_application_build1:
   id: 1
   hudson_job_id: 1
   number: 1
@@ -9,7 +9,7 @@ one_simple_ruby_application_build1:
   error:
   caused_by: 1
 
-four_nunit_build1:
+nunit_build1:
   id: 2
   hudson_job_id: 5
   number: 1

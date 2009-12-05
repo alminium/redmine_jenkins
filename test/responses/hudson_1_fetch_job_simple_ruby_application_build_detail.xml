@@ -46,6 +46,7 @@ add rspec for HelloEveryone</msg>
 <revision>17</revision>
 </revision>
 </changeSet>
+
 </build>
 
 <build>
@@ -99,6 +100,18 @@ add class Helloworld</msg>
 <revision>16</revision>
 </revision>
 </changeSet>
+
+<artifact>
+<displayPath>app</displayPath>
+<fileName>app.rb</fileName>
+<relativePath>RubySimpleApplication/source/app.rb</relativePath>
+</artifact>
+<artifact>
+<displayPath>readme</displayPath>
+<fileName>readme.rdoc</fileName>
+<relativePath>RubySimpleApplication/readme.rdoc</relativePath>
+</artifact>
+
 </build>
 
 <healthReport>

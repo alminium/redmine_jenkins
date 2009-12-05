@@ -9,6 +9,7 @@ class HudsonBuild < ActiveRecord::Base
   unloadable
   has_many :changesets, :class_name => 'HudsonBuildChangeset', :dependent => :destroy
   has_one :test_result, :class_name => 'HudsonBuildTestResult', :dependent => :destroy
+  has_many :artifacts, :class_name => 'HudsonBuildArtifact', :dependent => :destroy
   belongs_to :job, :class_name => 'HudsonJob', :foreign_key => 'hudson_job_id'
   belongs_to :author, :class_name => 'User', :foreign_key => 'caused_by'
 
@@ -107,6 +108,16 @@ class HudsonBuild < ActiveRecord::Base
     end
   end
 
+  def add_artifact_from_xml(element)
+    element.children.each do |child|
+      next if child.is_a?(REXML::Text)
+      next if "artifact" != child.name
+      artifact = new_artifact(child)
+      artifact.save
+      self.artifacts << artifact
+    end
+  end
+
   def new_test_result(elem)
     retval = HudsonBuildTestResult.new
     retval.hudson_build_id = self.id
@@ -121,6 +132,15 @@ class HudsonBuild < ActiveRecord::Base
     retval.hudson_build_id = self.id
     retval.repository_id = self.project.repository.id
     retval.revision = get_element_value(elem, "revision")
+    return retval
+  end
+
+  def new_artifact(elem)
+    retval = HudsonBuildArtifact.new
+    retval.hudson_build_id = self.id
+    retval.display_path = get_element_value(elem,"displayPath")
+    retval.file_name = get_element_value(elem, "fileName")
+    retval.relative_path = get_element_value(elem, "relativePath")
     return retval
   end
 

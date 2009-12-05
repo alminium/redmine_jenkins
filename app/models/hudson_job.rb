@@ -203,6 +203,9 @@ private
       # テスト結果を取得する
       build.add_testresult_from_xml buildelem
 
+      # 成果物を取得する
+      build.add_artifact_from_xml buildelem
+
     end
     
   end
