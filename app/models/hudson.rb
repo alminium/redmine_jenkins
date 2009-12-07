@@ -74,7 +74,7 @@ private
       
       job.update_by_xml(element)
       job.update_health_report_by_xml(element)
-      job.save
+      job.save!
     end
 
   end
@@ -93,12 +93,14 @@ private
   end
 
   def add_job(job_name)
-      retval = HudsonJob.new
-      retval.name = job_name
-      retval.project_id = self.project_id
-      retval.hudson_id = self.settings.id
-      self.jobs << retval
-      return retval
+    retval = HudsonJob.new
+    retval.name = job_name
+    retval.project_id = self.project_id
+    retval.hudson_id = self.settings.id
+    retval.project = self.project
+    retval.settings = self.settings
+    self.jobs << retval
+    return retval
   end
 
   def find_jobs

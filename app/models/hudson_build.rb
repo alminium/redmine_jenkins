@@ -181,7 +181,7 @@ def HudsonBuild.find_by_changeset(changeset)
 end
 
 class HudsonNoBuild
-  attr_reader :hudson_job_id, :number, :error, :building, :url, :result
+  attr_reader :hudson_job_id, :number, :error, :building, :url, :result, :artifacts
 
   def initialize
     @hudson_job_id = ""
@@ -190,6 +190,7 @@ class HudsonNoBuild
     @building = ""
     @url = ""
     @result = ""
+    @artifacts = []
   end
 
   def building?

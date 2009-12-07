@@ -1,7 +1,9 @@
 # $Id$
 
 Given /^I log on as a User$/ do
-  @current_user = User.new(:mail => 'test@example.com', :firstname => 'Couger', :lastname => 'Test')
+  @current_user = User.find_by_mail('couger-test@example.com')
+  return if @current_user
+  @current_user = User.new(:mail => 'couger-test@example.com', :firstname => 'Couger', :lastname => 'Test')
   @current_user.login = "couger_test"
   @current_user.save!
   
@@ -41,6 +43,8 @@ end
 Given /"(.*)" has a permission "(.*)"/ do |role_name, permission|
   role = Role.find_by_name(role_name)
   raise Exception.new("no such role #{role_name}") unless role
-  role.add_permission!(permission)
+  permission.split(",").each do |item|
+    role.add_permission!(item)
+  end
   role.save!
 end

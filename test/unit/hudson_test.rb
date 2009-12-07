@@ -163,12 +163,12 @@ class HudsonTest < Test::Unit::TestCase
     artifact = artifacts[0]
     assert_equal "app", artifact.display_path
     assert_equal "app.rb", artifact.file_name
-    assert_equal "RubySimpleApplication/source/app.rb", artifact.relative_path
+    assert_equal "SimpleRubyApplication/source/app.rb", artifact.relative_path
 
     artifact = artifacts[1]
     assert_equal "readme", artifact.display_path
     assert_equal "readme.rdoc", artifact.file_name
-    assert_equal "RubySimpleApplication/readme.rdoc", artifact.relative_path
+    assert_equal "SimpleRubyApplication/readme.rdoc", artifact.relative_path
 
 
     build = job.get_build("2")

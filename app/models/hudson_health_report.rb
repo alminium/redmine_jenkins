@@ -15,6 +15,10 @@ class HudsonHealthReport < ActiveRecord::Base
   end
 
   def get_health_report_url(job)
+    return "" unless job
+    return "" unless self.job
+    return "" unless self.job.settings
+    return "" unless self.job.settings.health_report_settings
     self.job.settings.health_report_settings.each do |hr_settings|
       if hr_settings.contained_in?(self.description)
         return URI.escape(hr_settings.get_url(job))

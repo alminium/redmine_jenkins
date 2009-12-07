@@ -15,7 +15,10 @@ module NavigationHelpers
     when /Hudson at "(.*)" Project/
       "/hudson/index/#{$1.downcase}"
 
-    # Add more mappings here.
+    when /HudsonSettings at "(.*)" Project/
+      "/hudson_settings/edit/#{$1.downcase}"
+
+      # Add more mappings here.
     # Here is a more fancy example:
     #
     #   when /^(.*)'s profile page$/i

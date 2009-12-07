@@ -54,4 +54,8 @@ Before do
   Fixtures.create_fixtures(fixtures_folder, fixtures)
 
   User.destroy_all
+  HudsonBuild.destroy_all
+  HudsonJob.destroy_all
+  HudsonHealthReport.destroy_all
+  HudsonSettings.destroy_all
 end

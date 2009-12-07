@@ -28,6 +28,7 @@ label_job_description_format: Format de la Description des Taches Hudson
 label_show_description: Montrer Description
 label_hide_description: Cacher Description
 label_todays_build: Constructions d'aujourd'hui
+label_build_artifacts: Artifacts
 
 button_delete_history: Effacer Historique
 
