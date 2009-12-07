@@ -1,5 +1,5 @@
 # $Id$
-= Hudson Plugin 1.0.1.1
+= Hudson Plugin 1.0.2
 
 This is a plugin collaborates with Hudson for Redmine.
 
@@ -22,6 +22,7 @@ Show job details.
 * You can change description visibility dynamically.
 * Provide a link to Hudson, if plugin found keyword in Health Report.
 * Bulid number linked to build result page.
+* Download artifacts.
 * Click clock-icon, request hudson to build.
 * Mr. hudson appears. ( sorry, not emotional )
 
@@ -109,6 +110,11 @@ you should try to delete data from database.
 Use 'delete history' button in setting page.
 
 == Changelog
+
+=== 1.0.2
+
+* ##198 (Feature) You can download artifacts.
+* ##235 (Defect) Hudson icon does not display in activitiy view with IE
 
 === 1.0.1.1
 
