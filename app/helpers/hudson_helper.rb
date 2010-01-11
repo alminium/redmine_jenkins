@@ -14,7 +14,7 @@ module HudsonHelper
 
     begin
       response = http.request(request)
-    rescue => error
+    rescue Timeout::Error, StandardError => error
       raise HudsonApiException.new(error)
     end
 
