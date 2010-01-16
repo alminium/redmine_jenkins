@@ -29,6 +29,10 @@ label_show_description: Montrer Description
 label_hide_description: Cacher Description
 label_todays_build: Constructions d'aujourd'hui
 label_build_artifacts: Artifacts
+label_num_of_stored_builds: Num of Builds
+label_delete_old_build: Delete Old Build
+label_log_rotator_days_to_keep: Days To Keep
+label_log_rotator_num_to_keep: Num To Keep
 
 button_delete_history: Effacer Historique
 

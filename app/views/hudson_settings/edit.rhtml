@@ -46,17 +46,11 @@
   </script>
 </fieldset>
 
-<fieldset class="box"><legend><%=l(:label_jobs)%></legend>
-    <%=render :partial => 'joblist'%>
-</fieldset>
+<h3><%=l(:label_jobs)%></h3>
 
-  <%= submit_tag l(:button_save) %>
-<% end %>
+  <%=render :partial => 'joblist'%>
 
-<h2 style="margin-top:20px;"><%=l(:label_database)%></h2>
-
-<% form_tag({:action => 'delete_history', :id => @project}) do %>
-  <%= submit_tag l(:button_delete_history) %>
+<p><%= submit_tag l(:button_save) %></p>
 <% end %>
 
 <style type="text/css">
@@ -66,5 +60,6 @@
 </style>
 
 <% content_for :header_tags do %>
+  <%= stylesheet_link_tag "hudson.css", :plugin => "redmine_hudson", :media => "screen" %>
   <%= javascript_include_tag 'hudson_settings', :plugin => "redmine_hudson" %>
 <% end %>

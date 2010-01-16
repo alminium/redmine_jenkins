@@ -9,8 +9,12 @@ module HudsonHelper
 
   def open_hudson_api( uri, auth_user, auth_password )
 
-    http = create_http_connection(uri)
-    request = create_http_request(uri, auth_user, auth_password)
+    begin
+      http = create_http_connection(uri)
+      request = create_http_request(uri, auth_user, auth_password)
+    rescue => error
+      raise HudsonApiException.new(error)
+    end
 
     begin
       response = http.request(request)

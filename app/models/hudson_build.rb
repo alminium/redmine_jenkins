@@ -146,6 +146,12 @@ class HudsonBuild < ActiveRecord::Base
 
 end
 
+def HudsonBuild.count_of(job)
+  return 0 unless job
+  return 0 unless job.is_a?(HudsonJob)
+  return HudsonBuild.count_by_sql(["select count(*) from #{HudsonBuild.table_name} where hudson_job_id = ?", job.id])
+end
+
 def HudsonBuild.parse_rss(entry)
   params = get_element_value(entry, "title").scan(/(.*)#(.*)\s\((.*)\)/)[0]
   retval = {}

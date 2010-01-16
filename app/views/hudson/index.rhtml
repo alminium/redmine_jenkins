@@ -25,6 +25,7 @@
   <div id="remote-debug" style="display:none;"></div>
 
   <% @hudson.jobs.each do |job|%>
+    <% next unless @hudson.settings.job_include?(job.name) %>
     <div class="contextual<%='-icon24' if @hudson.settings.look_and_feel == 'Hudson'%>">
     <% build_icon = image_tag("#{@hudson.settings.url}images/24x24/clock.gif", :alt => 'build', :class=>'icon-build-request', :id=>"build-request-#{job.name}", :title => l(:label_build_now)) if @hudson.settings.look_and_feel == 'Hudson' %>
     <% build_icon = "[#{l(:label_build_now)}]" if @hudson.settings.look_and_feel == 'Plugin' %>

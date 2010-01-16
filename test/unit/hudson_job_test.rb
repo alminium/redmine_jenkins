@@ -6,6 +6,24 @@ class HudsonSettingsTest < Test::Unit::TestCase
   fixtures :hudson_jobs, :hudson_builds, :hudson_settings, :hudson_settings_health_reports
   set_fixture_class :hudson_settings => HudsonSettings
 
+  def test_hudson_url_to_should_return_zero_length_string
+
+    assert_equal "", HudsonJob.url_to(nil, "")
+    assert_equal "", HudsonJob.url_to(nil, nil)
+    
+    data = hudson_jobs(:simple_ruby_application)
+    settings = hudson_settings(:one)
+
+    assert_equal "", HudsonJob.url_to(settings, nil)
+    assert_equal "", HudsonJob.url_to(settings, "")
+  end
+
+  def test_hudson_url_to
+    data = hudson_jobs(:simple_ruby_application)
+    settings = hudson_settings(:one)
+    assert_equal "#{settings.url}job/#{data.name}", HudsonJob.url_to(settings, data.name)
+  end
+
   def test_url
     data = hudson_jobs(:simple_ruby_application)
     settings = hudson_settings(:one)

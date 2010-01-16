@@ -7,6 +7,7 @@ require 'hudson_exceptions'
 class HudsonJob < ActiveRecord::Base
   unloadable
   has_many :health_reports, :class_name => 'HudsonHealthReport', :dependent => :destroy
+  has_one :job_settings, :class_name => 'HudsonJobSettings', :dependent => :destroy
   belongs_to :project, :foreign_key => 'project_id'
   belongs_to :settings, :class_name => 'HudsonSettings', :foreign_key => 'hudson_id'
 
@@ -20,16 +21,20 @@ class HudsonJob < ActiveRecord::Base
 
   def initialize
     super
-    initialize_added
+    @job_settings = HudsonJobSettings.new
+    @hudson_api_errors = []
   end
 
   def after_find
-    initialize_added
+    @hudson_api_errors = []
+  end
+
+  def after_save
+    @job_settings.save!
   end
 
   def url
-    return "" unless self.settings
-    return "#{self.settings.url}job/#{self.name}"
+    return HudsonJob.url_to(self.settings, self.name)
   end
 
   def get_build(number)
@@ -120,10 +125,6 @@ class HudsonJob < ActiveRecord::Base
   end
 
 private
-  def initialize_added
-    @hudson_api_errors = []
-  end
-
   def clear_hudson_api_errors
     @hudson_api_errors = []
   end
@@ -238,8 +239,14 @@ private
 
 end
 
+def HudsonJob.url_to(settings, job_name)
+    return "" unless settings
+    return "" unless (job_name && job_name.length > 0)
+    return "#{settings.url}job/#{job_name}"
+end
+
 class HudsonNoJob
-  attr_reader :id, :project_id, :hudson_id, :name, :latest_build_number, :created_at, :updated_at, :description, :state
+  attr_reader :id, :project_id, :hudson_id, :name, :latest_build_number, :created_at, :updated_at, :description, :state, :job_settings
 
   def initialize
     @id = ""
@@ -250,6 +257,7 @@ class HudsonNoJob
     @updated_at = ""
     @description = ""
     @state = ""
+    @job_settings = nil
   end
 
 end

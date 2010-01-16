@@ -183,4 +183,20 @@ class HudsonBuildTest < Test::Unit::TestCase
     assert_equal true, HudsonBuild.exists_number?(100,10)
   end
 
+  def test_hudson_build_count_of_should_return_zero
+    assert_equal 0, HudsonBuild.count_of(nil)
+
+    job_data = hudson_jobs(:have_white_space)
+    job = HudsonJob.find(job_data.id)
+    assert job != nil
+    assert_equal 0, HudsonBuild.count_of(job)
+  end
+
+  def test_hudson_build_count_of
+    job_data = hudson_jobs(:simple_ruby_application)
+    job = HudsonJob.find(job_data.id)
+    assert job != nil
+    assert_equal 1, HudsonBuild.count_of(job)
+  end
+
 end

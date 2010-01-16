@@ -29,6 +29,10 @@ label_show_description: Show Description
 label_hide_description: Hide Description
 label_todays_build: Today's Build
 label_build_artifacts: Artifacts
+label_num_of_stored_builds: Num of Builds
+label_delete_old_build: Delete Old Build
+label_log_rotator_days_to_keep: Days To Keep
+label_log_rotator_num_to_keep: Num To Keep
 
 button_delete_history: Delete History
 

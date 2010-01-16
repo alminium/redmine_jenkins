@@ -28,35 +28,16 @@ class HudsonSettingsController < ApplicationController
       @hudson.settings.show_compact = check_box_to_boolean(params[:settings][:show_compact])
       @hudson.settings.look_and_feel = params[:settings].fetch(:look_and_feel)
 
+      update_health_reports params
 
-      if (params[:health_report_settings] != nil)
-        params[:health_report_settings].each do |id, hrs|
-          setting = @hudson.settings.health_report_settings.detect {|item| item.id == id.to_i}
-          next unless setting
+      add_job
 
-          if HudsonSettingsHealthReport.is_blank?(hrs)
-            setting.destroy
-            next
-          end
-
-          setting.update_from_hash(hrs)
-          setting.save
-        end
-      end
-
-      if (params[:new_health_report_settings] != nil)
-        params[:new_health_report_settings].each do |id, hrs|
-          next if HudsonSettingsHealthReport.is_blank?(hrs)
-          @hudson.settings.health_report_settings << HudsonSettingsHealthReport.new(hrs)
-        end
-      end
+      update_job_settings params
 
       if ( @hudson.settings.save )
         flash[:notice] = l(:notice_successful_update)
         find_hudson # 一度設定を読み直さないと、destory したものが残るので ( delete_if の方が分かりやすい？ )
       end
-
-      destroy_garbage_jobs
     end
 
     # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない
@@ -73,6 +54,18 @@ class HudsonSettingsController < ApplicationController
     rescue HudsonApiException => error
       @error = error.message
     end
+    render :layout => false, :template => 'hudson_settings/_joblist.rhtml'
+  end
+
+  def delete_builds
+    find_hudson_jobs(@hudson.settings.url)
+    job = HudsonJob.find(params[:job_id])
+    ActiveRecord::Base::transaction() do
+      job.destroy_builds
+      job.latest_build_number = ""
+      job.save!
+    end if job
+  ensure
     render :layout => false, :template => 'hudson_settings/_joblist.rhtml'
   end
 
@@ -121,6 +114,56 @@ private
     doc = REXML::Document.new content
     doc.elements.each("hudson/job") do |element|
       @jobs << get_element_value(element, "name")
+    end
+  end
+
+  def update_health_reports(params)
+
+    return unless params[:health_report_settings]
+    
+    params[:health_report_settings].each do |id, hrs|
+      setting = @hudson.settings.health_report_settings.detect {|item| item.id == id.to_i}
+      next unless setting
+
+      if HudsonSettingsHealthReport.is_blank?(hrs)
+        setting.destroy
+        next
+      end
+
+      setting.update_from_hash(hrs)
+      setting.save
+    end
+
+    return unless params[:new_health_report_settings]
+
+    params[:new_health_report_settings].each do |id, hrs|
+      next if HudsonSettingsHealthReport.is_blank?(hrs)
+      @hudson.settings.health_report_settings << HudsonSettingsHealthReport.new(hrs)
+    end
+
+  end
+
+  def add_job
+    HudsonSettings.to_array(@hudson.settings.job_filter).each do |job_name|
+      next if @hudson.get_job(job_name).is_a?(HudsonJob)
+      job = @hudson.add_job(job_name)
+      job.save!
+    end
+  end
+
+  def update_job_settings(params)
+    return unless params[:job_settings]
+    @hudson.jobs.each do |job|
+      my_params = params[:job_settings][job.id.to_s]
+      next unless my_params
+
+      build_rotator_days_to_keep = my_params[:build_rotator_days_to_keep] != "" ? my_params[:build_rotator_days_to_keep] : -1
+      build_rotator_num_to_keep = my_params[:build_rotator_num_to_keep] != "" ? my_params[:build_rotator_num_to_keep] : -1
+
+      job.job_settings.build_rotate = check_box_to_boolean(my_params[:build_rotate])
+      job.job_settings.build_rotator_days_to_keep = build_rotator_days_to_keep
+      job.job_settings.build_rotator_num_to_keep = build_rotator_num_to_keep
+      job.job_settings.save!
     end
   end
 

@@ -41,6 +41,16 @@ class Hudson
       return job
   end
 
+  def add_job(job_name)
+    retval = HudsonJob.new
+    retval.name = job_name
+    retval.project_id = self.project_id
+    retval.hudson_id = self.settings.id
+    retval.project = self.project
+    self.jobs << retval
+    return retval
+  end
+
 private
   def clear_hudson_api_errors
     @hudson_api_errors = []
@@ -92,21 +102,11 @@ private
 
   end
 
-  def add_job(job_name)
-    retval = HudsonJob.new
-    retval.name = job_name
-    retval.project_id = self.project_id
-    retval.hudson_id = self.settings.id
-    retval.project = self.project
-    retval.settings = self.settings
-    self.jobs << retval
-    return retval
-  end
-
   def find_jobs
     @jobs = HudsonJob.find :all,
                            :order => "#{HudsonJob.table_name}.name",
-                           :conditions => ["#{HudsonJob.table_name}.project_id = ?", @project_id]
+                           :conditions => ["#{HudsonJob.table_name}.project_id = ?", @project_id],
+                           :include => :job_settings
   end
 
 end

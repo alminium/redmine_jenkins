@@ -4,17 +4,43 @@
 %>
 <div class="floating" id="joblist">
 <%=link_to_remote "[#{l(:label_update_jobs)}]", :update=>'joblist', :url=>{:action => 'joblist', :id=>@project}, :with=>"'url=' + $('settings_url').value"%><br>
+<p>
 <% if @jobs.length == 0 %>
   <%=@error if @error != nil%>
   <%=l(:notice_err_no_jobs) unless @error != nil%>
 <% else %>
-  <% @jobs.each do |job| %>
-    <label>
-    <%= check_box_tag 'settings[jobs][]', job, @hudson.settings.job_include?(job) %>
-    <%= job %>
-    </label><br>
+  <table class="job-list">
+    <thead>
+    <tr><th><%=link_to image_tag('toggle_check.png')%></th>
+    <th><%=l(:field_name)%></th>
+    <th><%=l(:label_num_of_stored_builds)%></th>
+    <th><%=l(:label_delete_old_build)%></th>
+    <th><%=l(:label_log_rotator_days_to_keep)%></th>
+    <th><%=l(:label_log_rotator_num_to_keep)%></th>
+    <th></th>
+    </tr>
+  <% @jobs.each do |job_name| %>
+    <% job = @hudson.get_job(job_name) -%>
+    <tr class="<%= cycle('odd', 'even')%>">
+    <td class="checkbox"><%= check_box_tag 'settings[jobs][]', job_name, @hudson.settings.job_include?(job_name) %></td>
+    <% linked_job_name = link_to(job_name, HudsonJob.url_to(@hudson.settings, job_name)) %>
+    <% number_of_build = HudsonBuild.count_of(job) -%>
+    <td class="job-name"><%= linked_job_name %></td>
+    <td class="number"><%= number_with_delimiter number_of_build %></td>
+
+    <%=render :partial => 'job_settings', :locals => {:field_name => "job_settings[]", :job => job} %>
+
+    <% delete_button = "" -%>
+    <% delete_button = link_to_remote(l(:button_delete), { :update => 'joblist',  :url => {:controller => 'hudson_settings', :action => 'delete_builds', :id => @project, :job_id => job.id},
+                                                  :method => :post
+                                                 }, :title => l(:button_delete),
+                                                 :class => 'icon icon-del') -%>
+    <td><%=delete_button%></td>
+    <tr>
   <% end %>
+  </table>
 <% end %>
  <%= hidden_field_tag 'settings[jobs][]', '' %>
+</p>
 </div>
  
