@@ -29,6 +29,11 @@ es:
   label_show_description: Mostrar descripción
   label_hide_description: Esconder descripción
   label_todays_build: Today's Build
+  label_build_artifacts: Artifacts
+  label_num_of_stored_builds: Num of Builds
+  label_delete_old_build: Delete Old Build
+  label_log_rotator_days_to_keep: Days To Keep
+  label_log_rotator_num_to_keep: Num To Keep
 
   button_delete_history: Borrar historial
 
@@ -42,14 +47,14 @@ es:
   notice_health_report_setting: 'Si el plugin encuentra la palabra clave - ${keyword} en el informe de salud, proporciona un enlace a Hudson - ${url_format}'
   notice_autofetch: Información de búsqueda desde Hudson durante la acción 'index'. <br/> Es posible realizar la llamada desde un script externo mediante una tarea "rake redmine_hudson:fetch".
 
-  notice_err_cant_connect: "Imposible conectar con Hudson %1s"
-  notice_err_response_invalid: 'Respuesta no válida %1s'
-  notice_err_http_error: 'Error HTTP %1s'
-  notice_err_no_settings: "Sin configuración para este proyecto. <a href='%1s'>Configurar proyecto</a>"
+  notice_err_cant_connect: "Imposible conectar con Hudson {{value}}"
+  notice_err_response_invalid: 'Respuesta no válida {{value}}'
+  notice_err_http_error: 'Error HTTP {{value}}'
+  notice_err_no_settings: "Sin configuración para este proyecto. <a href='{{value}}'>Configurar proyecto</a>"
   notice_err_no_jobs: Hudson no tiene tareas
   notice_err_invalid_url: URL no válida
-  notice_err_no_job : 'tarea no encontrada [%1s]'
-  notice_err_unknown: 'Unknown Error %1s'
+  notice_err_no_job : 'tarea no encontrada [{{value}}]'
+  notice_err_unknown: 'Unknown Error {{value}}'
 
-  notice_err_build_failed: 'Ejecución fallida %1s'
-  notice_err_build_failed_no_job: 'Ejecución fallida. Tarea no encontrada [%1s]'
+  notice_err_build_failed: 'Ejecución fallida {{value}}'
+  notice_err_build_failed_no_job: 'Ejecución fallida. Tarea no encontrada [{{value}}]'

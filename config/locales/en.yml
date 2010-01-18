@@ -29,6 +29,11 @@ en:
   label_show_description: Show Description
   label_hide_description: Hide Description
   label_todays_build: Today's Build
+  label_build_artifacts: Artifacts
+  label_num_of_stored_builds: Num of Builds
+  label_delete_old_build: Delete Old Build
+  label_log_rotator_days_to_keep: Days To Keep
+  label_log_rotator_num_to_keep: Num To Keep
 
   button_delete_history: Delete History
 
@@ -42,15 +47,15 @@ en:
   notice_health_report_setting: 'If plugin find keyword - ${keyword} in HealthReport, Provide a link to Hudson - ${url_format}'
   notice_autofetch: Fetch information from Hudson during action 'index'. <br> You can call rake-task "redmine_hudson:fetch" by an external script.
 
-  notice_err_cant_connect: "Can't Connect Hudson %1s"
-  notice_err_response_invalid: 'Response Invalid %1s'
-  notice_err_http_error: 'Http Error %1s'
-  notice_err_no_settings: "No settings for this project. Please <a href='%1s'>confirm settings</a>"
+  notice_err_cant_connect: "Can't Connect Hudson {{value}}"
+  notice_err_response_invalid: 'Response Invalid {{value}}'
+  notice_err_http_error: 'Http Error {{value}}'
+  notice_err_no_settings: "No settings for this project. Please <a href='{{value}}'>confirm settings</a>"
   notice_err_no_jobs: Hudson has no job
   notice_err_invalid_url: Invalid URL
-  notice_err_no_job : 'job not found [%1s]'
-  notice_err_unknown: 'Unknown Error %1s'
+  notice_err_no_job : 'job not found [{{value}}]'
+  notice_err_unknown: 'Unknown Error {{value}}'
 
-  notice_err_build_failed: 'Build failed %1s'
-  notice_err_build_failed_no_job: 'Build failed. Job not found [%1s]'
+  notice_err_build_failed: 'Build failed {{value}}'
+  notice_err_build_failed_no_job: 'Build failed. Job not found [{{value}}]'
 

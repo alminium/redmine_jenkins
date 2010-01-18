@@ -29,6 +29,11 @@ ja:
   label_show_description: 詳細を表示する
   label_hide_description: 詳細を隠す
   label_todays_build: 今日のビルド
+  label_build_artifacts: ビルド成果物
+  label_num_of_stored_builds: 保存しているビルドの数
+  label_delete_old_build: 古いビルドを破棄
+  label_log_rotator_days_to_keep: ビルドの保存日数
+  label_log_rotator_num_to_keep: ビルドの保存最大数
 
   button_delete_history: 履歴を削除
 
@@ -42,14 +47,14 @@ ja:
   notice_health_report_setting: 'ヘルスレポートの中に ${keyword} を見つけたら, Hudson へのリンク ${url_format} を作成します'
   notice_autofetch: アクション 'index' の中で最新の情報を取得します。<br> 定期的に情報を取得したい場合は rake タスク "redmine_hudson:fetch" を使ってください。
 
-  notice_err_cant_connect: "Hudson に接続できませんでした（Hudson が起動していないかもしれません） %1s"
-  notice_err_response_invalid: 'Hudson からの応答が何か変です。 %1s'
-  notice_err_http_error: 'Hudson からエラーが返って来ました。%1s'
-  notice_err_no_settings: このプロジェクトの設定が見当たりません。<a href='%1s'>設定を確認</a>してください。
+  notice_err_cant_connect: "Hudson に接続できませんでした（Hudson が起動していないかもしれません） {{value}}"
+  notice_err_response_invalid: 'Hudson からの応答が何か変です。 {{value}}'
+  notice_err_http_error: 'Hudson からエラーが返って来ました。{{value}}'
+  notice_err_no_settings: このプロジェクトの設定が見当たりません。<a href='{{value}}'>設定を確認</a>してください。
   notice_err_no_jobs: URLが設定されていないか、HudsonにJobが登録されていません。
   notice_err_invalid_url: URLに誤りがあるようです。
-  notice_err_no_job : 'Jobが見当たりません。[%1s]'
-  notice_err_unknown: 'エラーが発生しました。%1s'
+  notice_err_no_job : 'Jobが見当たりません。[{{value}}]'
+  notice_err_unknown: 'エラーが発生しました。{{value}}'
 
-  notice_err_build_failed: 'ビルドに失敗しました。%1s'
-  notice_err_build_failed_no_job: 'ビルドに失敗しました。Jobが見当たりません。[%1s]'
+  notice_err_build_failed: 'ビルドに失敗しました。{{value}}'
+  notice_err_build_failed_no_job: 'ビルドに失敗しました。Jobが見当たりません。[{{value}}]'
