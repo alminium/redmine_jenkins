@@ -1,0 +1,22 @@
+#$Id$
+
+simple_ruby_application:
+  id: 1
+  hudson_job_id: 1
+  build_rotate: t
+  build_rotator_days_to_keep: 1
+  build_rotator_num_to_keep: 20
+
+have_white_space:
+  id: 2
+  hudson_job_id: 2
+  build_rotate: t
+  build_rotator_days_to_keep: -1
+  build_rotator_num_to_keep: 15
+
+maven_application:
+  id: 3
+  hudson_job_id: 3
+  build_rotate: t
+  build_rotator_days_to_keep: 2
+  build_rotator_num_to_keep: -1
