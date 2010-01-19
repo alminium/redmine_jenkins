@@ -1,25 +1,20 @@
 # $Id$
-require 'cucumber/rake/task'
 desc 'Test Redmine Hudson Plugin'
 begin
-  rcov_options = "-I ../../../lib -x redmine"
+  rcov_unit_options = "-I ../../../lib -x redmine"
+  rcov_cucumber_options = "--rails --sort=coverage --exclude 'osx/objc,gems/,spec/,redmine' -o features_rcov"
 
   namespace :redmine_hudson do
     namespace :test do
       task :unit => [:cd_plugin_dir, :environment, :init_fixtures] do
         desc 'unittest for Hudson Plugin'
-        system "rcov #{rcov_options} test/unit/*_test.rb"
+        system "rcov #{rcov_unit_options} test/unit/*_test.rb"
       end
 
-      task :feature => [:cd_plugin_dir, :do_feature] do
+      task :feature => [:cd_plugin_dir] do
         desc 'featuretest for Hudson Plugin'
-      end
-
-      Cucumber::Rake::Task.new(:do_feature) do |t|
-        t.cucumber_opts = "test/features -S"
-        t.rcov = true
-        t.rcov_opts = ["--rails", "--sort=coverage", "--exclude 'osx/objc,gems/,spec/,redmine'"]
-        t.rcov_opts << %[-o "features_rcov"]
+        require 'cucumber/rake/task'
+        system "rcov #{rcov_cucumber_options} #{Cucumber::BINARY} -- test/features -S"
       end
 
       task :init_fixtures do
