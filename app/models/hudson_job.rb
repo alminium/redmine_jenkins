@@ -19,9 +19,9 @@ class HudsonJob < ActiveRecord::Base
   include HudsonHelper
   include RexmlHelper
 
-  def initialize
-    super
-    @job_settings = HudsonJobSettings.new
+  def initialize(attributes = nil)
+    super attributes
+    self.job_settings = HudsonJobSettings.new
     @hudson_api_errors = []
   end
 
@@ -30,7 +30,8 @@ class HudsonJob < ActiveRecord::Base
   end
 
   def after_save
-    @job_settings.save!
+    self.job_settings.hudson_job_id = self.id
+    self.job_settings.save!
   end
 
   def url

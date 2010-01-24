@@ -112,4 +112,17 @@ class HudsonSettingsTest < Test::Unit::TestCase
 
   end
 
+  def test_job_settings
+    target = HudsonJob.new(:project_id => 1, :hudson_id => 1, :name => 'test_job_settings')
+
+    assert_equal nil, target.id
+
+    target.save!
+
+    assert target.job_settings != nil
+    assert target.id != nil
+    assert_equal target.id, target.job_settings.hudson_job_id
+
+  end
+
 end

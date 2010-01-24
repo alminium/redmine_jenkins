@@ -11,8 +11,8 @@ class HudsonJobSettings < ActiveRecord::Base
   include RexmlHelper
   extend HudsonHelper
 
-  def initialize
-    super
+  def initialize(attributes = nil)
+    super attributes
     @build_rotate = false
     @build_rotator_days_to_keep = -1
     @build_rotator_num_to_keep = -1

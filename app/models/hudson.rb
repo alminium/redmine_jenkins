@@ -42,7 +42,7 @@ class Hudson
   end
 
   def add_job(job_name)
-    retval = HudsonJob.new
+    retval = HudsonJob.new()
     retval.name = job_name
     retval.project_id = self.project_id
     retval.hudson_id = self.settings.id

@@ -30,14 +30,13 @@ class HudsonSettingsController < ApplicationController
 
       update_health_reports params
 
-      add_job
-
-      update_job_settings params
-
       if ( @hudson.settings.save )
-        flash[:notice] = l(:notice_successful_update)
+        add_job
+        update_job_settings params
         find_hudson # 一度設定を読み直さないと、destory したものが残るので ( delete_if の方が分かりやすい？ )
+        flash[:notice] = l(:notice_successful_update)
       end
+
     end
 
     # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない

@@ -51,7 +51,6 @@ Feature: index
       And Hudson API returns "simple-ruby-application" as depth0
     When I go to HudsonSettings at "eCookbook" Project
     Then I fill in "http://localhost:8080" for "settings[url]"
-     And I press "Save"
      And I fill in "simple-ruby-application" for "settings[jobs][]"
      And I press "Save"
 
