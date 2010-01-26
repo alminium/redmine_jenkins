@@ -131,7 +131,7 @@ class HudsonBuild < ActiveRecord::Base
     retval = HudsonBuildChangeset.new
     retval.hudson_build_id = self.id
     retval.repository_id = self.project.repository.id
-    retval.revision = get_element_value(elem, "revision")
+    retval.revision = get_revision_no(elem)
     return retval
   end
 
@@ -141,6 +141,13 @@ class HudsonBuild < ActiveRecord::Base
     retval.display_path = get_element_value(elem,"displayPath")
     retval.file_name = get_element_value(elem, "fileName")
     retval.relative_path = get_element_value(elem, "relativePath")
+    return retval
+  end
+
+  def get_revision_no(elem)
+    retval = get_element_value(elem, "revision")
+    return retval if retval != ""
+    retval = get_element_value(elem, "rev") # for mercurial or hudson 1.340
     return retval
   end
 

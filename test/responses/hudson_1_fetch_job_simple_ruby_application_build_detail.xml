@@ -83,7 +83,7 @@ http://noauth.onejob.nohealthreport.local:9090/job/simple-ruby-application/9/
 <date>2009-07-19T11:33:21.526102Z</date>
 <msg>fixes #22
 add class HelloEveryone</msg>
-<revision>16</revision>
+<rev>16</rev>
 <user>t-andou</user>
 </item>
 
