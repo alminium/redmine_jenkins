@@ -57,13 +57,7 @@ class HudsonSettingsController < ApplicationController
   end
 
   def delete_builds
-    find_hudson_jobs(@hudson.settings.url)
-    job = HudsonJob.find(params[:job_id])
-    ActiveRecord::Base::transaction() do
-      job.destroy_builds
-      job.latest_build_number = ""
-      job.save!
-    end if job
+    # 今は何もしないようにしておく。
   ensure
     render :layout => false, :template => 'hudson_settings/_joblist.rhtml'
   end
