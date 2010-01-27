@@ -65,7 +65,7 @@ class HudsonApplicationHooks < Redmine::Hook::ViewListener
     o << "function add_build_info_to_changesets(){" + "\n"
     o << "  var messages = $$('div[class^=\"changeset\"] p');" + "\n"
     o << "  messages.each(function(message){" + "\n"
-    o << "    if ( message.innerHTML.indexOf('repositories') > 0) {" + "\n"
+    o << "    if ( message.innerHTML.indexOf('#{l(:label_revision)}') > 0) {" + "\n"
     o << "  	  add_build_info_to_changeset(message);" + "\n"
     o << "    }" + "\n"
     o << "  });" + "\n"
