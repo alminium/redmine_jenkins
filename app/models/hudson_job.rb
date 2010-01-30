@@ -142,6 +142,7 @@ private
     doc.elements.each("//entry") do |entry|
       buildinfo = HudsonBuild.parse_rss(entry)
 
+      next unless HudsonBuildRotator.can_store?(self, buildinfo[:number])
       next unless HudsonBuild.to_be_updated?(self.id, buildinfo[:number])
 
       build = get_build(buildinfo[:number])
@@ -188,6 +189,7 @@ private
     doc.elements.each("//build") do |buildelem|
       build_number = get_element_value(buildelem, "number")
 
+      next unless HudsonBuildRotator.can_store?(self, build_number)
       next unless HudsonBuild.to_be_updated?(self.id, build_number)
 
       build = get_build(build_number)

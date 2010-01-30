@@ -34,7 +34,7 @@
     <% delete_button = link_to_remote(l(:button_delete), { :update => 'joblist',  :url => {:controller => 'hudson_settings', :action => 'delete_builds', :id => @project, :job_id => job.id},
                                                   :method => :post
                                                  }, :title => l(:button_delete),
-                                                 :class => 'icon icon-del') -%>
+                                                 :class => 'icon icon-del') if job && job.job_settings && job.job_settings.do_rotate? -%>
     <td><%=delete_button%></td>
     <tr>
   <% end %>

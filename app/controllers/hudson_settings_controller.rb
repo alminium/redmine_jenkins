@@ -57,7 +57,16 @@ class HudsonSettingsController < ApplicationController
   end
 
   def delete_builds
-    # 今は何もしないようにしておく。
+    find_hudson_jobs(@hudson.settings.url)
+
+    return unless params[:job_id]
+    job = HudsonJob.find(params[:job_id])
+    return unless job
+
+    rotator = HudsonBuildRotator.new(job.job_settings)
+    rotator.execute
+  rescue => error
+    @error = error.message
   ensure
     render :layout => false, :template => 'hudson_settings/_joblist.rhtml'
   end

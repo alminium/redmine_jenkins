@@ -21,19 +21,22 @@ class HudsonBuildRotatorTest < Test::Unit::TestCase
 
     HudsonBuild.delete_all
 
-    create_build data_job.id, Date.today - 2, (1..10)
-    create_build data_job.id, Date.today - 1, (11..20)
-    create_build data_job.id, Date.today, (21..30)
+    curdate = DateTime.new(2010,1,30,12,00,10)
+    (0..1).each do |index|
+      create_build data_job.id + index, curdate - 2, (1..10)
+      create_build data_job.id + index, curdate - 1, (11..20)
+      create_build data_job.id + index, curdate, (21..30)
+    end
 
-    assert_equal 30, HudsonBuild.count()
+    assert_equal 60, HudsonBuild.count()
 
     target = HudsonBuildRotator.new(job.job_settings)
     target.execute
 
-    assert_equal 10, HudsonBuild.count
+    assert_equal 30, HudsonBuild.count_by_sql(["select count(*) from #{HudsonBuild.table_name} where hudson_job_id = ?", data_job.id + 1])
     count = 0
-    HudsonBuild.find(:all).each do |build|
-      count += 1 if build.number.to_i >= 11 && build.finished_at > Date.today - 1
+    HudsonBuild.find(:all, :conditions => ["hudson_job_id = ?", data_job.id]).each do |build|
+      count += 1 if build.number.to_i >= 11 && build.finished_at >= DateTime.new(2010,1,30,0,0,0)
     end
     assert_equal 10, count
 
@@ -48,15 +51,19 @@ class HudsonBuildRotatorTest < Test::Unit::TestCase
 
     HudsonBuild.delete_all
 
-    create_build data_job.id, Date.today - 2, (1..10)
-    create_build data_job.id, Date.today - 1, (11..20)
-    create_build data_job.id, Date.today, (21..30)
+    curdate = DateTime.new(2010,1,30,12,00,10)
+    (0..1).each do |index|
+      create_build data_job.id + index, curdate - 2, (1..10)
+      create_build data_job.id + index, curdate - 1, (11..20)
+      create_build data_job.id + index, curdate, (21..30)
+    end
 
     target.execute
 
-    assert_equal 15, HudsonBuild.count
+    assert_equal 45, HudsonBuild.count
+    assert_equal 30, HudsonBuild.count_by_sql(["select count(*) from #{HudsonBuild.table_name} where hudson_job_id = ?", data_job.id + 1])
     count = 0
-    HudsonBuild.find(:all).each do |build|
+    HudsonBuild.find(:all, :conditions => ["hudson_job_id = ?", data_job.id]).each do |build|
       count += 1 if build.number.to_i >= 16
     end
     assert_equal 15, count
@@ -72,18 +79,66 @@ class HudsonBuildRotatorTest < Test::Unit::TestCase
 
     HudsonBuild.delete_all
 
-    create_build data_job.id, Date.today - 2, (1..10)
-    create_build data_job.id, Date.today - 1, (11..20)
-    create_build data_job.id, Date.today, (21..30)
+    curdate = DateTime.new(2010,1,30,12,00,10)
+    (0..1).each do |index|
+      create_build data_job.id + index, curdate - 2, (1..10)
+      create_build data_job.id + index, curdate - 1, (11..20)
+      create_build data_job.id + index, curdate, (21..30)
+    end
 
     target.execute
 
-    assert_equal 20, HudsonBuild.count
+    assert_equal 50, HudsonBuild.count
+    assert_equal 30, HudsonBuild.count_by_sql(["select count(*) from #{HudsonBuild.table_name} where hudson_job_id = ?", data_job.id + 1])
     count = 0
-    HudsonBuild.find(:all).each do |build|
-      count += 1 if build.finished_at > Date.today - job.job_settings.build_rotator_days_to_keep
+    HudsonBuild.find(:all, :conditions => ["hudson_job_id = ?", data_job.id]).each do |build|
+      count += 1 if build.finished_at >= DateTime.new(2010,1,29,0,0,0)
     end
     assert_equal 20, count
+
+  end
+
+  def test_self_can_store_should_return_false
+
+    data_job = hudson_jobs(:simple_ruby_application)
+    job = HudsonJob.find(data_job.id, :include => HudsonJobSettings)
+
+    HudsonBuild.delete_all
+
+    curdate = DateTime.new(2010,1,30,12,00,10)
+    (0..1).each do |index|
+      create_build data_job.id + index, curdate - 2, (1..10)
+      create_build data_job.id + index, curdate - 1, (11..20)
+      create_build data_job.id + index, curdate, (21..30)
+    end
+
+    assert_equal false, HudsonBuildRotator.can_store?(nil, nil)
+    assert_equal false, HudsonBuildRotator.can_store?(nil, 1)
+    assert_equal false, HudsonBuildRotator.can_store?(nil, "1")
+
+    assert_equal false, HudsonBuildRotator.can_store?(job, 1)
+    assert_equal false, HudsonBuildRotator.can_store?(job, "1")
+    assert_equal false, HudsonBuildRotator.can_store?(job, 20)
+    assert_equal false, HudsonBuildRotator.can_store?(job, "20")
+
+  end
+
+  def test_self_can_store_should_return_true
+
+    data_job = hudson_jobs(:simple_ruby_application)
+    job = HudsonJob.find(data_job.id, :include => HudsonJobSettings)
+
+    HudsonBuild.delete_all
+
+    curdate = DateTime.new(2010,1,30,12,00,10)
+    (0..1).each do |index|
+      create_build data_job.id + index, curdate - 2, (1..10)
+      create_build data_job.id + index, curdate - 1, (11..20)
+      create_build data_job.id + index, curdate, (21..30)
+    end
+
+    assert_equal true, HudsonBuildRotator.can_store?(job, 31)
+    assert_equal true, HudsonBuildRotator.can_store?(job, "31")
 
   end
 
@@ -94,7 +149,7 @@ class HudsonBuildRotatorTest < Test::Unit::TestCase
         build.number = number
         build.result = "SUCCESS"
         build.building = false
-        build.finished_at = finished_at
+        build.finished_at = finished_at + Rational(1, 24 * 60 * 60) * number
         build.save!
       end
   end

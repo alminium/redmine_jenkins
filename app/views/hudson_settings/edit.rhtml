@@ -53,6 +53,12 @@
 <p><%= submit_tag l(:button_save) %></p>
 <% end %>
 
+<h2 style="margin-top:20px;"><%=l(:label_database)%></h2>
+
+<% form_tag({:action => 'delete_history', :id => @project}) do %>
+  <%= submit_tag l(:button_delete_history) %>
+<% end %>
+
 <style type="text/css">
 <!--
 .health_report_explain { font-weight:bold;}
