@@ -21,7 +21,8 @@ class HudsonBuildRotatorTest < Test::Unit::TestCase
 
     HudsonBuild.delete_all
 
-    curdate = DateTime.new(2010,1,30,12,00,10)
+    curdate = DateTime.now
+    curdate = DateTime.new(curdate.year, curdate.month, curdate.day, 12, 0, 0)
     (0..1).each do |index|
       create_build data_job.id + index, curdate - 2, (1..10)
       create_build data_job.id + index, curdate - 1, (11..20)
@@ -47,17 +48,17 @@ class HudsonBuildRotatorTest < Test::Unit::TestCase
     data_job = hudson_jobs(:have_white_space)
     job = HudsonJob.find(data_job.id, :include => HudsonJobSettings)
 
-    target = HudsonBuildRotator.new(job.job_settings)
-
     HudsonBuild.delete_all
 
-    curdate = DateTime.new(2010,1,30,12,00,10)
+    curdate = DateTime.now
+    curdate = DateTime.new(curdate.year, curdate.month, curdate.day, 12, 0, 0)
     (0..1).each do |index|
       create_build data_job.id + index, curdate - 2, (1..10)
       create_build data_job.id + index, curdate - 1, (11..20)
       create_build data_job.id + index, curdate, (21..30)
     end
 
+    target = HudsonBuildRotator.new(job.job_settings)
     target.execute
 
     assert_equal 45, HudsonBuild.count
@@ -79,7 +80,8 @@ class HudsonBuildRotatorTest < Test::Unit::TestCase
 
     HudsonBuild.delete_all
 
-    curdate = DateTime.new(2010,1,30,12,00,10)
+    curdate = DateTime.now
+    curdate = DateTime.new(curdate.year, curdate.month, curdate.day, 12, 0, 0)
     (0..1).each do |index|
       create_build data_job.id + index, curdate - 2, (1..10)
       create_build data_job.id + index, curdate - 1, (11..20)
@@ -105,7 +107,8 @@ class HudsonBuildRotatorTest < Test::Unit::TestCase
 
     HudsonBuild.delete_all
 
-    curdate = DateTime.new(2010,1,30,12,00,10)
+    curdate = DateTime.now
+    curdate = DateTime.new(curdate.year, curdate.month, curdate.day, 12, 0, 0)
     (0..1).each do |index|
       create_build data_job.id + index, curdate - 2, (1..10)
       create_build data_job.id + index, curdate - 1, (11..20)
@@ -130,7 +133,8 @@ class HudsonBuildRotatorTest < Test::Unit::TestCase
 
     HudsonBuild.delete_all
 
-    curdate = DateTime.new(2010,1,30,12,00,10)
+    curdate = DateTime.now
+    curdate = DateTime.new(curdate.year, curdate.month, curdate.day, 12, 0, 0)
     (0..1).each do |index|
       create_build data_job.id + index, curdate - 2, (1..10)
       create_build data_job.id + index, curdate - 1, (11..20)

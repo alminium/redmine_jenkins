@@ -34,6 +34,9 @@ label_delete_old_build: Delete Old Build
 label_log_rotator_days_to_keep: Days To Keep
 label_log_rotator_num_to_keep: Num To Keep
 
+field_hudson_job: Hudson(Job)
+field_hudson_build: Hudson(BuildNumber)
+
 button_delete_history: Delete History
 
 notice_no_jobs: No Jobs

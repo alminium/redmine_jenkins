@@ -72,8 +72,8 @@ class HudsonBuild < ActiveRecord::Base
 
   def update_by_rss(elem)
     info = HudsonBuild.parse_rss(elem)
-    self.number = info[:number] unless (self.number and self.number.length > 0)
-    return unless info[:number] == self.number
+    self.number = info[:number] unless self.number
+    return unless info[:number].to_i == self.number
     self.result = info[:result]
     self.finished_at = info[:published]
     self.building = info[:building]

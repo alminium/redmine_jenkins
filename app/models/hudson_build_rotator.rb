@@ -32,7 +32,7 @@ def HudsonBuildRotator.can_store?(job, number)
   # get oldest data
   oldest = HudsonBuild.find(:first,
                             :conditions => ["#{HudsonBuild.table_name}.hudson_job_id = ? and #{HudsonBuild.table_name}.id not in (select #{HudsonBuild.table_name}.id from #{HudsonBuild.table_name} where #{cond})", job.id],
-                            :order => "#{HudsonBuild.table_name}.finished_at")
+                            :order => "#{HudsonBuild.table_name}.number")
 
   return number.to_i >= oldest.number.to_i
 
@@ -65,5 +65,5 @@ end
 def HudsonBuildRotator.create_cond_num_to_delete(job_id, num_to_keep)
   return "" unless (num_to_keep && num_to_keep > 0)
 
-  return "#{HudsonBuild.table_name}.id not in (select #{HudsonBuild.table_name}.id from #{HudsonBuild.table_name} where #{HudsonBuild.table_name}.hudson_job_id = #{job_id} order by #{HudsonBuild.table_name}.finished_at desc limit #{num_to_keep})"
+  return "#{HudsonBuild.table_name}.id not in (select #{HudsonBuild.table_name}.id from #{HudsonBuild.table_name} where #{HudsonBuild.table_name}.hudson_job_id = #{job_id} order by #{HudsonBuild.table_name}.number desc limit #{num_to_keep})"
 end

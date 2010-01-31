@@ -34,6 +34,9 @@ label_delete_old_build: 古いビルドを破棄
 label_log_rotator_days_to_keep: ビルドの保存日数
 label_log_rotator_num_to_keep: ビルドの保存最大数
 
+field_hudson_job: Hudson(ジョブ名)
+field_hudson_build: Hudson(ビルド番号)
+
 button_delete_history: 履歴を削除
 
 notice_no_jobs: ジョブはありません。

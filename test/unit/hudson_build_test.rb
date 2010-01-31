@@ -77,7 +77,7 @@ class HudsonBuildTest < Test::Unit::TestCase
 
     build.update_by_rss(doc.elements["//entry"])
 
-    assert_equal  "3", build.number
+    assert_equal  3, build.number
     assert_equal "FAILURE", build.result
     assert_equal Time.xmlschema("2009-07-19T10:35:15Z").localtime, build.finished_at
     assert_equal true, build.building?
@@ -96,7 +96,7 @@ class HudsonBuildTest < Test::Unit::TestCase
     build = HudsonBuild.new
     build.update_by_rss(doc.elements["//entry"])
 
-    assert_equal "2", build.number
+    assert_equal 2, build.number
     assert_equal "SUCCESS", build.result
     assert_equal Time.xmlschema("2009-07-19T11:35:15Z").localtime, build.finished_at
     assert_equal false, build.building?
@@ -116,7 +116,7 @@ class HudsonBuildTest < Test::Unit::TestCase
     build.number = "2"
     build.update_by_rss(doc.elements["//entry"])
 
-    assert_equal "2", build.number
+    assert_equal 2, build.number
     assert_equal "SUCCESS", build.result
     assert_equal Time.xmlschema("2009-07-19T11:35:15Z").localtime, build.finished_at
     assert_equal false, build.building?

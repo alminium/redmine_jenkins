@@ -40,7 +40,6 @@ class HudsonJob < ActiveRecord::Base
 
   def get_build(number)
     return HudsonNoBuild.new unless number
-    return HudsonNoBuild.new if number.length == 0
 
     retval = HudsonBuild.find(:first, :conditions => ["#{HudsonBuild.table_name}.hudson_job_id = ? AND #{HudsonBuild.table_name}.number = ?",
                                                       self.id, number])
