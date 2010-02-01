@@ -38,48 +38,66 @@ module RedmineHudson
          def sql_for_field_with_redmine_hudson(field, value, db_table, db_field, is_custom_filter)
            case field
            when "hudson_build"
-             sql = "#{Issue.table_name}.id in"
-             sql << "(select changesets_issues.issue_id from changesets_issues"
-             sql << " where changesets_issues.changeset_id in"
-             sql << "  (select #{Changeset.table_name}.id from #{Changeset.table_name}"
-             sql << "   where #{Changeset.table_name}.repository_id = #{project.repository.id}"
-             sql << "    and   #{Changeset.table_name}.revision in"
-             sql << "     ( select #{HudsonBuildChangeset.table_name}.revision from #{HudsonBuildChangeset.table_name}"
-             sql << "        where #{HudsonBuildChangeset.table_name}.hudson_build_id in"
-             sql << "        ( select #{HudsonBuild.table_name}.id from #{HudsonBuild.table_name}"
-             sql << "         where " + conditions_for( field, value )
-             sql << "         and   #{HudsonBuild.table_name}.hudson_job_id in"
-             sql << "          ( select #{HudsonJob.table_name}.id from #{HudsonJob.table_name}"
-             sql << "            where #{HudsonJob.table_name}.project_id = #{project.id}"
-             sql << "          )"
-             sql << "       )"
-             sql << "    )"
-             sql << " )"
-             sql << ")"
-             return sql
+             return sql_for_hudson_build(field, value)
 
            when "hudson_job"
-             sql = "#{Issue.table_name}.id in"
-             sql << "(select changesets_issues.issue_id from changesets_issues"
-             sql << " where changesets_issues.changeset_id in"
-             sql << "  (select #{Changeset.table_name}.id from #{Changeset.table_name}"
-             sql << "   where #{Changeset.table_name}.repository_id = #{project.repository.id}"
-             sql << "    and   #{Changeset.table_name}.revision in"
-             sql << "     ( select #{HudsonBuildChangeset.table_name}.revision from #{HudsonBuildChangeset.table_name}"
-             sql << "        where #{HudsonBuildChangeset.table_name}.hudson_build_id in"
-             sql << "        ( select #{HudsonBuild.table_name}.id from #{HudsonBuild.table_name}"
-             sql << "         where " + conditions_for( field, value )
-             sql << "       )"
-             sql << "    )"
-             sql << " )"
-             sql << ")"
-             return sql
+             return sql_for_hudson_job(field, value)
              
            else
               return sql_for_field_without_redmine_hudson(field, value, db_table, db_field, is_custom_filter)
            end
          end
 
+         def sql_for_hudson_build(field, value)
+           return sql_for_always_true unless project
+
+           jobs = HudsonJob.find(:all, :conditions => ["#{HudsonJob.table_name}.project_id = ?", project.id])
+           value_jobs = jobs.collect{|target| "#{connection.quote_string(target.id.to_s)}"}.join(",")
+
+           builds = HudsonBuild.find(:all, :conditions => ["#{HudsonBuild.table_name}.hudson_job_id in (#{value_jobs}) and #{conditions_for(field, value)}"])
+           cond_builds = builds.collect{|target| "#{connection.quote_string(target.id.to_s)}"}.join(",")
+
+           hbchangesets = HudsonBuildChangeset.find(:all, :conditions => ["#{HudsonBuildChangeset.table_name}.hudson_build_id in (#{cond_builds})"])
+           value_revisions = hbchangesets.collect{|target| "#{connection.quote_string(target.revision.to_s)}"}.join(",")
+
+           sql = "#{Issue.table_name}.id in"
+           sql << "(select changesets_issues.issue_id from changesets_issues"
+           sql << " where changesets_issues.changeset_id in"
+           sql << "  (select #{Changeset.table_name}.id from #{Changeset.table_name}"
+           sql << "   where #{Changeset.table_name}.repository_id = #{project.repository.id}"
+           sql << "    and   #{Changeset.table_name}.revision in (#{value_revisions})"
+           sql << " )"
+           sql << ")"
+
+           return sql
+         end
+
+         def sql_for_hudson_job(field, value)
+           return sql_for_always_true unless project
+
+           builds = HudsonBuild.find(:all, :conditions => "#{conditions_for(field, value)}")
+           cond_builds = builds.collect{|target| "#{connection.quote_string(target.id.to_s)}"}.join(",")
+
+           hbchangesets = HudsonBuildChangeset.find(:all, :conditions => ["#{HudsonBuildChangeset.table_name}.hudson_build_id in (#{cond_builds})"])
+           value_revisions = hbchangesets.collect{|target| "#{connection.quote_string(target.revision.to_s)}"}.join(",")
+
+           sql = "#{Issue.table_name}.id in"
+           sql << "(select changesets_issues.issue_id from changesets_issues"
+           sql << " where changesets_issues.changeset_id in"
+           sql << "  (select #{Changeset.table_name}.id from #{Changeset.table_name}"
+           sql << "   where #{Changeset.table_name}.repository_id = #{project.repository.id}"
+           sql << "    and   #{Changeset.table_name}.revision in (#{value_revisions})"
+           sql << " )"
+           sql << ")"
+           
+           return sql
+         end
+
+         # conditions always true
+         def sql_for_always_true
+           return "#{HudsonBuild.table_name}.id > 0"
+         end
+ 
          def conditions_for(field, value)
            retval = ""
 
