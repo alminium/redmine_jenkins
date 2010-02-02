@@ -45,6 +45,6 @@ Redmine::Plugin.register :redmine_hudson do
 end
 
 Dispatcher.to_prepare do
-  Query.send( :include, RedmineHudson::Redmine::QueryPatch)
+  Query.send( :include, RedmineHudson::RedmineExt::QueryPatch)
 end
 
