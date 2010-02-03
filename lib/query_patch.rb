@@ -87,10 +87,14 @@ module RedmineHudson
           def sql_for_hudson_build(field, operator, value)
             return sql_for_always_false unless project
 
-            jobs = HudsonJob.find(:all, :conditions => ["#{HudsonJob.table_name}.project_id = ?", project.id])
-            value_jobs = jobs.collect{|target| "#{connection.quote_string(target.id.to_s)}"}.join(",")
+            if filters.has_key?('hudson_job')
+              cond_jobs = conditions_for('hudson_job', operator_for('hudson_job'), values_for('hudson_job'))
+            else
+              jobs = HudsonJob.find(:all, :conditions => ["#{HudsonJob.table_name}.project_id = ?", project.id])
+              cond_jobs = "#{HudsonBuild.table_name}.hudson_job_id in (" + jobs.collect{|target| "#{connection.quote_string(target.id.to_s)}"}.join(",") + ")"
+            end
 
-            builds = HudsonBuild.find(:all, :conditions => ["#{HudsonBuild.table_name}.hudson_job_id in (#{value_jobs}) and #{conditions_for(field, operator, value)}"])
+            builds = HudsonBuild.find(:all, :conditions => ["#{cond_jobs} and #{conditions_for(field, operator, value)}"])
             cond_builds = builds.collect{|target| "#{connection.quote_string(target.id.to_s)}"}.join(",")
 
             hbchangesets = HudsonBuildChangeset.find(:all, :conditions => ["#{HudsonBuildChangeset.table_name}.hudson_build_id in (#{cond_builds})"])
@@ -112,6 +116,10 @@ module RedmineHudson
           def sql_for_hudson_job(field, operator, value)
             return sql_for_always_false unless project
 
+            if filters.has_key?('hudson_build')
+              return sql_for_always_true
+            end
+
             builds = HudsonBuild.find(:all, :conditions => "#{conditions_for(field, operator, value)}")
             cond_builds = builds.collect{|target| "#{connection.quote_string(target.id.to_s)}"}.join(",")
 
@@ -130,6 +138,11 @@ module RedmineHudson
             sql << " )"
             sql << ")"
             return sql
+          end
+
+          # conditions always true
+          def sql_for_always_true
+            return "#{Issue.table_name}.id > 0"
           end
 
           # conditions always false
