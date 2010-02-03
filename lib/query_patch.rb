@@ -54,13 +54,19 @@ module RedmineHudson
 
             return @available_filters unless project
 
-            job_conditions = "#{HudsonJob.table_name}.project_id = #{project.id}"
+            hudson = Hudson.find_by_project_id(project.id)
 
+            job_conditions = "#{HudsonJob.table_name}.project_id = #{project.id}"
+ 
             @hudson_filters = []
             @hudson_filters <<
               HudsonQueryFilter.new("hudson_job",
                                     { :type => :list_optional, :order => @available_filters.size + 1,
-                                      :values => HudsonJob.find(:all, :conditions => job_conditions, :order => "#{HudsonJob.table_name}.name").collect{|s| [s.name, s.id.to_s] }},
+                                      :values => HudsonJob.find(:all, :conditions => job_conditions, :order => "#{HudsonJob.table_name}.name").collect {|job|
+                                                  next unless hudson.settings.job_include?(job.name)
+                                                  [job.name, job.id.to_s]
+                                                }
+                                    },
                                     HudsonBuild.table_name,
                                     "hudson_job_id")
             @hudson_filters <<
@@ -88,6 +94,9 @@ module RedmineHudson
             cond_builds = builds.collect{|target| "#{connection.quote_string(target.id.to_s)}"}.join(",")
 
             hbchangesets = HudsonBuildChangeset.find(:all, :conditions => ["#{HudsonBuildChangeset.table_name}.hudson_build_id in (#{cond_builds})"])
+
+            return sql_for_always_false if hbchangesets.length == 0
+
             value_revisions = hbchangesets.collect{|target| "#{connection.quote_string(target.revision.to_s)}"}.join(",")
             sql = "#{Issue.table_name}.id in"
             sql << "(select changesets_issues.issue_id from changesets_issues"
@@ -107,6 +116,9 @@ module RedmineHudson
             cond_builds = builds.collect{|target| "#{connection.quote_string(target.id.to_s)}"}.join(",")
 
             hbchangesets = HudsonBuildChangeset.find(:all, :conditions => ["#{HudsonBuildChangeset.table_name}.hudson_build_id in (#{cond_builds})"])
+
+            return sql_for_always_false if hbchangesets.length == 0
+
             value_revisions = hbchangesets.collect{|target| "#{connection.quote_string(target.revision.to_s)}"}.join(",")
 
             sql = "#{Issue.table_name}.id in"
@@ -122,7 +134,12 @@ module RedmineHudson
 
           # conditions always true
           def sql_for_always_true
-            return "#{HudsonBuild.table_name}.id > 0"
+            return "#{Issue.table_name}.id > 0"
+          end
+
+          # conditions always false
+          def sql_for_always_false
+            return "#{Issue.table_name}.id < 0"
           end
 
           def conditions_for(field, operator, value)
