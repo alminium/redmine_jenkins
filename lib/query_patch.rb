@@ -85,7 +85,7 @@ module RedmineHudson
           alias_method_chain :sql_for_field, :redmine_hudson unless method_defined?(:sql_for_field_without_redmine_hudson)
 
           def sql_for_hudson_build(field, operator, value)
-            return sql_for_always_true unless project
+            return sql_for_always_false unless project
 
             jobs = HudsonJob.find(:all, :conditions => ["#{HudsonJob.table_name}.project_id = ?", project.id])
             value_jobs = jobs.collect{|target| "#{connection.quote_string(target.id.to_s)}"}.join(",")
@@ -110,7 +110,7 @@ module RedmineHudson
           end
 
           def sql_for_hudson_job(field, operator, value)
-            return sql_for_always_true unless project
+            return sql_for_always_false unless project
 
             builds = HudsonBuild.find(:all, :conditions => "#{conditions_for(field, operator, value)}")
             cond_builds = builds.collect{|target| "#{connection.quote_string(target.id.to_s)}"}.join(",")
@@ -130,11 +130,6 @@ module RedmineHudson
             sql << " )"
             sql << ")"
             return sql
-          end
-
-          # conditions always true
-          def sql_for_always_true
-            return "#{Issue.table_name}.id > 0"
           end
 
           # conditions always false
