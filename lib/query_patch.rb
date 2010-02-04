@@ -95,6 +95,9 @@ module RedmineHudson
             end
 
             builds = HudsonBuild.find(:all, :conditions => ["#{cond_jobs} and #{conditions_for(field, operator, value)}"])
+
+            return sql_for_always_false if builds.length == 0
+
             cond_builds = builds.collect{|target| "#{connection.quote_string(target.id.to_s)}"}.join(",")
 
             hbchangesets = HudsonBuildChangeset.find(:all, :conditions => ["#{HudsonBuildChangeset.table_name}.hudson_build_id in (#{cond_builds})"])
@@ -121,6 +124,9 @@ module RedmineHudson
             end
 
             builds = HudsonBuild.find(:all, :conditions => "#{conditions_for(field, operator, value)}")
+
+            return sql_for_always_false if builds.length == 0
+
             cond_builds = builds.collect{|target| "#{connection.quote_string(target.id.to_s)}"}.join(",")
 
             hbchangesets = HudsonBuildChangeset.find(:all, :conditions => ["#{HudsonBuildChangeset.table_name}.hudson_build_id in (#{cond_builds})"])
