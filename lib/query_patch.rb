@@ -91,6 +91,9 @@ module RedmineHudson
               cond_jobs = conditions_for('hudson_job', operator_for('hudson_job'), values_for('hudson_job'))
             else
               jobs = HudsonJob.find(:all, :conditions => ["#{HudsonJob.table_name}.project_id = ?", project.id])
+
+              return sql_for_always_false if jobs.length == 0
+
               cond_jobs = "#{HudsonBuild.table_name}.hudson_job_id in (" + jobs.collect{|target| "#{connection.quote_string(target.id.to_s)}"}.join(",") + ")"
             end
 
