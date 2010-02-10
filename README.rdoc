@@ -41,11 +41,27 @@ Click note icon, show build history.
 
 * job-name, build-number, result and built date and time. when Hudson builds revisions associated issues.
 
-=== rake task 'redmine_hudson:fetch'
+=== Search issues related particular build
+
+You can search issues related job and build using filter.
+Plugin chases issues by taking following step.
+ Hudson Job -> Hudson Build -> Related Changeset -> Revision -> Issue
+Hudson Build and Related Changeset are too much, so plugin limits number of Builds and Changeset per each Hudson Job.
+You can change limit settings on settings/plugin/redmine_hudson.
+
+=== Rake task 'redmine_hudson:fetch'
 
 You can get build results using rake task 'redmine_hudson:fetch'.
 If you use rake task, please uncheck 'AutoFetch' setting.
 You can change 'AutoFetch' setting on settings/plugin/redmine_hudson.
+
+=== Clean up stored data
+
+You can delete old data ( builds, changesets, test results ).
+Settings are like Hudson.
+
+* rotate days ( 1day = keep today's data )
+* rotate nums
 
 === Settings for each projects
 
@@ -114,7 +130,15 @@ Use 'delete history' button in setting page.
 === 1.0.2
 
 * ##198 (Feature) You can download artifacts.
+* ##266 (Feature) Clean up stored data.
+* ##267 (Feature) Search issues related particular build.
 * ##235 (Defect) Hudson icon does not display in activitiy view with IE
+* ##273 (Defect) Internal error occures when hudson has no response.
+* ##276 (Defect) Translation missing occures on redmine0.9.x or trunk
+* ##284 (Defect) When saving the settings for a project, get the exception.
+* ##286 (Defect) Can't get changeset information.
+* ##288 (Defect) Can't show build results on issue redmine0.9.x or trunk
+* ##291 (Defect) db:migrate_plugins failed on PostgreSQL
 
 === 1.0.1.1
 
