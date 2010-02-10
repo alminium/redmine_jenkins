@@ -25,7 +25,9 @@ Redmine::Plugin.register :redmine_hudson do
 
   settings(:default => {
              'autofetch' => "true",
-             'job_description_format' => "hudson"
+             'job_description_format' => "hudson",
+             'query_limit_builds_each_job' => 100,
+             'query_limit_changesets_each_job' => 100
             },
            :partial => 'hudson_settings/redmine_hudson_settings')
 

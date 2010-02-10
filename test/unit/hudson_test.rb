@@ -258,6 +258,46 @@ class HudsonTest < Test::Unit::TestCase
     assert_equal "textile", Hudson.job_description_format
   end
 
+  def test_hudson_query_limit_builds_each_job_should_return_default
+    Setting.plugin_redmine_hudson['query_limit_builds_each_job'] = nil
+    assert_equal 100, Hudson.query_limit_builds_each_job
+
+    Setting.plugin_redmine_hudson['query_limit_builds_each_job'] = ""
+    assert_equal 100, Hudson.query_limit_builds_each_job
+
+    Setting.plugin_redmine_hudson['query_limit_builds_each_job'] = "a123"
+    assert_equal 100, Hudson.query_limit_builds_each_job
+
+    Setting.plugin_redmine_hudson['query_limit_builds_each_job'] = "-100"
+    assert_equal 100, Hudson.query_limit_builds_each_job
+
+  end
+
+  def test_hudson_query_limit_builds_each_job_should_return_number
+    Setting.plugin_redmine_hudson['query_limit_builds_each_job'] = "150"
+    assert_equal 150, Hudson.query_limit_builds_each_job
+  end
+
+  def test_hudson_query_limit_changesets_each_job_should_return_default
+    Setting.plugin_redmine_hudson['query_limit_changesets_each_job'] = nil
+    assert_equal 100, Hudson.query_limit_changesets_each_job
+
+    Setting.plugin_redmine_hudson['query_limit_changesets_each_job'] = ""
+    assert_equal 100, Hudson.query_limit_changesets_each_job
+
+    Setting.plugin_redmine_hudson['query_limit_changesets_each_job'] = "a123"
+    assert_equal 100, Hudson.query_limit_changesets_each_job
+
+    Setting.plugin_redmine_hudson['query_limit_changesets_each_job'] = "-100"
+    assert_equal 100, Hudson.query_limit_changesets_each_job
+
+  end
+
+  def test_hudson_query_limit_changesets_each_job_should_return_number
+    Setting.plugin_redmine_hudson['query_limit_changesets_each_job'] = "150"
+    assert_equal 150, Hudson.query_limit_changesets_each_job
+  end
+
   def test_hudson_find_all
     items = Hudson.find(:all)
 

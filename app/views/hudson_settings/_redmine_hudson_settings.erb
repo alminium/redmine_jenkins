@@ -9,3 +9,11 @@
   <%= radio_button_tag 'settings[job_description_format]', "hudson", @settings['job_description_format'] == "hudson" %> Hudson(html)<br>
   <%= radio_button_tag 'settings[job_description_format]', "textile", @settings['job_description_format'] == "textile" %> Textile
 </p>
+<p>
+  <%= content_tag(:label, l(:label_query_limit_builds_each_job)) %>
+  <%= text_field_tag 'settings[query_limit_builds_each_job]', @settings['query_limit_builds_each_job'], :size => 5 %>
+</p>
+<p>
+  <%= content_tag(:label, l(:label_query_limit_changesets_each_job)) %>
+  <%= text_field_tag 'settings[query_limit_changesets_each_job]', @settings['query_limit_changesets_each_job'], :size => 5 %>
+</p>

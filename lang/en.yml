@@ -33,6 +33,8 @@ label_num_of_stored_builds: Num of Builds
 label_delete_old_build: Delete Old Build
 label_log_rotator_days_to_keep: Days To Keep
 label_log_rotator_num_to_keep: Num To Keep
+label_query_limit_builds_each_job: Max Number of Builds for query (Using search issues)
+label_query_limit_changesets_each_job: Max Number of Changesets for query (Using search issues)
 
 field_hudson_job: Hudson(Job)
 field_hudson_build: Hudson(BuildNumber)

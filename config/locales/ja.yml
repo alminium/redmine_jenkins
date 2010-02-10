@@ -34,6 +34,8 @@ ja:
   label_delete_old_build: 古いビルドを破棄
   label_log_rotator_days_to_keep: ビルドの保存日数
   label_log_rotator_num_to_keep: ビルドの保存最大数
+  label_query_limit_builds_each_job: クエリで利用するビルドの最大件数（チケットを検索する時に利用します）
+  label_query_limit_changesets_each_job: クエリで利用するチェンジセットの最大件数（チケットを検索する時に利用します）
 
   field_hudson_job: Hudson(ジョブ名)
   field_hudson_build: Hudson(Build番号)
