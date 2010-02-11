@@ -7,7 +7,7 @@
   <% num_to_keep = settings.build_rotator_num_to_keep %>
   <% days_to_keep = "" if 1 > days_to_keep %>
   <% num_to_keep = "" if 1 > num_to_keep %>
-  <td class="build_rotate"><%= check_box_tag "#{name_base}[build_rotate]", true, settings.build_rotate?, :id => "#{id_base}_build_rotate" %></td>
+  <td class="build_rotate"><%= check_box_tag "#{name_base}[build_rotate]", true, settings.build_rotate?, :id => "#{id_base}_build_rotate", :class => "build_rotate" %></td>
   <td class="build_rotator_days_to_keep"><%= text_field_tag "#{name_base}[build_rotator_days_to_keep]", days_to_keep, :id=> "#{id_base}_build_rotator_days_to_keep", :size => 10, :class => "build_rotator_days_to_keep"%></td>
   <td class="build_rotator_num_to_keep"><%= text_field_tag "#{name_base}[build_rotator_num_to_keep]", num_to_keep, :id=> "#{id_base}_build_rotator_num_to_keep", :size => 10, :class => "build_rotator_num_to_keep"%></td>
 <% else -%>

@@ -64,8 +64,14 @@
 .health_report_explain { font-weight:bold;}
 -->
 </style>
+<script type="text/javascript">
+//<!--
+var controller = new JobSettingsFieldController();
+//-->
+</script>
 
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag "hudson.css", :plugin => "redmine_hudson", :media => "screen" %>
   <%= javascript_include_tag 'hudson_settings', :plugin => "redmine_hudson" %>
+  <%= javascript_include_tag 'job_settings_field_controller', :plugin => "redmine_hudson" %>
 <% end %>
