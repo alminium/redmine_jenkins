@@ -30,6 +30,7 @@ class HudsonJob < ActiveRecord::Base
   end
 
   def after_save
+    self.job_settings = HudsonJobSettings.new unless self.job_settings
     self.job_settings.hudson_job_id = self.id
     self.job_settings.save!
   end
