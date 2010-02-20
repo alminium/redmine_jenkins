@@ -46,7 +46,7 @@ Click note icon, show build history.
 You can search issues related job and build using filter.
 Plugin chases issues by taking following step.
  Hudson Job -> Hudson Build -> Related Changeset -> Revision -> Issue
-Hudson Build and Related Changeset are too much, so plugin limits number of Builds and Changeset per each Hudson Job.
+Hudson Build and Related Changeset are too much, so plugin limits number of Builds and Changesets per each Hudson Job.
 You can change limit settings on settings/plugin/redmine_hudson.
 
 === Rake task 'redmine_hudson:fetch'
@@ -78,6 +78,8 @@ Go  Administration -> Plugins -> 'Redmine Hudson Plugin' Configure.
 
 * You can choose format to write job description. HTML or Textile.
 * AutoFetch Mode. Plugin fetches information from Hudson during action 'index'.
+* Number of Builds per each Hudson Job. ( for search issues )
+* Number of Changesets per each Hudson Job. ( for search issues )
 
 == Install Instructions
 

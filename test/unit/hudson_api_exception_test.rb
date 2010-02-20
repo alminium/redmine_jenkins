@@ -2,6 +2,7 @@
 
 require 'net/http'
 require File.dirname(__FILE__) + '/../test_helper'
+require 'hudson_exceptions'
 
 class HudsonApiExceptionTest < Test::Unit::TestCase
   include ApplicationHelper
@@ -56,8 +57,15 @@ class HudsonApiExceptionTest < Test::Unit::TestCase
   end
 
   def test_rexml_parse_error
-    error = REXML::ParseException.new("rexml parse error 12345678901234567890123456789012345678901234567890")
-    target = HudsonApiException.new(error)
+
+    target = nil
+    error = nil
+    begin
+      doc = REXML::Document.new "<sample>error sample</error_sample>"
+    rescue REXML::ParseException => e
+      error = e
+      target = HudsonApiException.new(error)
+    end
 
     assert_equal l(:notice_err_response_invalid, truncate(error.to_s, 50)), target.message
     assert_equal error, target.inner_exception
