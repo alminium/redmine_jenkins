@@ -82,6 +82,13 @@ rake タスクを使って情報を取得する場合は、必ず 自動取得�
 * ジョブごとに追跡するビルドの件数（チケットの検索で利用します）
 * ジョブごとに追跡するチェンジセットの件数（チケットの検索で利用します）
 
+== 言語ファイル作成者（ありがとうございます）
+
+[de.yml] Jens Goldhammer, Florian Bartels
+[es.yml] juancayetano.delgado
+[fr.yml] Francois-Xavier CAUVIN
+[hu.yml] Péter Major
+
 == インストール方法
 
 === プラグインをインストールする
@@ -186,13 +193,6 @@ rake タスクを使って情報を取得する場合は、必ず 自動取得�
 === 0.1.0
 
 * 最初のリリース
-
-== 言語ファイル作成者（ありがとうございます）
-
-[de.yml] Jens Goldhammer, Florian Bartels
-[es.yml] juancayetano.delgado
-[fr.yml] Francois-Xavier CAUVIN
-[hu.yml] Péter Major
 
 == お問い合わせ
 

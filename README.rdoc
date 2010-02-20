@@ -81,6 +81,13 @@ Go  Administration -> Plugins -> 'Redmine Hudson Plugin' Configure.
 * Number of Builds per each Hudson Job. ( for search issues )
 * Number of Changesets per each Hudson Job. ( for search issues )
 
+== Language contributors
+
+[de.yml] Jens Goldhammer, Florian Bartels
+[es.yml] juancayetano.delgado
+[fr.yml] Francois-Xavier CAUVIN
+[hu.yml] Péter Major
+
 == Install Instructions
 
 === Install plugin
@@ -189,13 +196,6 @@ Use 'delete history' button in setting page.
 === 0.1.0
 
 * First release
-
-== Language contributors
-
-[de.yml] Jens Goldhammer, Florian Bartels
-[es.yml] juancayetano.delgado
-[fr.yml] Francois-Xavier CAUVIN
-[hu.yml] Péter Major
 
 == Contact info
 
