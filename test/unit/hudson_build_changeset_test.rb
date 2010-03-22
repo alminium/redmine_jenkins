@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class HudsonBuildChangesetTest < Test::Unit::TestCase
+class HudsonBuildChangesetTest < ActiveSupport::TestCase
 
   def test_description_for_activity_should_return_zero_length_string
     target = HudsonBuildChangeset.new

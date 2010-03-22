@@ -5,7 +5,7 @@ require 'uri'
 require 'net/http'
 require 'mocha'
 
-class HudsonTest < Test::Unit::TestCase
+class HudsonTest < ActiveSupport::TestCase
   fixtures :projects, :repositories, :hudson_settings, :hudson_settings_health_reports, :hudson_jobs, :hudson_builds
   set_fixture_class :hudson_settings => HudsonSettings
 

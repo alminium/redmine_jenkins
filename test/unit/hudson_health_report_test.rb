@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class HudsonHealthReportTest < Test::Unit::TestCase
+class HudsonHealthReportTest < ActiveSupport::TestCase
   fixtures :hudson_jobs, :hudson_settings
 
   def test_get_health_report_url_should_be_return_zero_length_string

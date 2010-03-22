@@ -2,9 +2,12 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class HudsonSettingsTest < Test::Unit::TestCase
+class HudsonSettingsTest < ActiveSupport::TestCase
   fixtures :hudson_settings, :hudson_settings_health_reports
   set_fixture_class :hudson_settings => HudsonSettings
+
+  include ApplicationHelper
+  include ActionView::Helpers::TextHelper
 
   def test_job_include_should_be_false
     mydata = hudson_settings(:one)

@@ -3,7 +3,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'hudson_exceptions'
 
-class HudsonHelperTest < Test::Unit::TestCase
+class HudsonHelperTest < ActiveSupport::TestCase
 
   include HudsonHelper
 

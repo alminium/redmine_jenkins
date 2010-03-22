@@ -4,7 +4,7 @@ require 'net/http'
 require File.dirname(__FILE__) + '/../test_helper'
 require 'hudson_exceptions'
 
-class HudsonApiExceptionTest < Test::Unit::TestCase
+class HudsonApiExceptionTest < ActiveSupport::TestCase
   include ApplicationHelper
   include ActionView::Helpers::TextHelper
 
@@ -67,7 +67,7 @@ class HudsonApiExceptionTest < Test::Unit::TestCase
       target = HudsonApiException.new(error)
     end
 
-    assert_equal l(:notice_err_response_invalid, truncate(error.to_s, 50)), target.message
+    assert_equal l(:notice_err_response_invalid, truncate(error.to_s, :length => 50)), target.message
     assert_equal error, target.inner_exception
   end
 

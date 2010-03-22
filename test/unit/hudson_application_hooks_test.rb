@@ -3,7 +3,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/../../lib/hudson_application_hooks'
 
-class HudsonApplicationHooksTest < Test::Unit::TestCase
+class HudsonApplicationHooksTest < ActiveSupport::TestCase
   fixtures :projects
 
   def test_view_layouts_base_html_head_should_return_zero_length_string

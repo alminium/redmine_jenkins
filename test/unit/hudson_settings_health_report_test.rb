@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class HudsonSettingsHealthReportTest < Test::Unit::TestCase
+class HudsonSettingsHealthReportTest < ActiveSupport::TestCase
   fixtures :hudson_settings_health_reports, :hudson_settings, :hudson_jobs
   set_fixture_class :hudson_settings => HudsonSettings
 

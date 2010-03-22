@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class HudsonBuildTestResultTest < Test::Unit::TestCase
+class HudsonBuildTestResultTest < ActiveSupport::TestCase
 
   def test_description_for_activity
 

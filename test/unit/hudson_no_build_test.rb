@@ -1,6 +1,6 @@
 # $Id$
 
-class HudsonNoBuildTest < Test::Unit::TestCase
+class HudsonNoBuildTest < ActiveSupport::TestCase
 
   def test_building_should_return_false
     target = HudsonNoBuild.new
