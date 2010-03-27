@@ -11,7 +11,10 @@
 <% form_for @settings, :url => {:action => 'edit', :id => @project}, :html => {:method=>:put} do |setting_form| %>
 <div class="box tabular">
   <p><label><%=l(:label_url)%></label>
-     <%=text_field :settings, :url, :size=>50%> <%=l(:notice_hudson_url)%></p>
+     <%=text_field :settings, :url, :size=>50%> <%=l(:notice_hudson_url)%><br/>
+     <%=check_box_tag "enable_url_for_plugin", :value => 'true' %> <%=l(:label_use_url_for_plugin)%><br/>
+     <span style="display:none;" id="rect_url_for_plugin"><%=text_field :settings, :url_for_plugin, :size=>50%></span>
+  </p>
   <p><label><%=l(:field_user)%></label>
      <%=text_field :settings, :auth_user, :size=>20 %></p>
   <p><label><%=l(:field_password)%></label>
@@ -66,7 +69,16 @@
 </style>
 <script type="text/javascript">
 //<!--
+<% enable_url_for_plugin = (@settings.url_for_plugin and @settings.url_for_plugin.length != 0) %>
 var controller = new JobSettingsFieldController();
+Event.observe($('enable_url_for_plugin'), 'click', switch_state_url_for_plugin);
+function switch_state_url_for_plugin(){
+  display = 'none';
+  if ( $('enable_url_for_plugin').checked ) { display = 'inline'; }
+  $('rect_url_for_plugin').style.display = display;
+}
+$('enable_url_for_plugin').checked = <%=enable_url_for_plugin%>;
+switch_state_url_for_plugin();
 //-->
 </script>
 

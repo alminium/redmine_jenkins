@@ -6,29 +6,35 @@ class HudsonSettingsTest < ActiveSupport::TestCase
   fixtures :hudson_jobs, :hudson_builds, :hudson_settings, :hudson_settings_health_reports
   set_fixture_class :hudson_settings => HudsonSettings
 
-  def test_hudson_url_to_should_return_zero_length_string
+  def test_url_for_should_return_zero_length_string
 
-    assert_equal "", HudsonJob.url_to(nil, "")
-    assert_equal "", HudsonJob.url_to(nil, nil)
+    name_nil_job = HudsonJob.new # settings がない
+    name_zero_length_job = HudsonJob.new(:name => "")
+    [:for_user, :for_plugin].each do |type|
+      assert_equal "", name_nil_job.url_for(type)
+      assert_equal "", name_zero_length_job.url_for(type)
+    end
+
+
+    settings = hudson_settings(:one)
+    name_nil_job.settings = settings
+    name_zero_length_job.settings = settings
+
+    [:for_user, :for_plugin].each do |type|
+      assert_equal "", name_nil_job.url_for(type)
+      assert_equal "", name_zero_length_job.url_for(type)
+    end
+  end
+
+  def test_url_to
+    data = hudson_jobs(:simple_ruby_application)
+    settings = hudson_settings(:one)
     
-    data = hudson_jobs(:simple_ruby_application)
-    settings = hudson_settings(:one)
+    job = HudsonJob.find(data.id)
 
-    assert_equal "", HudsonJob.url_to(settings, nil)
-    assert_equal "", HudsonJob.url_to(settings, "")
-  end
+    assert_equal "#{settings.url}job/#{data.name}", job.url_for(:user)
+    assert_equal "#{settings.url_for_plugin}job/#{data.name}", job.url_for(:plugin)
 
-  def test_hudson_url_to
-    data = hudson_jobs(:simple_ruby_application)
-    settings = hudson_settings(:one)
-    assert_equal "#{settings.url}job/#{data.name}", HudsonJob.url_to(settings, data.name)
-  end
-
-  def test_url
-    data = hudson_jobs(:simple_ruby_application)
-    settings = hudson_settings(:one)
-    target = HudsonJob.find(data.id)
-    assert_equal "#{settings.url}job/#{data.name}", target.url
   end
 
   def test_latest_build_should_be_nobuild
@@ -76,7 +82,7 @@ class HudsonSettingsTest < ActiveSupport::TestCase
 
     data = hudson_jobs(:simple_ruby_application)
     job = HudsonJob.find(data.id)
-    job.expects(:open_hudson_api).with("http://noauth.onejob.nohealthreport.local:9090/job/simple-ruby-application/build", nil, nil)
+    job.expects(:open_hudson_api).with("http://noauth.onejob.nohealthreport.local:19090/job/simple-ruby-application/build", nil, nil)
 
     job.request_build
   end

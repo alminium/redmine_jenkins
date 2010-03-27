@@ -28,7 +28,7 @@ Given /^I join "(.*)" Project as a "(.*)"/ do |project_name, role_name|
   project = Project.find_by_name(project_name)
   raise Exception.new("no such project name #{project_name}") unless project
 
-  member = Member.new(:user_id => @current_user.id, :role_id => role.id, :project_id => project.id)
+  member = Member.new(:user_id => @current_user.id, :project_id => project.id, :roles => [role])
   member.save!
 end
 

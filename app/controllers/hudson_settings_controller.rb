@@ -16,11 +16,14 @@ class HudsonSettingsController < ApplicationController
 
   include RexmlHelper
   include HudsonHelper
+  include HudsonUrlHelper
 
   def edit
     if (params[:settings] != nil)
       @hudson.settings.project_id = @project.id
       @hudson.settings.url = HudsonSettings.add_last_slash_to_url(params[:settings].fetch(:url))
+      @hudson.settings.url_for_plugin = ""
+      @hudson.settings.url_for_plugin = HudsonSettings.add_last_slash_to_url(params[:settings].fetch(:url_for_plugin)) if ( check_box_to_boolean(params[:enable_url_for_plugin]) )
       @hudson.settings.job_filter = HudsonSettings.to_value(params[:settings].fetch(:jobs))
       @hudson.settings.auth_user = params[:settings].fetch(:auth_user)
       @hudson.settings.auth_password = params[:settings].fetch(:auth_password)
@@ -40,7 +43,7 @@ class HudsonSettingsController < ApplicationController
     end
 
     # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない
-    find_hudson_jobs(@hudson.settings.url)
+    find_hudson_jobs
 
   rescue HudsonApiException => error
     flash.now[:error] = error.message
@@ -49,7 +52,13 @@ class HudsonSettingsController < ApplicationController
   def joblist
     begin
       # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない
-      find_hudson_jobs(HudsonSettings.add_last_slash_to_url(params[:url]))
+      # ジョブの一覧を取得するためだけなので、設定に一時値は反映するけれど、保存はしない
+      @hudson.settings = HudsonSettings.new unless @hudson.settings
+      @hudson.settings.url = HudsonSettings.add_last_slash_to_url(params[:url])
+      @hudson.settings.url_for_plugin = ""
+      @hudson.settings.url_for_plugin = HudsonSettings.add_last_slash_to_url(params[:url_for_plugin]) if ( check_box_to_boolean(params[:enable_url_for_plugin]) )
+
+      find_hudson_jobs
     rescue HudsonApiException => error
       @error = error.message
     end
@@ -57,7 +66,7 @@ class HudsonSettingsController < ApplicationController
   end
 
   def delete_builds
-    find_hudson_jobs(@hudson.settings.url)
+    find_hudson_jobs
 
     return unless params[:job_id]
     job = HudsonJob.find(params[:job_id])
@@ -85,7 +94,7 @@ class HudsonSettingsController < ApplicationController
   rescue Exception => error
     flash[:error] = error.message
   ensure
-    find_hudson_jobs(@hudson.settings.url)
+    find_hudson_jobs(@hudson.settings)
     render(:action => "edit")
   end
 
@@ -104,12 +113,13 @@ private
     flash.clear
   end
 
-  def find_hudson_jobs(url)
+  def find_hudson_jobs()
     @jobs = []
 
-    return if url == nil || url.length == 0
+    api_url = @hudson.api_url_for(:plugin)
+    return if api_url == nil || api_url.length == 0
 
-    api_url = "#{url}api/xml?depth=0"
+    api_url = "#{api_url}/xml?depth=0"
 
     # Open the feed and parse it
     content = open_hudson_api(api_url, @hudson.settings.auth_user, @hudson.settings.auth_password)

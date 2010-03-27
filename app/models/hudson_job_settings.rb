@@ -10,18 +10,33 @@ class HudsonJobSettings < ActiveRecord::Base
 
   include RexmlHelper
   extend HudsonHelper
+  extend HudsonUrlHelper
 
   def initialize(attributes = nil)
     super attributes
-    @build_rotate = false
-    @build_rotator_days_to_keep = -1
-    @build_rotator_num_to_keep = -1
+    self.build_rotate = false
+    self.build_rotator_days_to_keep = -1
+    self.build_rotator_num_to_keep = -1
   end
 
   def do_rotate?
     return false unless self.build_rotate
     return false unless (self.build_rotator_days_to_keep > 0 || self.build_rotator_num_to_keep > 0)
     return true
+  end
+
+  def fetch
+
+    return unless self.job
+    return unless self.job.settings
+
+    api_uri = "#{job.config_url_for(:plugin)}"
+    content = open_hudson_api(api_uri, self.job.settings.auth_user, self.job.settings.auth_password)
+
+    doc = REXML::Document.new content
+
+    self.update_by_xml(doc)
+
   end
 
   def update_by_xml(doc)
@@ -43,21 +58,4 @@ class HudsonJobSettings < ActiveRecord::Base
 
   end
   
-end
-
-def HudsonJobSettings.fetch(settings, job_name)
-
-  raise Exception.new("Argument invalid settings isn't HudsonSettings") unless settings.is_a? HudsonSettings
-
-  api_uri = "#{settings.url}job/#{job_name}/config.xml"
-
-  content = open_hudson_api(api_uri, settings.auth_user, settings.auth_password)
-
-  doc = REXML::Document.new content
-
-  retval = HudsonJobSettings.new
-  retval.update_by_xml(doc)
-
-  return retval
-
 end

@@ -38,7 +38,7 @@
         <% if "" != job.latest_build.number %>
           <%=image_tag 'document.png', :class=>'icon-build-history', :id=>"build-history-#{job.name}", :title=>l(:label_show_build_history)%>
           <%=image_tag("#{@hudson.settings.url}images/16x16/package.gif", :class=>"icon-build-artifacts", :id=>"build-artifacts-#{job.name}") unless job.latest_build.artifacts.empty? %>
-          <%=link_to "##{job.latest_build.number}", job.latest_build.url%>
+          <%=link_to "##{job.latest_build.number}", job.latest_build.url_for(:user)%>
           <%=content_tag("span", job.latest_build.result, :class => "result #{job.latest_build.result.downcase}") if true != job.latest_build.building? && "" != job.latest_build.result%>
           <%=content_tag("span", l(:notice_building), :class => "result") if job.latest_build.building? %>
           <% today_tag = "" %>
@@ -52,7 +52,7 @@
     <div class="job-state" id="job-state-<%="#{job.name}"%>">
     <% icon_base_class = "icon24" if @hudson.settings.look_and_feel == 'Hudson' %>
     <% icon_base_class = "icon" if @hudson.settings.look_and_feel == 'Plugin' %>
-    <h3 class="<%=icon_base_class%> icon-<%=job.state%>"><%=link_to job.name, job.url%></h3>
+    <h3 class="<%=icon_base_class%> icon-<%=job.state%>"><%=link_to job.name, job.url_for(:user)%></h3>
       <div class="wiki job-description">
         <%= textilizable job.description if Hudson.job_description_format == "textile"%>
         <%= job.description unless Hudson.job_description_format == "textile" %>
@@ -68,7 +68,7 @@
 
     <ul class="build-artifacts-list" id="build-artifacts-list-<%="#{job.name}"%>" style="display:none;">
     <% job.latest_build.artifacts.each do |artifact| %>
-      <%="<li><a href='#{job.url}/#{job.latest_build.number}/artifact/#{artifact.relative_path}'>#{artifact.display_path}</a>"%>
+      <%="<li><a href='#{job.url_for(:user)}/#{job.latest_build.number}/artifact/#{artifact.relative_path}'>#{artifact.display_path}</a>"%>
     <% end %>
     </ul>
 
@@ -76,7 +76,7 @@
 
   <div id="build-history" style="display:none;"></div>
   <div id="build-artifacts" style="display:none;">
-    <%="#{l(:label_build_artifacts)}" %><hr style="width:18em;"><div id="build-artifacts-list" style="padding-left:20px;"></div>
+    <%="#{l(:label_build_artifacts)}" %><hr style="width:18em;"/><div id="build-artifacts-list" style="padding-left:20px;"></div>
   </div>
   <%= javascript_tag "new BuildArtifacts()"  %>
   <%= javascript_tag "new BuildHistory('#{url_for(:controller => 'hudson', :action => 'history', :id=>@project)}')" %>

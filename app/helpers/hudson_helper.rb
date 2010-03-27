@@ -33,6 +33,7 @@ module HudsonHelper
   def check_box_to_boolean(item)
     return false unless item
     return false if "0" == item
+    return false if "false" == item
     return true
   end
 

@@ -17,6 +17,7 @@ class HudsonJob < ActiveRecord::Base
   validates_presence_of :project_id, :hudson_id, :name
 
   include HudsonHelper
+  include HudsonUrlHelper
   include RexmlHelper
 
   def initialize(attributes = nil)
@@ -35,8 +36,30 @@ class HudsonJob < ActiveRecord::Base
     self.job_settings.save!
   end
 
-  def url
-    return HudsonJob.url_to(self.settings, self.name)
+  def url_for(type = :user)
+    return "" unless self.settings
+    return "" unless (self.name && self.name.length > 0)
+    return "#{self.settings.url_for(type)}job/#{self.name}"
+  end
+
+  def build_url_for(type = :user)
+    return "" if url_for(type) == ""
+    return "#{url_for(type)}/build"
+  end
+
+  def rss_url_for(type = :user)
+    return "" if url_for(type) == ""
+    return "#{url_for(type)}/rssAll"
+  end
+
+  def config_url_for(type = :user)
+    return "" if url_for(type) == ""
+    return "#{url_for(type)}/config.xml"
+  end
+
+  def api_url_for(type = :user)
+    return "" if url_for(type) == ""
+    return "#{url_for(type)}/api"
   end
 
   def get_build(number)
@@ -88,7 +111,7 @@ class HudsonJob < ActiveRecord::Base
 
   def request_build
     clear_hudson_api_errors
-    api_url = "#{self.settings.url}job/#{self.name}/build"
+    api_url = build_url_for(:plugin)
     open_hudson_api(api_url, self.settings.auth_user, self.settings.auth_password)
   rescue HudsonApiException => error
     @hudson_api_errors << HudsonApiError.new(self.class.name, "request_build '#{self.name}'", error)
@@ -96,7 +119,7 @@ class HudsonJob < ActiveRecord::Base
 
   def fetch_recent_builds
     clear_hudson_api_errors
-    api_uri = "#{self.settings.url}job/#{self.name}/rssAll"
+    api_uri = rss_url_for(:plugin)
     content = open_hudson_api(api_uri, self.settings.auth_user, self.settings.auth_password)
 
     doc = REXML::Document.new content
@@ -131,7 +154,7 @@ private
   end
 
   def fetch_summary
-    api_url = "#{self.settings.url}job/#{self.name}/rssAll"
+    api_url = rss_url_for(:plugin)
     begin
       content = open_hudson_api(api_url, self.settings.auth_user, self.settings.auth_password)
     rescue HudsonApiException => error
@@ -159,7 +182,7 @@ private
 
   def fetch_detail
 
-    api_url = "#{self.settings.url}job/#{self.name}/api/xml?depth=1"
+    api_url = "#{api_url_for(:plugin)}/xml/?depth=1"
     api_url << "&exclude=//build/changeSet/item/path"
     api_url << "&exclude=//build/changeSet/item/addedPath"
     api_url << "&exclude=//build/changeSet/item/modifiedPath"
@@ -242,16 +265,10 @@ private
 
 end
 
-def HudsonJob.url_to(settings, job_name)
-    return "" unless settings
-    return "" unless (job_name && job_name.length > 0)
-    return "#{settings.url}job/#{job_name}"
-end
-
 class HudsonNoJob
-  attr_reader :id, :project_id, :hudson_id, :name, :latest_build_number, :created_at, :updated_at, :description, :state, :job_settings
+  attr_reader :settings, :hudson_id, :project_id, :id, :name, :latest_build_number, :created_at, :updated_at, :description, :state, :job_settings
 
-  def initialize
+  def initialize(args = nil)
     @id = ""
     @project_id = ""
     @name = ""
@@ -261,6 +278,19 @@ class HudsonNoJob
     @description = ""
     @state = ""
     @job_settings = nil
+    @settings = nil
+
+    return unless args
+
+    @settings = args[:settings]
+    @name = args[:name]
+
+  end
+
+  def url_for(type = :user)
+    return "" unless self.settings
+    return "" unless (self.name && self.name.length > 0)
+    return "#{self.settings.url_for(type)}job/#{self.name}"
   end
 
 end

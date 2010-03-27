@@ -8,10 +8,11 @@ class HudsonBuildTest < ActiveSupport::TestCase
 
   def test_url_should_return_zero_length_string
     build = HudsonBuild.new()
-    assert_equal "", build.url
+    assert_equal "", build.url_for(:user)
+    assert_equal "", build.url_for(:plugin)
   end
 
-  def test_url
+  def test_url_for
     job = HudsonJob.new()
     job.hudson_id = 1
     job.name = "test-job"
@@ -20,7 +21,8 @@ class HudsonBuildTest < ActiveSupport::TestCase
     build.hudson_job_id = job.id
     build.job = job
     build.number = 10
-    assert_equal "http://noauth.onejob.nohealthreport.local:9090/job/test-job/10", build.url
+    assert_equal "http://noauth.onejob.nohealthreport.local:9090/job/test-job/10", build.url_for(:user)
+    assert_equal "http://noauth.onejob.nohealthreport.local:19090/job/test-job/10", build.url_for(:plugin)
   end
 
   def test_event_url_should_return_zero_length_string

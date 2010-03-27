@@ -7,12 +7,18 @@ class Hudson
   unloadable
 
   include HudsonHelper
+  include HudsonUrlHelper
   include RexmlHelper
 
   attr_accessor :project_id, :settings, :jobs
   attr_reader :project, :hudson_api_errors
 
-  def initialize(project_id)
+  def api_url_for(type = :user)
+    return "" unless @settings
+    return "#{@settings.url_for(type)}api"
+  end
+
+def initialize(project_id)
     @project_id = project_id
     @project = Project.find(project_id)
     @settings = HudsonSettings.find_by_project_id(@project_id)
@@ -37,7 +43,7 @@ class Hudson
 
   def get_job(job_name)
       job = self.jobs.find{|job| job.name == job_name }
-      return HudsonNoJob.new unless job
+      return HudsonNoJob.new(:name => job_name, :settings => @settings) unless job
       return job
   end
 
@@ -60,7 +66,7 @@ private
     content = ""
     begin
     # job/build, view, primaryView は省く
-    api_url = "#{self.settings.url}api/xml?depth=1" +
+    api_url = "#{api_url_for(:plugin)}/xml?depth=1" +
               "&xpath=/hudson" +
               "&exclude=/hudson/view" +
               "&exclude=/hudson/primaryView" +
@@ -137,7 +143,7 @@ def Hudson.fetch
     hudson.fetch
     next if hudson.hudson_api_errors.empty?
     hudson.hudson_api_errors.each do |error|
-      $stderr.print "redmine_hudson: #{hudson.project.name}(#{hudson.settings.url}) #{error.class_name}:#{error.method_name} #{error.exception.message}\n"
+      $stderr.print "redmine_hudson: #{hudson.project.name}(#{hudson.settings.api_url}) #{error.class_name}:#{error.method_name} #{error.exception.message}\n"
     end
   end
 end
@@ -165,3 +171,4 @@ def Hudson.query_limit_changesets_each_job
   return 100 if Setting.plugin_redmine_hudson['query_limit_changesets_each_job'] !~ /^[0-9]+$/
   return Setting.plugin_redmine_hudson['query_limit_changesets_each_job'].to_i
 end
+

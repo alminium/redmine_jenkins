@@ -39,6 +39,7 @@ class HudsonBuild < ActiveRecord::Base
                              :permission => :view_hudson
 
   include HudsonHelper
+  include HudsonUrlHelper
   extend RexmlHelper
 
   def project
@@ -47,12 +48,14 @@ class HudsonBuild < ActiveRecord::Base
   end
 
   def event_url(options ={})
-    return url
+    return url_for(:user)
   end
 
-  def url
-    return "" unless job
-    return "#{self.job.settings.url}job/#{self.job.name}/#{self.number}"
+  def url_for(type = :user)
+    return "" unless @job
+    return "" unless @job.settings
+    return "" unless (@job.name && @job.name.length > 0)
+    return "#{@job.settings.url_for(type)}job/#{@job.name}/#{self.number}"
   end
 
   def building?

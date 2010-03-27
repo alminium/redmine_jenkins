@@ -26,6 +26,11 @@ class HudsonSettings < ActiveRecord::Base
     return value.include?(other.to_s)
   end
 
+  def url_for(type)
+    return self.url_for_plugin if type == :plugin and self.url_for_plugin and self.url_for_plugin.length > 0
+    return self.url
+  end
+
   # エラーメッセージに表示されるbegin, end を日本語名にするために追加。
   @@HUMANIZED_ATTRIBUTE_KEY_NAMES = {
     "health_report_settings" => l(:label_health_report_settings)
@@ -39,9 +44,9 @@ end
 
 def HudsonSettings.add_last_slash_to_url(url)
   retval = url
-  if retval
-    retval += "/" unless retval.index(/\/$/)
-  end
+  return "" unless retval
+  return "" if retval.length == 0
+  retval += "/" unless retval.index(/\/$/)
   return retval
 end
 

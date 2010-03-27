@@ -8,6 +8,7 @@ ja:
   label_job_list: ジョブの一覧
   label_settings: 設定
   label_url: URL
+  label_url_for_plugin: HudsonプラグインがアクセスするURL
   label_jobs: 表示するジョブ
   label_build_history: ビルド履歴
   label_update_jobs: ジョブの一覧を更新する
@@ -36,6 +37,7 @@ ja:
   label_log_rotator_num_to_keep: ビルドの保存最大数
   label_query_limit_builds_each_job: ジョブごとに追跡するチェンジセットの件数（チケットの検索で利用します）
   label_query_limit_changesets_each_job: ジョブごとに追跡するチェンジセットの件数（チケットの検索で利用します）
+  label_use_url_for_plugin: プラグインからアクセスする場合は、上記と異なるURLを使います。
 
   field_hudson_job: Hudson(ジョブ名)
   field_hudson_build: Hudson(Build番号)
