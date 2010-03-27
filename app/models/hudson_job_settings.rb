@@ -10,7 +10,6 @@ class HudsonJobSettings < ActiveRecord::Base
 
   include RexmlHelper
   extend HudsonHelper
-  extend HudsonUrlHelper
 
   def initialize(attributes = nil)
     super attributes

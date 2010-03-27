@@ -17,7 +17,6 @@ class HudsonJob < ActiveRecord::Base
   validates_presence_of :project_id, :hudson_id, :name
 
   include HudsonHelper
-  include HudsonUrlHelper
   include RexmlHelper
 
   def initialize(attributes = nil)

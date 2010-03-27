@@ -7,7 +7,6 @@ class Hudson
   unloadable
 
   include HudsonHelper
-  include HudsonUrlHelper
   include RexmlHelper
 
   attr_accessor :project_id, :settings, :jobs

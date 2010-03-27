@@ -39,7 +39,6 @@ class HudsonBuild < ActiveRecord::Base
                              :permission => :view_hudson
 
   include HudsonHelper
-  include HudsonUrlHelper
   extend RexmlHelper
 
   def project

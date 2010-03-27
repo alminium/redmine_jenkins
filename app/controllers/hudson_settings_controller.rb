@@ -16,7 +16,6 @@ class HudsonSettingsController < ApplicationController
 
   include RexmlHelper
   include HudsonHelper
-  include HudsonUrlHelper
 
   def edit
     if (params[:settings] != nil)

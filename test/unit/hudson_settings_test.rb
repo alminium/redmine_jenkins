@@ -16,15 +16,19 @@ class HudsonSettingsTest < ActiveSupport::TestCase
   end
 
   def test_add_last_slash_to_url_should_add
-    url = ""
+    url = "abc"
     target = HudsonSettings.add_last_slash_to_url(url)
-    assert_equal "/", target
+    assert_equal "abc/", target
   end
 
   def test_add_last_slash_to_url_should_not_add
     url = "test/"
     target = HudsonSettings.add_last_slash_to_url(url)
     assert_equal "test/", target
+
+    url = ""
+    target = HudsonSettings.add_last_slash_to_url(url)
+    assert_equal "", target
   end
 
   def test_hudson_settings_human_attribute_name
