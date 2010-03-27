@@ -1,5 +1,5 @@
 # $Id$
-= Hudson Plugin 1.0.2
+= Hudson Plugin 1.0.3
 
 This is a plugin collaborates with Hudson for Redmine.
 
@@ -66,6 +66,7 @@ Settings are like Hudson.
 === Settings for each projects
 
 * Hudson url (can use https)
+User can specify url separately, for plugin access and user access.
 * auth user, password ( 0.1.1 higher )
 * can stop plugin getting test results and changesets. (Getting test results and changesets needs a good amount of time.)
 * choose job
@@ -87,6 +88,7 @@ Go  Administration -> Plugins -> 'Redmine Hudson Plugin' Configure.
 [es.yml] juancayetano.delgado
 [fr.yml] Francois-Xavier CAUVIN
 [hu.yml] Péter Major
+[it.yml] Marco Bazzani
 
 == Install Instructions
 
@@ -135,6 +137,11 @@ you should try to delete data from database.
 Use 'delete history' button in setting page.
 
 == Changelog
+
+=== 1.0.3
+
+* ##306 (機能) User can specify url separately, for plugin access and user access
+* ##314 (機能) Italian translation
 
 === 1.0.2
 
