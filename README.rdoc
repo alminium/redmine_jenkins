@@ -140,6 +140,8 @@ Use 'delete history' button in setting page.
 
 === 1.0.3
 
+* ##282 (Defect) unit and feature test failed with redmine 0.9.x or trunk
+* ##304 (Defect) migrate_plugins failed with MySQL
 * ##306 (Feature) User can specify url separately, for plugin access and user access
 * ##314 (Feature) Italian translation
 
