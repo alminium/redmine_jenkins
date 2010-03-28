@@ -140,8 +140,8 @@ Use 'delete history' button in setting page.
 
 === 1.0.3
 
-* ##306 (機能) User can specify url separately, for plugin access and user access
-* ##314 (機能) Italian translation
+* ##306 (Feature) User can specify url separately, for plugin access and user access
+* ##314 (Feature) Italian translation
 
 === 1.0.2
 
