@@ -11,13 +11,13 @@ it:
   label_jobs: Jobs
   label_build_history: Cronologia delle Build
   label_update_jobs: Aggiorna Jobs
-  label_build_now: Build Now
+  label_build_now: Esegui Build ora
   label_show_build_history: Mostra Cronologia delle Build
-  label_show_compact: Mostra Ridotto
+  label_show_compact: Mostra Compatto
   label_health_report_build_stability: HealthReport:BuildStability
   label_health_report_test_result: HealthReport:TestResult
   label_database: DataBase
-  label_get_build_details: Ottieni Dettagli Build (changesets e test-results)
+  label_get_build_details: Ottieni Dettagli Build (modifiche e risultati dei test)
   label_look_and_feel: Aspetto (solo icone)
   label_look_and_feel_hudson: Hudson
   label_look_and_feel_plugin: Plugin originale
@@ -35,9 +35,9 @@ it:
   label_log_rotator_days_to_keep: Giorni Da Mantenere
   label_log_rotator_num_to_keep: Numeri Da Mantenere
   label_query_limit_builds_each_job: Massimo Numero di Builds per query (Usando la ricerca delle segnalazioni)
-  label_query_limit_changesets_each_job: Massimo Numero di Changesets per query (Usando la ricerca delle segnalazioni)
-  label_use_url_for_plugin: Plugin uses below url for access to hudson. Don't use above. ( for user )
-
+  label_query_limit_changesets_each_job: Massimo Numero di Modifiche per query (Usando la ricerca delle segnalazioni)
+  label_use_url_for_plugin: Il Plugin usa la url sottostante per accedere a hudson. Non usa quello sopra. (che è per l'utente)
+  
   field_hudson_job: Hudson(Job)
   field_hudson_build: Hudson(BuildNumber)
 
@@ -48,20 +48,20 @@ it:
 
   notice_building: Compilando...
   notice_hudson_url: 'con http://, https:// ...'
-  notice_get_build_details: Rimuovi checkmark, se ci mette molto tempo.
+  notice_get_build_details: Rimuovi spunta, se ci mette molto tempo.
   notice_health_report: Fornisci un link ad Hudson, se il plugin trova la keyword nell'Helth Report.
   notice_health_report_setting: 'Se il plugin trova la keyword - ${keyword} nel HealthReport, Fornisci un link a Hudson - ${url_format}'
   notice_autofetch: Recupera le informazioni da Hudson durante l'operazione di 'index'. <br> puoi anche eseguire rake-task "redmine_hudson:fetch" da uno script esterno.
 
-  notice_err_cant_connect: "Impossibile Connettersi a Hudson %1s"
-  notice_err_response_invalid: 'Risposta Invalida %1s'
-  notice_err_http_error: 'Http Error %1s'
-  notice_err_no_settings: "Nessuna impostazione per questo progetto. Prego <a href='%1s'>confermare le impostazioni</a>"
+  notice_err_cant_connect: "Impossibile Connettersi a Hudson {{value}}"
+  notice_err_response_invalid: 'Risposta Invalida {{value}}'
+  notice_err_http_error: 'Errore http {{value}}'
+  notice_err_no_settings: "Nessuna impostazione per questo progetto. Prego <a href='{{value}}'>confermare le impostazioni</a>"
   notice_err_no_jobs: Hudson non ha job
   notice_err_invalid_url: URL Invalida
-  notice_err_no_job : 'job non trovato [%1s]'
-  notice_err_unknown: 'Errore sconosciuto %1s'
+  notice_err_no_job : 'job non trovato [{{value}}]'
+  notice_err_unknown: 'Errore sconosciuto {{value}}'
 
-  notice_err_build_failed: 'Build fallita %1s'
-  notice_err_build_failed_no_job: 'Build faillita. Job non trovato [%1s]'
+  notice_err_build_failed: 'Build fallita {{value}}'
+  notice_err_build_failed_no_job: 'Build faillita. Job non trovato [{{value}}]'
 
