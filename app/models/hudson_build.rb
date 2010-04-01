@@ -51,10 +51,10 @@ class HudsonBuild < ActiveRecord::Base
   end
 
   def url_for(type = :user)
-    return "" unless @job
-    return "" unless @job.settings
-    return "" unless (@job.name && @job.name.length > 0)
-    return "#{@job.settings.url_for(type)}job/#{@job.name}/#{self.number}"
+    return "" unless self.job
+    return "" unless self.job.settings
+    return "" unless (self.job.name && self.job.name.length > 0)
+    return "#{self.job.settings.url_for(type)}job/#{self.job.name}/#{self.number}"
   end
 
   def building?

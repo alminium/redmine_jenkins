@@ -2,6 +2,10 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../test_helper')
 
+When /^I show (.+)$/ do |page_name|
+  visit path_to(page_name)
+end
+
 Then /^the field named "([^\"]*)" should contain "([^\"]*)"$/ do |field, value|
   field_named(field).value.should =~ /#{value}/
 end

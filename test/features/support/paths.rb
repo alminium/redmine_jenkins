@@ -18,6 +18,9 @@ module NavigationHelpers
     when /HudsonSettings at "(.*)" Project/
       "/hudson_settings/edit/#{$1.downcase}"
 
+    when /issue #(.*)/
+      "/issues/#{$1}"
+
       # Add more mappings here.
     # Here is a more fancy example:
     #

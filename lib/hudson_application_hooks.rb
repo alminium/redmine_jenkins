@@ -57,7 +57,7 @@ class HudsonApplicationHooks < Redmine::Hook::ViewListener
                                     {:controller => 'projects', :action => 'activity', :id => @project, :from => build.finished_at.to_date},
                                      :title => format_time(build.finished_at))
 	      o << "results.add("
-        o << "new BuildResult('#{job.name}',#{build.number},'#{build.result}','#{build.finished_at}','#{finished_at_tag}','#{build.url}'));" + "\n"
+        o << "new BuildResult('#{job.name}',#{build.number},'#{build.result}','#{build.finished_at}','#{finished_at_tag}','#{build.url_for(:user)}'));" + "\n"
       }
 	    o << "builds.set(results.revision, results);" + "\n"
     }

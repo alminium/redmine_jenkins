@@ -48,3 +48,13 @@ Given /"(.*)" has a permission "(.*)"/ do |role_name, permission|
   end
   role.save!
 end
+
+Given /Issue #(.*) is related to revisions "(.*)"/ do |issue_no, revisions|
+  issue = Issue.find(issue_no)
+  raise Exception.new("issue not found - #{issue_no}") unless issue
+  revisions.split(/,/).each do |revision|
+    changeset = Changeset.find(:first, :conditions => ["repository_id = ? and revision = ?", issue.project.repository.id, revision])
+    raise Exception.new("no such changeset - #{issue.project.name} rev-#{revision}") unless changeset
+    Changeset.connection.execute("INSERT INTO changesets_issues (changeset_id, issue_id) values (#{changeset.id}, #{issue.id})")
+  end
+end
