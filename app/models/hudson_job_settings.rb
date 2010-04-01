@@ -9,7 +9,7 @@ class HudsonJobSettings < ActiveRecord::Base
   validates_presence_of :hudson_job_id
 
   include RexmlHelper
-  extend HudsonHelper
+  include HudsonHelper
 
   def initialize(attributes = nil)
     super attributes

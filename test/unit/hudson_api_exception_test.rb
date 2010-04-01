@@ -67,7 +67,7 @@ class HudsonApiExceptionTest < ActiveSupport::TestCase
       target = HudsonApiException.new(error)
     end
 
-    assert_equal l(:notice_err_response_invalid, truncate(error.to_s, :length => 50)), target.message
+    assert_equal l(:notice_err_response_invalid, truncate(error.to_s, 50)), target.message
     assert_equal error, target.inner_exception
   end
 

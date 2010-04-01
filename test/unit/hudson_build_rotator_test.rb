@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class HudsonBuildRotatorTest < Test::Unit::TestCase
+class HudsonBuildRotatorTest < ActiveSupport::TestCase
   fixtures :hudson_jobs, :hudson_job_settings, :hudson_settings, :hudson_settings_health_reports
   set_fixture_class :hudson_settings => HudsonSettings
   set_fixture_class :hudson_job_settings => HudsonJobSettings

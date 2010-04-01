@@ -2,8 +2,8 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class HudsonJobSettingsTest < Test::Unit::TestCase
-  fixtures :hudson_settings, :hudson_settings_health_reports
+class HudsonJobSettingsTest < ActiveSupport::TestCase
+  fixtures :hudson_settings, :hudson_settings_health_reports, :hudson_jobs
   set_fixture_class :hudson_settings => HudsonSettings
 
   def test_initialize
@@ -24,15 +24,14 @@ class HudsonJobSettingsTest < Test::Unit::TestCase
 
     Net::HTTP.any_instance.stubs(:request).returns(@response)
 
-    data = hudson_settings(:one)
-    settings = HudsonSettings.find(data.id)
+    data = hudson_jobs(:simple_ruby_application)
+    job = HudsonJob.find(data.id)
 
-    target = HudsonJobSettings.fetch(settings, "simple-ruby-application")
+    job.job_settings.fetch
 
-    assert target.is_a?(HudsonJobSettings)
-    assert_equal true, target.build_rotate
-    assert_equal 100, target.build_rotator_days_to_keep
-    assert_equal -1, target.build_rotator_num_to_keep
+    assert_equal true, job.job_settings.build_rotate
+    assert_equal 100, job.job_settings.build_rotator_days_to_keep
+    assert_equal -1, job.job_settings.build_rotator_num_to_keep
 
   end
 
