@@ -130,8 +130,16 @@ private
 
   def update_health_reports(params)
 
+    update_existing_health_reports
+
+    update_new_health_reports
+
+  end
+
+  def update_existing_health_reports
+
     return unless params[:health_report_settings]
-    
+
     params[:health_report_settings].each do |id, hrs|
       setting = @hudson.settings.health_report_settings.detect {|item| item.id == id.to_i}
       next unless setting
@@ -144,6 +152,9 @@ private
       setting.update_from_hash(hrs)
       setting.save
     end
+  end
+
+  def update_new_health_reports
 
     return unless params[:new_health_report_settings]
 
