@@ -14,6 +14,7 @@ class Hudson
 
   def api_url_for(type = :user)
     return "" unless @settings
+    return "" if @settings.url_for(type) == nil || @settings.url_for(type).length == 0
     return "#{@settings.url_for(type)}api"
   end
 

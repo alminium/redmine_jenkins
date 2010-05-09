@@ -1,9 +1,9 @@
-<%#$Id$%>
-<% fields_for field_name, hrs do |hrs_f| %>
-  <% fields = l(:notice_health_report_setting) %>
-  <% field_keyword = hrs_f.text_field :keyword, :size=>20 %>
-  <% field_url_format = hrs_f.text_field :url_format, :size=>60 %>
-  <% fields = fields.gsub('${keyword}', field_keyword) %>
-  <% fields = fields.gsub('${url_format}', field_url_format) %>
+<%#$Id$ -%>
+<% fields_for field_name, hrs do |hrs_f| -%>
+  <% fields = l(:notice_health_report_setting) -%>
+  <% field_keyword = hrs_f.text_field :keyword, :size=>20 -%>
+  <% field_url_format = hrs_f.text_field :url_format, :size=>60 -%>
+  <% fields = fields.gsub('${keyword}', field_keyword) -%>
+  <% fields = fields.gsub('${url_format}', field_url_format) -%>
   <p><%= fields  %></p>
-<% end %>
+<% end -%>

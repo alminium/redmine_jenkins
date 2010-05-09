@@ -30,14 +30,14 @@ class HudsonSettingsController < ApplicationController
       @hudson.settings.show_compact = check_box_to_boolean(params[:settings][:show_compact])
       @hudson.settings.look_and_feel = params[:settings].fetch(:look_and_feel)
 
-      update_health_reports params
-
       if ( @hudson.settings.save )
         add_job
         update_job_settings params
         find_hudson # 一度設定を読み直さないと、destory したものが残るので ( delete_if の方が分かりやすい？ )
         flash[:notice] = l(:notice_successful_update)
       end
+
+      update_health_reports params
 
     end
 
@@ -93,7 +93,11 @@ class HudsonSettingsController < ApplicationController
   rescue Exception => error
     flash[:error] = error.message
   ensure
-    find_hudson_jobs(@hudson.settings)
+    begin
+      find_hudson_jobs
+    rescue HudsonApiException => error
+      flash.now[:error] = error.message
+    end
     render(:action => "edit")
   end
 
@@ -161,6 +165,11 @@ private
     params[:new_health_report_settings].each do |id, hrs|
       next if HudsonSettingsHealthReport.is_blank?(hrs)
       @hudson.settings.health_report_settings << HudsonSettingsHealthReport.new(hrs)
+    end
+
+    @hudson.settings.health_report_settings.each do |hrs|
+      next unless hrs.new_record?
+      hrs.save
     end
 
   end
