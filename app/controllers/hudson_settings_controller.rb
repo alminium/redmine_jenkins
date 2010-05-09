@@ -30,14 +30,16 @@ class HudsonSettingsController < ApplicationController
       @hudson.settings.show_compact = check_box_to_boolean(params[:settings][:show_compact])
       @hudson.settings.look_and_feel = params[:settings].fetch(:look_and_feel)
 
-      if ( @hudson.settings.save )
+      success_to_save = @hudson.settings.save
+
+      update_health_reports params
+
+      if success_to_save
         add_job
         update_job_settings params
         find_hudson # 一度設定を読み直さないと、destory したものが残るので ( delete_if の方が分かりやすい？ )
         flash[:notice] = l(:notice_successful_update)
       end
-
-      update_health_reports params
 
     end
 
