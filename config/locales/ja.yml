@@ -65,3 +65,7 @@ ja:
 
   notice_err_build_failed: 'ビルドに失敗しました。{{value}}'
   notice_err_build_failed_no_job: 'ビルドに失敗しました。Jobが見当たりません。[{{value}}]'
+
+  permission_view_hudson: Hudsonの閲覧
+  permission_build_hudson: Hudsonのビルド
+  permission_edit_hudson_settings: Hudsonの管理

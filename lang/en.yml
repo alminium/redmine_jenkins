@@ -64,3 +64,6 @@ notice_err_unknown: 'Unknown Error %1s'
 notice_err_build_failed: 'Build failed %1s'
 notice_err_build_failed_no_job: 'Build failed. Job not found [%1s]'
 
+permission_view_hudson: View Hudson
+permission_build_hudson: Build Hudson
+permission_edit_hudson_settings: Edit Hudson settings

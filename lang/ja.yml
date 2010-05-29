@@ -63,3 +63,7 @@ notice_err_unknown: 'エラーが発生しました。%1s'
 
 notice_err_build_failed: 'ビルドに失敗しました。%1s'
 notice_err_build_failed_no_job: 'ビルドに失敗しました。Jobが見当たりません。[%1s]'
+
+permission_view_hudson: Hudsonの閲覧
+permission_build_hudson: Hudsonのビルド
+permission_edit_hudson_settings: Hudsonの管理

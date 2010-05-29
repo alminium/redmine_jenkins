@@ -1,5 +1,15 @@
 # $Id$
 
+Given /^I log on as a Admin$/ do
+  @current_user = User.find_by_login("admin")
+  return if @current_user
+  @current_user = User.new(:mail => 'admin@example.com', :firstname => 'Admin', :lastname => 'Redmine')
+  @current_user.login = "admin"
+  @current_user.admin = true
+  @current_user.save!
+  User.stubs(:current).returns(@current_user)
+end
+
 Given /^I log on as a User$/ do
   @current_user = User.find_by_mail('couger-test@example.com')
   return if @current_user

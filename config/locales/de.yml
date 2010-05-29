@@ -65,3 +65,6 @@ de:
   notice_err_build_failed: 'Build fehlgeschlagen [{{value}}].'
   notice_err_build_failed_no_job: 'Build fehlgeschlagen. Der Job [{{value}}] wurde nicht gefunden.'
 
+  permission_view_hudson: View Hudson
+  permission_build_hudson: Build Hudson
+  permission_edit_hudson_settings: Edit Hudson settings

@@ -64,3 +64,7 @@ es:
 
   notice_err_build_failed: 'Ejecución fallida {{value}}'
   notice_err_build_failed_no_job: 'Ejecución fallida. Tarea no encontrada [{{value}}]'
+
+  permission_view_hudson: View Hudson
+  permission_build_hudson: Build Hudson
+  permission_edit_hudson_settings: Edit Hudson settings

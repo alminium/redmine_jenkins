@@ -65,3 +65,6 @@ it:
   notice_err_build_failed: 'Build fallita {{value}}'
   notice_err_build_failed_no_job: 'Build faillita. Job non trovato [{{value}}]'
 
+  permission_view_hudson: View Hudson
+  permission_build_hudson: Build Hudson
+  permission_edit_hudson_settings: Edit Hudson settings

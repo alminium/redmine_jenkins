@@ -64,3 +64,6 @@ notice_err_unknown: 'Inconnu erreur %1s'
 notice_err_build_failed: 'Construction Echouée %1s'
 notice_err_build_failed_no_job: 'Construction Echouée. Tâche Introuvable [%1s]'
 
+permission_view_hudson: View Hudson
+permission_build_hudson: Build Hudson
+permission_edit_hudson_settings: Edit Hudson settings

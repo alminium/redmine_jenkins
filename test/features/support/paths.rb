@@ -21,6 +21,9 @@ module NavigationHelpers
     when /issue #(.*)/
       "/issues/#{$1}"
 
+    when /Edit roles for "(.*)"$/
+      "/roles/edit/1"
+
       # Add more mappings here.
     # Here is a more fancy example:
     #
