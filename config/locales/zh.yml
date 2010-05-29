@@ -1,0 +1,70 @@
+# $Id$
+# Simplified Chinese strings go here
+zh:
+  label_hudson: Hudson
+  label_hudson_plural: Hudson
+  label_build: 编译生成
+  label_latest_build: 最后一次生成
+  label_job_list: 任务列表
+  label_settings: 设置
+  label_url: URL
+  label_jobs: 任务
+  label_build_history: 历史记录
+  label_update_jobs: 最新更新的任务
+  label_build_now: 正在生成
+  label_show_build_history: 显示历史记录
+  label_show_compact: 简洁显示
+  label_health_report_build_stability: 项目健康报告:成功率
+  label_health_report_test_result: 项目健康报告:测试结果
+  label_database: 数据库
+  label_get_build_details: 详细报告 (更新列表和测试报告)
+  label_look_and_feel: 界面 (只用图标)
+  label_look_and_feel_hudson: Hudson
+  label_look_and_feel_plugin: 使用插件原生
+  label_add_health_report: 添加项目健康报告
+  label_health_report: 项目健康报告
+  label_health_report_settings: 项目健康报告设置
+  label_autofetch: 自动获取
+  label_job_description_format: 任务描述格式
+  label_show_description: 显示项目描述
+  label_hide_description: 隐藏项目描述
+  label_todays_build: 今天生成
+  label_build_artifacts: 人工生成
+  label_num_of_stored_builds: 生成总数
+  label_delete_old_build: 删除生成记录
+  label_log_rotator_days_to_keep: 保留天数
+  label_log_rotator_num_to_keep: 保留生成记录个数
+  label_query_limit_builds_each_job: 最大编译请求数
+  label_query_limit_changesets_each_job: 最大更新列表请求数 (Using search issues)
+  label_use_url_for_plugin: 插件使用下面url链接Hudson服务器。用户使用上面链接。
+
+  field_hudson_job: Hudson(任务)
+  field_hudson_build: Hudson(生成数)
+
+  button_delete_history: 删除历史记录
+
+  notice_no_jobs: 没有任务
+  notice_no_builds: 没有生成
+
+  notice_building: 正在编译生成...
+  notice_hudson_url: 'with http://, https:// ...'
+  notice_get_build_details: 如果用时过长，建议取消该选项。
+  notice_health_report: 如果在项目健康报告中发现关键字，将使用指定url。
+  notice_health_report_setting: '如果发现关键字 - ${keyword} , 指定Hudson上链接 - ${url_format}'
+  notice_autofetch: 获取Hudson相关信息 'index'. <br> 可以运行外部脚本 "redmine_hudson:fetch" 。
+
+  notice_err_cant_connect: "不能连接到Hudson %1s"
+  notice_err_response_invalid: 'Response Invalid %1s'
+  notice_err_http_error: 'Http Error %1s'
+  notice_err_no_settings: "此项目无设置. 请 <a href='%1s'>更新设置</a>"
+  notice_err_no_jobs: Hudson没有任务
+  notice_err_invalid_url: Invalid URL
+  notice_err_no_job : '没有发现任务 [%1s]'
+  notice_err_unknown: 'Unknown Error %1s'
+
+  notice_err_build_failed: '生成失败 %1s'
+  notice_err_build_failed_no_job: '生成失败。没有发现任务 [%1s]'
+
+  permission_view_hudson: View Hudson
+  permission_build_hudson: Build Hudson
+  permission_edit_hudson_settings: Edit Hudson settings
