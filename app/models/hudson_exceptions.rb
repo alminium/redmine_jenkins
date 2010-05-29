@@ -13,6 +13,7 @@ class HudsonApiException < Exception
 
   include ApplicationHelper
   include ActionView::Helpers::TextHelper
+  include Redmine::I18n if RedmineHudson::RedmineExt.redmine_090_or_higher?
   
   def initialize( object )
     @code = ""

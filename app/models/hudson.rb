@@ -122,11 +122,13 @@ def Hudson.find(*args)
     when :all   then
       retval = []
       HudsonSettings.find(*args).each do |settings|
+        next unless Project.find_by_id(settings.project_id)
         retval << Hudson.new(settings.project_id)
       end
       return retval
     else
       settings = HudsonSettings.find(*args)
+      return nil unless Project.find_by_id(settings.project_id)
       retval = Hudson.new(settings.project_id)
       return retval
   end
@@ -143,7 +145,7 @@ def Hudson.fetch
     hudson.fetch
     next if hudson.hudson_api_errors.empty?
     hudson.hudson_api_errors.each do |error|
-      $stderr.print "redmine_hudson: #{hudson.project.name}(#{hudson.settings.api_url}) #{error.class_name}:#{error.method_name} #{error.exception.message}\n"
+      $stderr.print "redmine_hudson: #{hudson.project.name}(#{hudson.settings.url_for(:plugin)}) #{error.class_name}:#{error.method_name} #{error.exception.message}\n"
     end
   end
 end
