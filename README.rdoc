@@ -1,5 +1,5 @@
 # $Id$
-= Hudson Plugin 1.0.4
+= Hudson Plugin 1.0.5
 
 This is a plugin collaborates with Hudson for Redmine.
 
@@ -89,6 +89,7 @@ Go  Administration -> Plugins -> 'Redmine Hudson Plugin' Configure.
 [fr.yml] Francois-Xavier CAUVIN
 [hu.yml] Péter Major
 [it.yml] Marco Bazzani
+[zh.yml] Billy T
 
 == Install Instructions
 
@@ -137,6 +138,12 @@ you should try to delete data from database.
 Use 'delete history' button in setting page.
 
 == Changelog
+
+=== 1.0.5
+
+* ##411 (Feature) Chinese translation
+* ##387 (Defect) Error occurs when Hudson.Fetch fails by HudsonApiException
+* ##386 (Feature) Localization for permission string
 
 === 1.0.4
 
