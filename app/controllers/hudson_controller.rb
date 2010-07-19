@@ -17,6 +17,7 @@ class HudsonController < ApplicationController
   before_filter :find_hudson
   before_filter :authorize
   before_filter :clear_flash
+  accept_key_auth :index
 
   include HudsonHelper
   include RexmlHelper
@@ -26,7 +27,12 @@ class HudsonController < ApplicationController
     raise HudsonNoSettingsException if @hudson.settings.new_record?
 
     @hudson.fetch if Hudson.autofetch?
-
+       
+    respond_to do |format|
+      format.html { render :action => 'index', :layout => !request.xhr? }
+      format.atom { }
+    end
+    
   rescue HudsonNoSettingsException
     flash.now[:error] = l(:notice_err_no_settings, url_for(:controller => 'hudson_settings', :action => 'edit', :id => @project))
   ensure

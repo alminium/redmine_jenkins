@@ -84,6 +84,11 @@
   <%= javascript_tag "new DescriptionVisibilityController(#{!@hudson.settings[:show_compact]}, '#{l(:label_show_description)}', '#{l(:label_hide_description)}')"%>
 <% end %>
 
+<!-- Add Atom Feed -->
+<% other_formats_links do |f| %>
+        <%= f.link_to 'Atom', :url => { :project_id => @project,  :key => User.current.rss_key } %>
+<% end %>
+
 <% content_for :sidebar do %>
   <%= render :partial => 'hudson_sidebar' %>
 <% end %>

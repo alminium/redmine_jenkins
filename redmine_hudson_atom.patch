@@ -1,0 +1,119 @@
+Index: app/controllers/hudson_controller.rb
+===================================================================
+--- app/controllers/hudson_controller.rb	(リビジョン 545)
++++ app/controllers/hudson_controller.rb	(作業コピー)
+@@ -17,6 +17,7 @@
+   before_filter :find_hudson
+   before_filter :authorize
+   before_filter :clear_flash
++  accept_key_auth :index
+ 
+   include HudsonHelper
+   include RexmlHelper
+@@ -26,7 +27,12 @@
+     raise HudsonNoSettingsException if @hudson.settings.new_record?
+ 
+     @hudson.fetch if Hudson.autofetch?
+-
++       
++    respond_to do |format|
++      format.html { render :action => 'index', :layout => !request.xhr? }
++      format.atom { }
++    end
++    
+   rescue HudsonNoSettingsException
+     flash.now[:error] = l(:notice_err_no_settings, url_for(:controller => 'hudson_settings', :action => 'edit', :id => @project))
+   ensure
+Index: app/helpers/hudson_helper.rb
+===================================================================
+--- app/helpers/hudson_helper.rb	(リビジョン 545)
++++ app/helpers/hudson_helper.rb	(作業コピー)
+@@ -79,5 +79,35 @@
+     return retval
+ 
+   end
++  
++  def generate_atom_content(job)
++    tag = ""
++    tag = job.latest_build.error if "" != job.latest_build.error
++    if "" == job.latest_build.error
++    
++      tag << image_tag ("/plugin_assets/redmine_hudson/images/" + job.state + ".png") 
++      tag << " "
++    
++      if "" != job.latest_build.number
++        tag << link_to("##{job.latest_build.number}",job.latest_build.url_for(:user))
++        tag << " "
++        tag << content_tag("span", job.latest_build.result, 
++               :class => "result #{job.latest_build.result.downcase}") if true != job.latest_build.building? && "" != job.latest_build.result
++        tag " " 
++        tag << content_tag("span", l(:notice_building), :class => "result") if job.latest_build.building?
++        tag << " "
++        tag << content_tag("span", job.latest_build.finished_at.localtime.strftime("%Y/%m/%d %H:%M:%S"))
++      end
++      tag << l(:notice_no_builds) if "" == job.latest_build.number
++    end    
++  
++    tag << "<ul class=\"job-health-reports\">"
++    job.health_reports.each do |report|
++      tag << "<li>#{link_to(report.description, report.url)} #{report.score}" if report.url != ""
++      tag << "<li>#{report.description} #{report.score}%" if report.url == ""
++    end
++    tag << "</ul>"
++    return tag  
++  end
+ 
+ end
+Index: app/views/hudson/index.atom.builder
+===================================================================
+--- app/views/hudson/index.atom.builder	(リビジョン 0)
++++ app/views/hudson/index.atom.builder	(リビジョン 0)
+@@ -0,0 +1,32 @@
++atom_feed(:language => 'ja-JP',
++          :root_url => @site_url,
++          :url      => @atom_url,
++          :id       => @site_url) do |feed|
++  f_title = "#{@project || Setting.app_title}: #{l(:label_hudson_plural)}"        
++  feed.title    truncate_single_line(f_title, :length => 100)
++  feed.subtitle @site_description
++  feed.updated  Time.now
++  feed.author{|author| author.name(Setting.app_title) }
++
++  all_builds = []
++  @hudson.jobs.each do |job|
++    builds = job.fetch_recent_builds
++    builds.each do |build|
++      all_builds.push(build)
++    end
++  end
++
++  @hudson.jobs.each do |job|
++    title = job.name + ' #' + job.latest_build_number + " (" + job.latest_build.result + ")"
++    content = generate_atom_content(job) 
++    feed.entry(job,
++                 :url       => job.url_for(:user),
++                 :id        => job.id,
++                 :published => job.created_at,
++                 :updated   => job.updated_at
++                 ) do |item|
++        item.title(title)
++        item.content(content, :type => 'html')
++    end
++  end
++end
+Index: app/views/hudson/index.rhtml
+===================================================================
+--- app/views/hudson/index.rhtml	(リビジョン 545)
++++ app/views/hudson/index.rhtml	(作業コピー)
+@@ -84,6 +84,11 @@
+   <%= javascript_tag "new DescriptionVisibilityController(#{!@hudson.settings[:show_compact]}, '#{l(:label_show_description)}', '#{l(:label_hide_description)}')"%>
+ <% end %>
+ 
++<!-- Add Atom Feed -->
++<% other_formats_links do |f| %>
++        <%= f.link_to 'Atom', :url => { :project_id => @project,  :key => User.current.rss_key } %>
++<% end %>
++
+ <% content_for :sidebar do %>
+   <%= render :partial => 'hudson_sidebar' %>
+ <% end %>

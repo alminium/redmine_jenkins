@@ -79,5 +79,38 @@ module HudsonHelper
     return retval
 
   end
+  
+  def generate_atom_content(job)
+    tag = ""
+    tag = job.latest_build.error if "" != job.latest_build.error
+    if "" == job.latest_build.error
+    
+      icon = "#{job.state}.gif"
+      icon = "grey.gif" if job.state == "disabled"
+
+      tag << image_tag("#{job.settings.url}images/24x24/#{icon}")
+      tag << " "
+    
+      if "" != job.latest_build.number
+        tag << link_to("##{job.latest_build.number}",job.latest_build.url_for(:user))
+        tag << " "
+        tag << content_tag("span", job.latest_build.result, 
+               :class => "result #{job.latest_build.result.downcase}") if true != job.latest_build.building? && "" != job.latest_build.result
+        tag " " 
+        tag << content_tag("span", l(:notice_building), :class => "result") if job.latest_build.building?
+        tag << " "
+        tag << content_tag("span", job.latest_build.finished_at.localtime.strftime("%Y/%m/%d %H:%M:%S"))
+      end
+      tag << l(:notice_no_builds) if "" == job.latest_build.number
+    end    
+  
+    tag << "<ul class=\"job-health-reports\">"
+    job.health_reports.each do |report|
+      tag << "<li>#{link_to(report.description, report.url)} #{report.score}" if report.url != ""
+      tag << "<li>#{report.description} #{report.score}%" if report.url == ""
+    end
+    tag << "</ul>"
+    return tag  
+  end
 
 end
