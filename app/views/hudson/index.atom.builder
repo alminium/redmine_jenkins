@@ -1,4 +1,4 @@
-atom_feed(:language => 'ja-JP',
+atom_feed(:language => User.current.language,
           :root_url => @site_url,
           :url      => @atom_url,
           :id       => @site_url) do |feed|
