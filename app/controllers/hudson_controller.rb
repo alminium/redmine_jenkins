@@ -30,7 +30,7 @@ class HudsonController < ApplicationController
        
     respond_to do |format|
       format.html { render :action => 'index', :layout => !request.xhr? }
-      format.atom { }
+      format.atom { render :layout => false, :template => 'hudson/index.atom.builder', :type => 'text/xml' } 
     end
     
   rescue HudsonNoSettingsException
