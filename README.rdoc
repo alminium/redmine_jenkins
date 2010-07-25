@@ -1,5 +1,5 @@
 # $Id$
-= Hudson Plugin 1.0.5
+= Hudson Plugin 1.0.6
 
 This is a plugin collaborates with Hudson for Redmine.
 
@@ -138,6 +138,10 @@ you should try to delete data from database.
 Use 'delete history' button in setting page.
 
 == Changelog
+
+=== 1.0.6
+
+* ##476 (Feature) Support Atom format (thanks! Akiko Takano)
 
 === 1.0.5
 

@@ -1,5 +1,5 @@
 # $Id$
-= Hudson Plugin 1.0.5
+= Hudson Plugin 1.0.6
 
 Redmie を Hudson と連携させるためのプラグインです。
 
@@ -136,11 +136,15 @@ rake タスクを使って情報を取得する場合は、必ず 自動取得�
 
 == 変更履歴
 
+=== 1.0.6
+
+* ##476 (機能) Atom フォーマットのサポート (thanks! Akiko Takano)
+
 === 1.0.5
 
-* ##411 (Feature) 中国語対応
-* ##387 (Defect) Hudson.fetch でHudsonApiException が発生すると、エラーが出てしまう
-* ##386 (Feature) 権限の名前をローカライズ
+* ##411 (機能) 中国語対応
+* ##387 (バグ) Hudson.fetch でHudsonApiException が発生すると、エラーが出てしまう
+* ##386 (機能) 権限の名前をローカライズ
 
 === 1.0.4
 
