@@ -25,6 +25,7 @@ Show job details.
 * Download artifacts.
 * Click clock-icon, request hudson to build.
 * Mr. hudson appears. ( sorry, not emotional )
+* You can get job list by Atom.
 
 === Show Build History
 Click note icon, show build history.
