@@ -188,7 +188,10 @@ private
     return unless params[:job_settings]
     @hudson.jobs.each do |job|
       my_params = params[:job_settings][job.id.to_s]
-      next unless my_params
+
+      unless my_params
+        my_params = {:build_rotator_days_to_keep => "", :build_rotator_num_to_keep => "", :build_rotate => "false"}
+      end
 
       build_rotator_days_to_keep = my_params[:build_rotator_days_to_keep] != "" ? my_params[:build_rotator_days_to_keep] : -1
       build_rotator_num_to_keep = my_params[:build_rotator_num_to_keep] != "" ? my_params[:build_rotator_num_to_keep] : -1

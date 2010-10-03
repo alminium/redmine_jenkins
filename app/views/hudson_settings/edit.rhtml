@@ -70,8 +70,6 @@
 <script type="text/javascript">
 //<!--
 <% enable_url_for_plugin = (@settings.url_for_plugin and @settings.url_for_plugin.length != 0) %>
-var controller = new JobSettingsFieldController();
-Event.observe($('enable_url_for_plugin'), 'click', switch_state_url_for_plugin);
 function switch_state_url_for_plugin(){
   display = 'none';
   if ( $('enable_url_for_plugin').checked ) { display = 'inline'; }

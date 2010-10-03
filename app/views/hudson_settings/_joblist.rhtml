@@ -33,7 +33,8 @@
 
     <% delete_button = "" -%>
     <% delete_button = link_to_remote(l(:button_delete), { :update => 'joblist',  :url => {:controller => 'hudson_settings', :action => 'delete_builds', :id => @project, :job_id => job.id},
-                                                  :method => :post
+                                                  :method => :post,
+                                                  :success => "on_job_settings_reloaded",
                                                  }, :title => l(:button_delete),
                                                  :class => 'icon icon-del') if job && job.job_settings && job.job_settings.do_rotate? -%>
     <td><%=delete_button%></td>
@@ -42,6 +43,15 @@
   </table>
 <% end %>
  <%= hidden_field_tag 'settings[jobs][]', '' %>
+ <%= hidden_field_tag 'job_settings[-1]', '' %>
 </p>
+<script type="text/javascript">
+//<!--
+var controller = new JobSettingsFieldController();
+function on_job_settings_reloaded() {
+  alert("here");
+  controller.initialize();
+}
+//-->
+</script>
 </div>
- 
