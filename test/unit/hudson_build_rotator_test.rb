@@ -36,10 +36,12 @@ class HudsonBuildRotatorTest < ActiveSupport::TestCase
 
     assert_equal 30, HudsonBuild.count_by_sql(["select count(*) from #{HudsonBuild.table_name} where hudson_job_id = ?", data_job.id + 1])
     count = 0
+    oldest_date_remain = curdate - job.job_settings.build_rotator_days_to_keep
+    oldest_date_remain = DateTime.new(oldest_date_remain.year, oldest_date_remain.month, oldest_date_remain.day, 0, 0, 0)
     HudsonBuild.find(:all, :conditions => ["hudson_job_id = ?", data_job.id]).each do |build|
-      count += 1 if build.number.to_i >= 11 && build.finished_at >= DateTime.new(2010,1,30,0,0,0)
+      count += 1 if build.number.to_i >= 26 && build.finished_at >= oldest_date_remain
     end
-    assert_equal 10, count
+    assert_equal 5, count
 
   end
 
@@ -61,13 +63,13 @@ class HudsonBuildRotatorTest < ActiveSupport::TestCase
     target = HudsonBuildRotator.new(job.job_settings)
     target.execute
 
-    assert_equal 45, HudsonBuild.count
+    assert_equal 35, HudsonBuild.count
     assert_equal 30, HudsonBuild.count_by_sql(["select count(*) from #{HudsonBuild.table_name} where hudson_job_id = ?", data_job.id + 1])
     count = 0
     HudsonBuild.find(:all, :conditions => ["hudson_job_id = ?", data_job.id]).each do |build|
-      count += 1 if build.number.to_i >= 16
+      count += 1 if build.number.to_i >= 26
     end
-    assert_equal 15, count
+    assert_equal 5, count
 
   end
 
@@ -93,8 +95,10 @@ class HudsonBuildRotatorTest < ActiveSupport::TestCase
     assert_equal 50, HudsonBuild.count
     assert_equal 30, HudsonBuild.count_by_sql(["select count(*) from #{HudsonBuild.table_name} where hudson_job_id = ?", data_job.id + 1])
     count = 0
+    oldest_date_remain = curdate - job.job_settings.build_rotator_days_to_keep
+    oldest_date_remain = DateTime.new(oldest_date_remain.year, oldest_date_remain.month, oldest_date_remain.day, 0, 0, 0)
     HudsonBuild.find(:all, :conditions => ["hudson_job_id = ?", data_job.id]).each do |build|
-      count += 1 if build.finished_at >= DateTime.new(2010,1,29,0,0,0)
+      count += 1 if build.finished_at >= oldest_date_remain
     end
     assert_equal 20, count
 
