@@ -1,5 +1,5 @@
 # $Id$
-= Hudson Plugin 1.0.6
+= Hudson Plugin 1.0.6.1
 
 This is a plugin collaborates with Hudson for Redmine.
 
@@ -139,6 +139,11 @@ you should try to delete data from database.
 Use 'delete history' button in setting page.
 
 == Changelog
+
+=== 1.0.6.1
+
+* ##563 (Defect) can't disable rotate, when enable 'rotate' with one job.
+* ##515 (Defect) can't save job rotate settings with mysql 5.0.
 
 === 1.0.6
 

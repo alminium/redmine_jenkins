@@ -9,7 +9,7 @@ Redmine::Plugin.register :redmine_hudson do
   author 'Toshiyuki Ando r-labs'
   url "http://www.r-labs.org/repositories/show/hudson" if respond_to?(:url)
   description 'This is a Hudson plugin for Redmine'
-  version '1.0.6'
+  version '1.0.6.1'
   requires_redmine :version_or_higher => '0.8.0'
 
   project_module :hudson do
