@@ -13,6 +13,6 @@ class CreateHudsonJobSettings < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :hudson_job_config
+    drop_table :hudson_job_settings
   end
 end
