@@ -1,5 +1,5 @@
 # $Id$
-= Hudson Plugin 1.0.6.1
+= Hudson Plugin 1.0.7
 
 This is a plugin collaborates with Hudson for Redmine.
 
@@ -139,6 +139,11 @@ you should try to delete data from database.
 Use 'delete history' button in setting page.
 
 == Changelog
+
+=== 1.0.7
+
+* ##682 (Defect) Plugin has no license
+* ##675 (Defect) db:migrate_plugins down failed
 
 === 1.0.6.1
 
