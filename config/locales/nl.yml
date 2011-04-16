@@ -1,0 +1,70 @@
+# $Id$
+# Dutch strings go here (by Bart Van Hooydonck, thanks!)
+nl:
+  label_hudson: Hudson
+  label_hudson_plural: Hudson
+  label_build: Build
+  label_latest_build: Laatste Build
+  label_job_list: Job Lijst
+  label_settings: Instellingen
+  label_url: URL
+  label_jobs: Jobs
+  label_build_history: Build Geschiedenis
+  label_update_jobs: Vernieuw Jobs
+  label_build_now: Build Now
+  label_show_build_history: Toon Build Geschiedenis
+  label_show_compact: Toon Compacte versie
+  label_health_report_build_stability: HealthReport:BuildStability
+  label_health_report_test_result: HealthReport:TestResult
+  label_database: DataBase
+  label_get_build_details: Haal build details op (changesets en test-resultaten)
+  label_look_and_feel: Look and Feel (alleen icons)
+  label_look_and_feel_hudson: Hudson
+  label_look_and_feel_plugin: Plugin original
+  label_add_health_report: Voeg HealthReport instelling toe
+  label_health_report: Health Report
+  label_health_report_settings: Health Report Instellingen
+  label_autofetch: AutoFetch
+  label_job_description_format: Formaat van de Hudson-Job omschrijving
+  label_show_description: Toon Omschrijving
+  label_hide_description: Verberg Omschrijving
+  label_todays_build: Build van vandaag
+  label_build_artifacts: Artifacts
+  label_num_of_stored_builds: Aantal Builds
+  label_delete_old_build: Verwijder oude Build
+  label_log_rotator_days_to_keep: Dagen om bij te houden
+  label_log_rotator_num_to_keep: Aantal om bij te houden
+  label_query_limit_builds_each_job: Max Aanta Builds voor een query (Gebruik search issues)
+  label_query_limit_changesets_each_job: Max Aantal Changesets voor een query (Gebruik search issues)
+  label_use_url_for_plugin: Plugin uses below url for access to hudson. Don't use above. ( for user )
+
+  field_hudson_job: Hudson(Job)
+  field_hudson_build: Hudson(BuildNummer)
+
+  button_delete_history: Verwijder Geschiedenis
+
+  notice_no_jobs: Geen Jobs
+  notice_no_builds: Geen Builds
+
+  notice_building: Nu aan het Building...
+  notice_hudson_url: 'met http://, https:// ...'
+  notice_get_build_details: Vink uit, als het veel tijd neemt.
+  notice_health_report: Geeft een link naar Hudson, als de plugin het keyword vind in Health Report.
+  notice_health_report_setting: 'Als de plugin het keyword vindt - ${keyword} in het HealthReport, Geeft het een link naar Hudson - ${url_format}'
+  notice_autofetch: Haal informatie van Hudson tijdens de actie 'index'. <br> U kan de rake-task "redmine_hudson:fetch" uitvoeren in een external script.
+
+  notice_err_cant_connect: "Kan niet verbinden met Hudson %1s"
+  notice_err_response_invalid: 'Response ongeldig %1s'
+  notice_err_http_error: 'Http fout %1s'
+  notice_err_no_settings: "Geen instellingen voor dit project. Alstublief <a href='%1s'>bevestig de instellingen</a>"
+  notice_err_no_jobs: Hudson heeft geen job
+  notice_err_invalid_url: Ongeldige URL
+  notice_err_no_job : 'job niet gevonden [%1s]'
+  notice_err_unknown: 'Onbekende fout %1s'
+
+  notice_err_build_failed: 'Build gefaald %1s'
+  notice_err_build_failed_no_job: 'Build gefaald. Job niet gevonden [%1s]'
+
+  permission_view_hudson: Zie Hudson
+  permission_build_hudson: Build Hudson
+  permission_edit_hudson_settings: Wijzig Hudson instellingen
