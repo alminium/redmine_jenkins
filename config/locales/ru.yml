@@ -1,0 +1,70 @@
+# $Id: ru.yml ### 2011.06.02 03:32 AM eugene.sirotkin@gmail.com $
+# Russian strings go here
+ru:
+  label_hudson: Сборка
+  label_hudson_plural: Хадсон
+  label_build: Сборка
+  label_latest_build: Последняя сборка
+  label_job_list: Список задач
+  label_settings: Настройки
+  label_url: URL
+  label_jobs: Задачи
+  label_build_history: История сборок
+  label_update_jobs: Обновить задачи
+  label_build_now: Собрать сейчас
+  label_show_build_history: Показать историю сборок
+  label_show_compact: Отображать компактно
+  label_health_report_build_stability: Стабильность сборок
+  label_health_report_test_result: Результаты тестов
+  label_database: База данных
+  label_get_build_details: Детальная информация (изменения и результаты тестов)
+  label_look_and_feel: Внешний вид (только иконки)
+  label_look_and_feel_hudson: Хадсон
+  label_look_and_feel_plugin: Оригинальные
+  label_add_health_report: Добавить отчёт о состоянии
+  label_health_report: Отчёт о состоянии
+  label_health_report_settings: Настройки отчёта о состоянии
+  label_autofetch: Автообновление
+  label_job_description_format: Формат описания задач Хадсона
+  label_show_description: Показать описание
+  label_hide_description: Скрыть описание
+  label_todays_build: Сегодняшняя сборка
+  label_build_artifacts: Артефакты
+  label_num_of_stored_builds: Количество сборок
+  label_delete_old_build: Удалить старые сборки
+  label_log_rotator_days_to_keep: Сколько дней хранить результаты сборки
+  label_log_rotator_num_to_keep: Сколько последних сборок хранить
+  label_query_limit_builds_each_job: Максимальное количество сборок в запросе (для поиска)
+  label_query_limit_changesets_each_job: Максимальное количество изменений в запросе (для поиска)
+  label_use_url_for_plugin: Плагин использует данный URL для доступа к Хадсону.
+
+  field_hudson_job: Задача сборки
+  field_hudson_build: Номер сборки
+
+  button_delete_history: Удалить историю
+
+  notice_no_jobs: Нет задач
+  notice_no_builds: Нет сборок
+
+  notice_building: Собирается...
+  notice_hudson_url: 'http://, https:// ...'
+  notice_get_build_details: Снимите галочку, если это занимает много времени.
+  notice_health_report: Предоставляет ссылку на Хадсон, если плагин обнаружит ключевое слово в отчёте о состоянии.
+  notice_health_report_setting: 'Если плагин найдёт ключевое слово - ${keyword} в отчёте о состоянии, предоставит ссылку на Хадсон - ${url_format}'
+  notice_autofetch: Получать информацию из Хадсона во время индексирования. <br> Вы можете вызвать "redmine_hudson:fetch" посредством внешнего скрипта.
+
+  notice_err_cant_connect: "Невозможно подключиться к Хадсону {{value}}"
+  notice_err_response_invalid: 'Некорректный ответ {{value}}'
+  notice_err_http_error: 'Ошибка HTTP {{value}}'
+  notice_err_no_settings: "Отсутствуют установки для данного проекта. Пожалуйста <a href='{{value}}'>настройте плагин</a>"
+  notice_err_no_jobs: У Хадсона нет задач на сборку
+  notice_err_invalid_url: Некорректный URL
+  notice_err_no_job : 'Задача не найдена [{{value}}]'
+  notice_err_unknown: 'Неизвестная ошибка {{value}}'
+
+  notice_err_build_failed: 'Сборка провалилась {{value}}'
+  notice_err_build_failed_no_job: 'Сборка провалилась. Задача не найдена [{{value}}]'
+
+  permission_view_hudson: Посмотреть
+  permission_build_hudson: Собрать
+  permission_edit_hudson_settings: Изменить установки Хадсона

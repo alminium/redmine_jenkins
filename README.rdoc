@@ -90,6 +90,7 @@ Go  Administration -> Plugins -> 'Redmine Hudson Plugin' Configure.
 [fr.yml] Francois-Xavier CAUVIN
 [hu.yml] Péter Major
 [it.yml] Marco Bazzani
+[ru.yml] Eugene Sirotkin.
 [zh.yml] Billy T
 
 == Install Instructions
@@ -144,6 +145,9 @@ Use 'delete history' button in setting page.
 
 * ##682 (Defect) Plugin has no license
 * ##675 (Defect) db:migrate_plugins down failed
+* ##713 (Defect) I checked "Plugin uses below url for access to hudson.", but textbox doesn't appear
+* ##714 (Feature) Dutch translation
+* ##769 (Feature) Russian translation
 
 === 1.0.6.1
 

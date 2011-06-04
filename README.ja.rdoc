@@ -91,6 +91,7 @@ rake タスクを使って情報を取得する場合は、必ず 自動取得�
 [fr.yml] Francois-Xavier CAUVIN
 [hu.yml] Péter Major
 [it.yml] Marco Bazzani
+[ru.yml] Eugene Sirotkin.
 [zh.yml] Billy T
 
 == インストール方法
@@ -141,6 +142,9 @@ rake タスクを使って情報を取得する場合は、必ず 自動取得�
 
 * ##682 (バグ) ライセンスが設定されてない
 * ##675 (バグ) db:migrate_plugins down が失敗する
+* ##713 (Defect) プラグインが利用するURLが設定できない
+* ##714 (Feature) オランダ語対応
+* ##769 (Feature) ロシア語対応
 
 === 1.0.6.1
 
