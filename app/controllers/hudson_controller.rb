@@ -17,7 +17,6 @@ class HudsonController < ApplicationController
   before_filter :find_hudson
   before_filter :authorize
   before_filter :clear_flash
-  accept_key_auth :index
 
   include HudsonHelper
   include RexmlHelper
