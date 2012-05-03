@@ -1,4 +1,3 @@
-# $Id$
 # German strings go here
 de:
   label_hudson: Build Server
@@ -11,10 +10,10 @@ de:
   label_jobs: Jobs
   label_build_history: Build Verlauf
   label_update_jobs: Jobs
-  label_build_now: Build ausfuhren
+  label_build_now: Build ausführen
   label_show_build_history: Build Verlauf anzeigen
   label_show_compact: Kompaktdarstellung
-  label_health_report_build_stability: Statusbericht:Build-Stabilitat
+  label_health_report_build_stability: Statusbericht:Build-Stabilität
   label_health_report_test_result: Statusbericht:Testergebnisse
   label_database: Datenbank
   label_get_build_details: Builddetails anzeigen (Changesets und Tests)
@@ -25,7 +24,7 @@ de:
   label_health_report: Statusbericht
   label_health_report_settings: Statusbericht Einstellungen
   label_autofetch: AutoFetch
-  label_job_description_format: Format fur die Build-Job Beschreibung
+  label_job_description_format: Format für die Build-Job Beschreibung
   label_show_description: Beschreibung anzeigemn
   label_hide_description: Beschreibung verstecken
   label_todays_build: Builds von heute
@@ -36,27 +35,27 @@ de:
   label_log_rotator_num_to_keep: Aufbewahrungszeit in Anzahl der Builds
   label_query_limit_builds_each_job: Maximale Anzahl angezeigter Builds bei der Ticketsuche
   label_query_limit_changesets_each_job: Maximale Anzahl angezeigter Changesets bei der Ticketsuche
-  label_use_url_for_plugin: Das Plugin verwendet die untenstehende URL um auf den Build Server zu verbinden. Die oben stehende URLs ist nur fur die Anzeige beim Benuzer.
+  label_use_url_for_plugin: Das Plugin verwendet die untenstehende URL um auf den Build Server zu verbinden. Die oben stehende URLs ist nur für die Anzeige beim Benuzer.
 
   field_hudson_job: Build-Job
   field_hudson_build: Build-Nummer
 
-  button_delete_history: Hostorie loschen
+  button_delete_history: Hostorie löschen
 
   notice_no_jobs: Keine Jobs vorhanden
   notice_no_builds: Keine Builds vorhanden
 
-  notice_building: Build wird ausgefuhrt...
+  notice_building: Build wird ausgeführt...
   notice_bAuhaus_url: 'mit http://, https:// ...'
   notice_get_build_details: Diese Option sollte abschaltet werden falls der Anzeigeaufbau zu lange dauert.
-  notice_health_report: Einen Link anzeigen wenn im Build Statusbericht ein Schlusselwort gefunden wird.
-  notice_health_report_setting: 'Wenn das Schlusselwort - ${keyword} im Build Statusbericht gefunden wird, einen Link zum Build Job ${url_format} einfugen'
-  notice_autofetch: Hole die Daten vom Build Server wahrend der 'Index' Aktion. <br> Alternativ kann man dies auch durch den rake-task "redmine_build:fetch" durch ein externes Skript periodisch ausfuhren lasen.
+  notice_health_report: Einen Link anzeigen wenn im Build Statusbericht ein Schlüsselwort gefunden wird.
+  notice_health_report_setting: 'Wenn das Schlüsselwort - ${keyword} im Build Statusbericht gefunden wird, einen Link zum Build Job ${url_format} einfügen'
+  notice_autofetch: Hole die Daten vom Build Server während der 'Index' Aktion. <br> Alternativ kann man dies auch durch den rake-task "redmine_build:fetch" durch ein externes Skript periodisch ausführen lasen.
 
   notice_err_cant_connect: "Es kann keine Verbindung zum Build-Server bAuhaus aufgebaut werden. {{value}}" 
   notice_err_response_invalid: 'Die Antwort war nicht valide [{{value}}]'
   notice_err_http_error: 'Http-Fehler [{{value}}]'
-  notice_err_no_settings: "Keine Einstellungen fur dieses Projekt. Bitte uberprufen Sie die <a href='{{value}}'>Einstellungen</a>." 
+  notice_err_no_settings: "Keine Einstellungen für dieses Projekt. Bitte überprüfen Sie die <a href='{{value}}'>Einstellungen</a>." 
   notice_err_no_jobs: Im Build wurde kein Job konfiguriert.
   notice_err_invalid_url: Nicht valide URL
   notice_err_no_job : 'Der Job [{{value}}] wurde nicht gefunden.'
@@ -66,5 +65,5 @@ de:
   notice_err_build_failed_no_job: 'Build fehlgeschlagen. Der Job [{{value}}] wurde nicht gefunden.'
 
   permission_view_bAuhaus: Build jobs sehen
-  permission_build_bAuhaus: build Job ausfuhren
+  permission_build_bAuhaus: build Job ausführen
   permission_edit_bAuhaus_settings: Build Job editieren
