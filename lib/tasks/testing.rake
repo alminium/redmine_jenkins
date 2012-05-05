@@ -2,7 +2,7 @@
 desc 'Test Redmine Hudson Plugin'
 begin
   rcov_unit_options = "-I ../../../lib -x redmine"
-  rcov_cucumber_options = "--rails --sort=coverage --exclude 'osx/objc,gems/,spec/,redmine' -o features_rcov"
+  rcov_cucumber_options = "--rails --sort=coverage --exclude 'osx/objc,gems/,spec/,redmine,/var/lib/gems' -o features_rcov"
 
   namespace :redmine_hudson do
     namespace :test do
