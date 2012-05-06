@@ -8,4 +8,5 @@ group :test do
   gem "rspec-rails", "1.3.3", :group => :development
   gem "rack-test", :group => :development
   gem "rcov", :group => :development, :require => false
+  gem "json", "1.4.6", :group => :development, :require => false
 end
