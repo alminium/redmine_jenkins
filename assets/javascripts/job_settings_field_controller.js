@@ -1,5 +1,3 @@
-/* $Id$ */
-
 JobSettingsFieldController = Class.create();
 JobSettingsFieldController.prototype = {
   initialize: function () {

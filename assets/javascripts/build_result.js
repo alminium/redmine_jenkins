@@ -1,5 +1,3 @@
-/* $Id$ */
-
 BuildResult = Class.create();
 BuildResult.prototype = {
   initialize: function (job_name, number, result, finished_at, finished_at_tag, url) {

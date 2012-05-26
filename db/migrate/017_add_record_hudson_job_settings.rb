@@ -1,5 +1,3 @@
-# $Id$
-
 class AddRecordHudsonJobSettings < ActiveRecord::Migration
   def self.up
     HudsonJob.find(:all).each do |job|

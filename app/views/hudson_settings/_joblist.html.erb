@@ -1,7 +1,3 @@
-<%# $Id$
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-%>
 <div class="floating" id="joblist">
 <%=link_to_remote "[#{l(:label_update_jobs)}]", :update=>'joblist', :url=>{:action => 'joblist', :id=>@project}, :with=>"'url=' + $('settings_url').value + '&url_for_plugin=' + $('settings_url_for_plugin').value + '&enable_url_for_plugin=' + $('enable_url_for_plugin').checked"%><br/>
 <p>

@@ -1,5 +1,3 @@
-# $Id$
-
 require 'redmine/version'
 
 module RedmineHudson

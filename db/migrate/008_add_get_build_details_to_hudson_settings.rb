@@ -1,5 +1,3 @@
-# $Id$
-
 class AddGetBuildDetailsToHudsonSettings < ActiveRecord::Migration
   def self.up
     add_column :hudson_settings, :get_build_details, :boolean, :default => true

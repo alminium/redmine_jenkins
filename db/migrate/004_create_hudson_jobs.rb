@@ -1,4 +1,3 @@
-# $Id$
 class CreateHudsonJobs < ActiveRecord::Migration
   def self.up
     create_table :hudson_jobs do |t|

@@ -1,6 +1,4 @@
-# $Id$
-
-require 'hudson_settings'
+require File.join(File.dirname(__FILE__), '../../app/models', 'hudson_settings')
 
 class AddHealthReportKeywordsToHudsonSettings < ActiveRecord::Migration
   def self.up

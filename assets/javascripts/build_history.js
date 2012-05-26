@@ -1,5 +1,3 @@
-/* $Id$ */
-
 BuildHistory = Class.create();
 BuildHistory.prototype = {
   initialize: function (url) {

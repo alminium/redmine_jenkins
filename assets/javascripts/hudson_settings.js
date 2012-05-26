@@ -1,5 +1,3 @@
-/* $Id$ */
-
 HealthReportFieldAppender = Class.create();
 HealthReportFieldAppender.prototype = {
   initialize: function (message, initial_count) {

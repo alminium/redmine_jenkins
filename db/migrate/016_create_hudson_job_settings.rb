@@ -1,6 +1,4 @@
-# $Id: 004_create_hudson_jobs.rb 175 2009-06-27 15:42:20Z toshiyuki.ando1971 $
-
-require 'hudson_job_settings'
+require File.join(File.dirname(__FILE__), "../../app/models", 'hudson_job_settings')
 
 class CreateHudsonJobSettings < ActiveRecord::Migration
   def self.up

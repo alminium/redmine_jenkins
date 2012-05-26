@@ -1,11 +1,15 @@
-# $Id$
+# -*- coding: utf-8 -*-
 
-require 'hudson_build'
-require 'hudson_api_error'
-require 'hudson_exceptions'
+require File.join( File.dirname( __FILE__ ), 'hudson_build' )
+require File.join( File.dirname( __FILE__ ), 'hudson_api_error' )
+require File.join( File.dirname( __FILE__ ), 'hudson_exceptions' )
 
 class HudsonJob < ActiveRecord::Base
   unloadable
+
+  include HudsonHelper
+  include RexmlHelper
+
   has_many :health_reports, :class_name => 'HudsonHealthReport', :dependent => :destroy
   has_one :job_settings, :class_name => 'HudsonJobSettings', :dependent => :destroy
   belongs_to :project, :foreign_key => 'project_id'
@@ -15,9 +19,6 @@ class HudsonJob < ActiveRecord::Base
 
   # 空白を許さないもの
   validates_presence_of :project_id, :hudson_id, :name
-
-  include HudsonHelper
-  include RexmlHelper
 
   def initialize(attributes = nil)
     super attributes

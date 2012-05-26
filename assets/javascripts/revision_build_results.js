@@ -1,5 +1,3 @@
-/* $Id$ */
-
 RevisionBuildResults = Class.create();
 RevisionBuildResults.prototype = {
   initialize: function (revision) {

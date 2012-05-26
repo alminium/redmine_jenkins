@@ -1,21 +1,20 @@
-# $Id$
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+# -*- coding: utf-8 -*-
 
 require "rexml/document"
-require 'hudson_exceptions'
+require File.join(File.dirname(__FILE__), "../models", 'hudson_exceptions')
 
 class HudsonSettingsController < ApplicationController
   unloadable
+
+  include RexmlHelper
+  include HudsonHelper
+
   layout 'base'
 
   before_filter :find_project
   before_filter :find_hudson
   before_filter :authorize
   before_filter :clear_flash
-
-  include RexmlHelper
-  include HudsonHelper
 
   def edit
     if (params[:settings] != nil)
@@ -38,7 +37,7 @@ class HudsonSettingsController < ApplicationController
         add_job
         update_job_settings params
         find_hudson # 一度設定を読み直さないと、destory したものが残るので ( delete_if の方が分かりやすい？ )
-        flash[:notice] = l(:notice_successful_update)
+        flash[:notice] = t :notice_successful_update
       end
 
     end
@@ -63,7 +62,7 @@ class HudsonSettingsController < ApplicationController
     rescue HudsonApiException => error
       @error = error.message
     end
-    render :layout => false, :template => 'hudson_settings/_joblist.rhtml'
+    render :layout => false, :template => 'hudson_settings/_joblist'
   end
 
   def delete_builds
@@ -78,7 +77,7 @@ class HudsonSettingsController < ApplicationController
   rescue => error
     @error = error.message
   ensure
-    render :layout => false, :template => 'hudson_settings/_joblist.rhtml'
+    render :layout => false, :template => 'hudson_settings/_joblist'
   end
 
   def delete_history
@@ -91,7 +90,7 @@ class HudsonSettingsController < ApplicationController
       end
     }
 
-    flash[:notice] = l(:notice_successful_delete)
+    flash[:notice] = t :notice_successful_delete 
   rescue Exception => error
     flash[:error] = error.message
   ensure

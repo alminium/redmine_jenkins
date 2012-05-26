@@ -1,9 +1,10 @@
-# $Id$
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+# -*- coding: utf-8 -*-
 
 class HudsonSettings < ActiveRecord::Base
   unloadable
+
+  include I18n
+  
   has_many :health_report_settings, :class_name => 'HudsonSettingsHealthReport', :dependent => :destroy
 
   # 空白を許さないもの
@@ -33,7 +34,7 @@ class HudsonSettings < ActiveRecord::Base
 
   # エラーメッセージに表示されるbegin, end を日本語名にするために追加。
   @@HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-    "health_report_settings" => l(:label_health_report_settings)
+    "health_report_settings" => I18n.t(:label_health_report_settings)
   }
 
   # attribute_key_name を人が分かる言葉にするためのメソッド。ActiveRecord がそもそも持っているものをカスタマイズ

@@ -1,13 +1,11 @@
-# $Id$
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+# -*- coding: utf-8 -*-
 
 require "uri"
 require 'net/http'
 
 module HudsonHelper
 
-  def open_hudson_api( uri, auth_user, auth_password )
+  def open_hudson_api(uri, auth_user, auth_password)
 
     begin
       http = create_http_connection(uri)
@@ -97,11 +95,11 @@ module HudsonHelper
         tag << content_tag("span", job.latest_build.result, 
                :class => "result #{job.latest_build.result.downcase}") if true != job.latest_build.building? && "" != job.latest_build.result
         tag " " 
-        tag << content_tag("span", l(:notice_building), :class => "result") if job.latest_build.building?
+        tag << content_tag("span", t(:notice_building), :class => "result") if job.latest_build.building?
         tag << " "
         tag << content_tag("span", job.latest_build.finished_at.localtime.strftime("%Y/%m/%d %H:%M:%S"))
       end
-      tag << l(:notice_no_builds) if "" == job.latest_build.number
+      tag << t(:notice_no_builds) if "" == job.latest_build.number
     end    
   
     tag << "<ul class=\"job-health-reports\">"

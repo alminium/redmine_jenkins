@@ -1,5 +1,4 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+# -*- coding: utf-8 -*-
 
 class HudsonBuildRotator
   unloadable
@@ -14,7 +13,6 @@ class HudsonBuildRotator
     return unless @job_settings.do_rotate?
 
     HudsonBuild.destroy_all(HudsonBuildRotator.create_cond_to_delete(@job_settings))
-
   end
 
 end

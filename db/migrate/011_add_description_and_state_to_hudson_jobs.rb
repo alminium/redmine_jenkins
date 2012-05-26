@@ -1,5 +1,3 @@
-# $Id$
-
 class AddDescriptionAndStateToHudsonJobs < ActiveRecord::Migration
   def self.up
     add_column :hudson_jobs, :description, :text

@@ -1,7 +1,8 @@
-# $Id$
+# -*- coding: utf-8 -*-
 
 class HudsonBuildChangeset < ActiveRecord::Base
   unloadable
+
   belongs_to :build, :class_name => 'HudsonBuild', :foreign_key => 'hudson_build_id'
 
   # 空白を許さないもの

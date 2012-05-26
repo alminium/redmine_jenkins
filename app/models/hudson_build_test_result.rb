@@ -1,8 +1,8 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+# -*- coding: utf-8 -*-
 
 class HudsonBuildTestResult < ActiveRecord::Base
   unloadable
+
   belongs_to :build, :class_name => 'HudsonBuild', :foreign_key => 'hudson_build_id'
 
   # 空白を許さないもの

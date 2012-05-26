@@ -1,12 +1,12 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
+# -*- coding: utf-8 -*-
 
 class HudsonHealthReport < ActiveRecord::Base
   unloadable
-  belongs_to :job, :class_name => 'HudsonJob', :foreign_key => 'hudson_job_id'
 
   include HudsonHelper
   include RexmlHelper
+
+  belongs_to :job, :class_name => 'HudsonJob', :foreign_key => 'hudson_job_id'
 
   def update_by_xml(element)
     self.description = get_element_value(element, "description")

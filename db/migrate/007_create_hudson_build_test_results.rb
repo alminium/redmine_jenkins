@@ -1,5 +1,3 @@
-# $Id$
-
 class CreateHudsonBuildTestResults < ActiveRecord::Migration
   def self.up
     create_table :hudson_build_test_results do |t|

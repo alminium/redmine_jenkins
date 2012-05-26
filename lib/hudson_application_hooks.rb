@@ -1,5 +1,3 @@
-# $Id$
-
 class HudsonApplicationHooks < Redmine::Hook::ViewListener
 
   include ActionView::Helpers::DateHelper

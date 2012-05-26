@@ -1,4 +1,3 @@
-# $Id$
 desc 'Fetch buildresults from the Hudson'
 
 namespace :redmine_hudson do

@@ -1,4 +1,3 @@
-# $Id$
 desc 'Test Redmine Hudson Plugin'
 begin
   rcov_unit_options = "-I ../../../lib -x redmine"

@@ -1,5 +1,3 @@
-/* $Id$ */
-
 BuildArtifacts = Class.create();
 BuildArtifacts.prototype = {
   initialize: function () {

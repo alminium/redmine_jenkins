@@ -1,5 +1,3 @@
-# $Id$
-
 class ChangeColumnHudsonBuildNumber < ActiveRecord::Migration
   def self.up
     add_column :hudson_builds, :number_new, :integer

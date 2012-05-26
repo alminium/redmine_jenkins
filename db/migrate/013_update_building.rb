@@ -1,6 +1,4 @@
-# $Id$
-
-require 'hudson_build'
+require File.join(File.dirname(__FILE__), '../../app/models', 'hudson_build')
 
 class UpdateBuilding < ActiveRecord::Migration
   def self.up

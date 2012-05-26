@@ -1,5 +1,3 @@
-# $Id$
-
 class CreateHudsonBuildArtifacts < ActiveRecord::Migration
   def self.up
     create_table :hudson_build_artifacts do |t|

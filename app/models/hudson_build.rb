@@ -1,12 +1,15 @@
-# $Id$
+# -*- coding: utf-8 -*-
 
-require 'hudson_api_error'
-require 'hudson_exceptions'
-require 'rexml_helper'
-include RexmlHelper
+require File.join( File.dirname( __FILE__ ), 'hudson_api_error' )
+require File.join( File.dirname( __FILE__ ), 'hudson_exceptions' )
 
 class HudsonBuild < ActiveRecord::Base
   unloadable
+
+  extend RexmlHelper
+  include RexmlHelper
+  include HudsonHelper
+
   has_many :changesets, :class_name => 'HudsonBuildChangeset', :dependent => :destroy
   has_one :test_result, :class_name => 'HudsonBuildTestResult', :dependent => :destroy
   has_many :artifacts, :class_name => 'HudsonBuildArtifact', :dependent => :destroy
@@ -19,9 +22,17 @@ class HudsonBuild < ActiveRecord::Base
   # 重複を許さないもの
   validates_uniqueness_of :number, :scope => :hudson_job_id
 
+  # 活動にHudsonを追加
+  acts_as_activity_provider :type => 'hudson',
+                             :timestamp => "#{HudsonBuild.table_name}.finished_at",
+                             :author_key => "#{HudsonBuild.table_name}.caused_by",
+                             :find_options => {:include => {:job => :project}},
+                             :permission => :view_hudson
+
+  # 活動の表示内容を規定
   acts_as_event :title => Proc.new {|o| 
-                                  retval = "#{l(:label_build)} #{o.job.name} #{o.number}: #{o.result}" unless o.building?
-                                  retval = "#{l(:label_build)} #{o.job.name} #{o.number}: #{l(:notice_building)}" if o.building?
+                                  retval = "#{t(:label_build)} #{o.job.name} #{o.number}: #{o.result}" unless o.building?
+                                  retval = "#{t(:label_build)} #{o.job.name} #{o.number}: #{t(:notice_building)}" if o.building?
                                   retval
                                 },
                   :description => Proc.new{|o|
@@ -31,15 +42,6 @@ class HudsonBuild < ActiveRecord::Base
                                   items.join("; ")
                                 },
                   :datetime => :finished_at
-
-  acts_as_activity_provider :type => 'hudson',
-                             :timestamp => "#{HudsonBuild.table_name}.finished_at",
-                             :author_key => "#{HudsonBuild.table_name}.caused_by",
-                             :find_options => {:include => {:job => :project}},
-                             :permission => :view_hudson
-
-  include HudsonHelper
-  extend RexmlHelper
 
   def project
     return nil unless job

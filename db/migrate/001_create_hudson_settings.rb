@@ -1,4 +1,3 @@
-# $Id$
 class CreateHudsonSettings < ActiveRecord::Migration
   def self.up
     create_table :hudson_settings do |t|

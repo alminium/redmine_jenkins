@@ -1,4 +1,3 @@
-# $Id$
 class AddAuthUserPassword < ActiveRecord::Migration
   def self.up
     add_column :hudson_settings, :auth_user, :string, :default => ''

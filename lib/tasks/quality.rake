@@ -1,4 +1,3 @@
-# $Id$
 desc 'Auto Code Review Redmine Hudson Plugin'
 begin
   namespace :redmine_hudson do

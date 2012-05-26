@@ -1,7 +1,7 @@
-# $Id$
+# -*- coding: utf-8 -*-
 
-require 'hudson_api_error'
-require 'hudson_exceptions'
+require File.join( File.dirname(__FILE__), 'hudson_api_error' )
+require File.join( File.dirname(__FILE__), 'hudson_exceptions' )
 
 class Hudson
   unloadable
@@ -42,7 +42,7 @@ def initialize(project_id)
   end
 
   def get_job(job_name)
-      job = self.jobs.find{|job| job.name == job_name }
+      job = self.jobs.find{|job| job.name == job_name}
       return HudsonNoJob.new(:name => job_name, :settings => @settings) unless job
       return job
   end

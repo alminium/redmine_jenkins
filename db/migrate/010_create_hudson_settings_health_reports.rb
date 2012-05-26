@@ -1,5 +1,3 @@
-# $Id$
-
 class CreateHudsonSettingsHealthReports < ActiveRecord::Migration
   def self.up
     create_table :hudson_settings_health_reports do |t|

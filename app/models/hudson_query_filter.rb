@@ -1,4 +1,4 @@
-# $Id$
+# -*- coding: utf-8 -*-
 
 class HudsonQueryFilter
   unloadable

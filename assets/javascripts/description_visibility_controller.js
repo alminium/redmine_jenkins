@@ -1,5 +1,3 @@
-/* $Id$ */
-
 DescriptionVisibilityController = Class.create();
 DescriptionVisibilityController.prototype = {
   initialize: function (first_state, label_show, label_hide) {

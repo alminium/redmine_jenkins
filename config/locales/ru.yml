@@ -1,4 +1,3 @@
-# $Id: ru.yml ### 2011.06.02 03:32 AM eugene.sirotkin@gmail.com $
 # Russian strings go here
 ru:
   label_hudson: Сборка

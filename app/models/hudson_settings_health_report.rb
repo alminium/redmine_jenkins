@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
+
 class HudsonSettingsHealthReport < ActiveRecord::Base
   unloadable
+
   belongs_to :settings, :class_name => 'HudsonSettings', :foreign_key => 'hudson_settings_id'
 
   # 空白を許さないもの

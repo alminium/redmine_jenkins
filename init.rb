@@ -1,5 +1,4 @@
 # $Id$
-require 'dispatcher'
 require 'redmine'
 require 'hudson_application_hooks'
 require 'query_patch'
@@ -46,7 +45,8 @@ Redmine::Plugin.register :redmine_hudson do
 
 end
 
-Dispatcher.to_prepare do
-  Query.send( :include, RedmineHudson::RedmineExt::QueryPatch)
+Rails.configuration.to_prepare do
+  unless Query.included_modules.include? RedmineHudson::RedmineExt::QueryPatch
+    Query.send( :include, RedmineHudson::RedmineExt::QueryPatch)
+  end
 end
-

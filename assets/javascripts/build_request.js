@@ -1,4 +1,3 @@
-/* $Id$ */
 BuildRequest = Class.create();
 BuildRequest.prototype = {
   initialize: function (url, message_success, message_failure) {
