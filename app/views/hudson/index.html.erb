@@ -51,13 +51,13 @@
     <h3 class="<%=icon_base_class%> icon-<%=job.state%>"><%=link_to job.name, job.url_for(:user)%></h3>
       <div class="wiki job-description">
         <%= textilizable job.description if Hudson.job_description_format == "textile"%>
-        <%= job.description unless Hudson.job_description_format == "textile" %>
+        <%=raw job.description unless Hudson.job_description_format == "textile" %>
       </div>
 
       <ul class="job-health-reports">
         <% job.health_reports.each do |report| %>
-          <%="<li>#{link_to(report.description, report.url)} #{report.score}%" if report.url != ""%>
-          <%="<li>#{report.description} #{report.score}%" if report.url == ""%>
+          <%= content_tag :li, "#{link_to(report.description, report.url)} #{report.score}%".html_safe if report.url != ""%>
+          <%= content_tag :li, "#{report.description} #{report.score}%" if report.url == ""%>
         <% end %>
       </ul>
     </div>
