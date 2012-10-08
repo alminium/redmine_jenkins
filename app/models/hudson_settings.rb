@@ -15,6 +15,14 @@ class HudsonSettings < ActiveRecord::Base
 
   DELIMITER = ','
 
+  def self.add_last_slash(value)
+    added = value
+    return "" unless added
+    return "" if added.length == 0
+    added += "/" unless added.index(/\/$/)
+    return added
+  end
+
   def use_authentication?
     return false unless self.auth_user
     return false unless self.auth_user.length > 0
@@ -32,6 +40,10 @@ class HudsonSettings < ActiveRecord::Base
     return self.url
   end
 
+  def url=(value)
+    write_attribute(:url, self.add_last_slash(value))
+  end
+
   # エラーメッセージに表示されるbegin, end を日本語名にするために追加。
   @@HUMANIZED_ATTRIBUTE_KEY_NAMES = {
     "health_report_settings" => I18n.t(:label_health_report_settings)
@@ -41,14 +53,6 @@ class HudsonSettings < ActiveRecord::Base
   def HudsonSettings.human_attribute_name(attribute_key_name)
     @@HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
   end
-end
-
-def HudsonSettings.add_last_slash_to_url(url)
-  retval = url
-  return "" unless retval
-  return "" if retval.length == 0
-  retval += "/" unless retval.index(/\/$/)
-  return retval
 end
 
 def HudsonSettings.find_by_project_id(project_id)

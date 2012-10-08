@@ -12,6 +12,7 @@ Feature: index
 
     Then I should not see "Hudson" within "#main-menu"
 
+  @wip
   Scenario: If 'Developer' have 'view_hudson' permission, Redmine show hudson tab on the menu
     Given Project "eCookbook" uses "hudson" Plugin
       And "Developer" has a permission "view_hudson"
@@ -23,6 +24,7 @@ Feature: index
 
     Then I should see "Hudson" within "#main-menu"
 
+  @wip
   Scenario: If project has no Hudson settings, plugin show message
     Given Project "eCookbook" uses "hudson" Plugin
       And "Developer" has a permission "view_hudson,edit_hudson_settings"
@@ -42,6 +44,7 @@ Feature: index
     When I go to Hudson at "eCookbook" Project
     Then I should see "No Jobs"
 
+  @wip
   Scenario: Show job simple-ruby-application
     Given Project "eCookbook" uses "hudson" Plugin
       And "Developer" has a permission "view_hudson,edit_hudson_settings"

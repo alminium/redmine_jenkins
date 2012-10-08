@@ -17,7 +17,7 @@ begin
 
   namespace :cucumber do
     default_dependency_tasks = 
-      ['redmine_hudson:db:test:prepare', 'redmine_hudson:config:prepare']
+      ['environment', 'redmine_hudson:db:test:prepare', 'redmine_hudson:config:prepare']
 
     Cucumber::Rake::Task.new({:ok => default_dependency_tasks}, 'Run features that should pass') do |t|
       t.binary = vendored_cucumber_bin # If nil, the gem's binary is used.
@@ -35,6 +35,12 @@ begin
       t.binary = vendored_cucumber_bin
       t.fork = true # You may get faster startup if you set this to false
       t.profile = 'rerun'
+    end
+
+    Cucumber::Rake::Task.new({:partial => default_dependency_tasks}, 'Run features that should pass') do |t|
+      t.binary = vendored_cucumber_bin # If nil, the gem's binary is used.
+      t.fork = true # You may get faster startup if you set this to false
+      t.profile = 'partial'
     end
 
     desc 'Run all features'
@@ -57,6 +63,7 @@ begin
 
   # In case we don't have ActiveRecord, append a no-op task that we can depend upon.
   task 'db:test:prepare' do
+     
   end
 
   task 'config:prepare' do

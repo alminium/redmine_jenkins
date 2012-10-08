@@ -1,5 +1,8 @@
 <div class="floating" id="joblist">
-<%=link_to_remote "[#{l(:label_update_jobs)}]", :update=>'joblist', :url=>{:action => 'joblist', :id=>@project}, :with=>"'url=' + $('settings_url').value + '&url_for_plugin=' + $('settings_url_for_plugin').value + '&enable_url_for_plugin=' + $('enable_url_for_plugin').checked"%><br/>
+  <%=link_to "[#{l(:label_update_jobs)}]", 
+    :url => { :action => 'joblist', :id=>@project },
+    :with => "'url=' + $('settings_url').value + '&url_for_plugin=' + $('settings_url_for_plugin').value + '&enable_url_for_plugin=' + $('enable_url_for_plugin').checked",
+    :remote => true %><br/>
 <p>
 <% if @jobs.length == 0 %>
   <%=@error if @error != nil%>
@@ -26,13 +29,16 @@
     <td class="number"><%= number_with_delimiter number_of_build %></td>
 
     <%=render :partial => 'job_settings', :locals => {:field_name => "job_settings[]", :job => job} %>
-
-    <% delete_button = "" -%>
-    <% delete_button = link_to_remote(l(:button_delete), { :update => 'joblist',  :url => {:controller => 'hudson_settings', :action => 'delete_builds', :id => @project, :job_id => job.id},
-                                                  :method => :post,
-                                                  :success => "on_job_settings_reloaded",
-                                                 }, :title => l(:button_delete),
-                                                 :class => 'icon icon-del') if job && job.job_settings && job.job_settings.do_rotate? -%>
+    <% delete_button = "" 
+       if job && job.job_settings && job.job_settings.do_rotate? 
+         delete_button = 
+           link_to(l(:button_delete), 
+                   :url => { :controller => 'hudson_settings', :action => 'delete_builds', :id => @project, :job_id => job.id },
+                   :method => :post,
+                   :success => "on_job_settings_reloaded",
+                   :title => l(:button_delete),
+                   :class => 'icon icon-del')
+       end -%>
     <td><%=delete_button%></td>
     </tr>
   <% end %>

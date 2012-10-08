@@ -2,8 +2,22 @@
 Feature: settings_edit
   show and edit hudson settings
 
+  # jsmith joins "eCookbook" Project as a "Developer"
+  Scenario: Permission - "jsmith" has permisson, can see settings page.
+    Given Project "eCookbook" uses "Hudson" Plugin
+      And "Developer" has a permission below:
+        | permissions         |
+        | View Hudson         |
+        | Edit Hudson settings|
+      And "jsmith" log on as a User
+    When  I go to HudsonSettings at "eCookbook" Project
+    Then I should see "Settings"
+     And I should see "Plugin uses below url for access to hudson."
+    
+
+  @wip
   Scenario: Add new project settings
-    Given Project "eCookbook" uses "hudson" Plugin
+    Given Project "eCookbook" uses "Hudson" Plugin
       And "Developer" has a permission "view_hudson,edit_hudson_settings"
       And I log on as a User
       And I select "English" as language
@@ -14,6 +28,7 @@ Feature: settings_edit
      And I press "Save"
     Then the field named "settings[url]" should contain "http://localhost:8080/"
 
+  @wip
   Scenario: Add HealthReport settings
     Given Project "eCookbook" uses "hudson" Plugin
       And "Developer" has a permission "view_hudson,edit_hudson_settings"
@@ -28,6 +43,7 @@ Feature: settings_edit
     Then the field named "settings[url]" should contain "http://localhost:8080/"
      And health_report_settings "1" should have Keyword "Build stability" and URLFormat "http://hoge.com/hudson/simple-job/lastBuild/"
 
+  @wip
   Scenario: Add HealthReport settings
     Given Project "eCookbook" uses "hudson" Plugin
       And "Developer" has a permission "view_hudson,edit_hudson_settings"
