@@ -6,4 +6,4 @@ std_opts = "--require plugins/redmine_hudson/features --format #{ENV['CUCUMBER_F
 default: <%= std_opts %> plugins/redmine_hudson/features
 wip: --tags @wip:3 --wip plugins/redmine_hudson/features
 rerun: <%= rerun_opts %> --format rerun --out rerun.txt --strict --tags ~@wip
-partial: <%= std_opts %> plugins/redmine_hudson/features/hudson_settings_edit.feature
+current: <%= std_opts %> --tags @current plugins/redmine_hudson/features/hudson_settings_edit.feature
