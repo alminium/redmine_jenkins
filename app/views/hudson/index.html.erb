@@ -37,9 +37,8 @@
           <%=link_to "##{job.latest_build.number}", job.latest_build.url_for(:user)%>
           <%=content_tag("span", job.latest_build.result, :class => "result #{job.latest_build.result.downcase}") if true != job.latest_build.building? && "" != job.latest_build.result%>
           <%=content_tag("span", l(:notice_building), :class => "result") if job.latest_build.building? %>
-          <% today_tag = "" %>
-          <% today_tag = " " + image_tag("today.png", :plugin => "redmine_hudson", :title => l(:label_todays_build)) if is_today?(job.latest_build.finished_at) %>
-          <%=content_tag("span", job.latest_build.finished_at.localtime.strftime("%Y/%m/%d %H:%M:%S")) + today_tag if job.latest_build.finished_at %>
+          <%=content_tag("span", job.latest_build.finished_at.localtime.strftime("%Y/%m/%d %H:%M:%S"))%>
+          <%=image_tag("today.png", :plugin => "redmine_hudson", :title => l(:label_todays_build)) if is_today?(job.latest_build.finished_at)%>
         <% end %>
         <%=l(:notice_no_builds) if "" == job.latest_build.number%>
       <% end %>
