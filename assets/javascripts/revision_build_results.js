@@ -1,4 +1,4 @@
-RevisionBuildResults = Class.create();
+function RevisionBuildResults(){};
 RevisionBuildResults.prototype = {
   initialize: function (revision) {
      this.revision = revision;

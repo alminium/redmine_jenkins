@@ -1,4 +1,4 @@
-JobSettingsFieldController = Class.create();
+function JobSettingsFieldController(){};
 JobSettingsFieldController.prototype = {
   initialize: function () {
     this.elements_build_rotate = $$('input[class^="build_rotate"]');

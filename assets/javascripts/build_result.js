@@ -1,4 +1,4 @@
-BuildResult = Class.create();
+function BuildResult(){};
 BuildResult.prototype = {
   initialize: function (job_name, number, result, finished_at, finished_at_tag, url) {
      this.job_name = job_name;

@@ -1,4 +1,4 @@
-BuildHistory = Class.create();
+function BuildHistory(){};
 BuildHistory.prototype = {
   initialize: function (url) {
      this.url = url;
