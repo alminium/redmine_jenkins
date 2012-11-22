@@ -30,7 +30,7 @@ class HudsonController < ApplicationController
     end
     
   rescue HudsonNoSettingsException
-    flash.now[:error] = t(:notice_err_no_settings, :url => url_for(:controller => 'hudson_settings', :action => 'edit', :id => @project))
+    flash.now[:error] = l(:notice_err_no_settings, :url => url_for(:controller => 'hudson_settings', :action => 'edit', :id => @project))
   ensure
     unless @hudson.hudson_api_errors.empty?
       flash.now[:error] << "<br>" if flash.now[:error]
@@ -50,9 +50,9 @@ class HudsonController < ApplicationController
     job.request_build
 
   rescue HudsonNoSettingsException
-    render :text => t(:notice_err_build_failed, :description => :notice_err_no_settings)
+    render :text => l(:notice_err_build_failed, :description => :notice_err_no_settings)
   rescue HudsonNoJobException
-    render :text => t(:notice_err_build_failed_no_job, :job_name => params[:name])
+    render :text => l(:notice_err_build_failed_no_job, :job_name => params[:name])
   else
     if job.hudson_api_errors.empty?
       render :text => "#{params[:name]} #{t :build_accepted}"
@@ -73,9 +73,9 @@ class HudsonController < ApplicationController
     @builds = job.fetch_recent_builds
 
   rescue HudsonNoSettingsException
-    render :text => t(:notice_err_no_settings, :url => url_for(:controller => 'hudson_settings', :action => 'edit', :id => @project))
+    render :text => l(:notice_err_no_settings, :url => url_for(:controller => 'hudson_settings', :action => 'edit', :id => @project))
   rescue HudsonNoJobException
-    render :text => t(:notice_err_no_job, :job_name => params[:name])
+    render :text => l(:notice_err_no_job, :job_name => params[:name])
   else
     if job.hudson_api_errors.empty?
       render :partial => 'history'

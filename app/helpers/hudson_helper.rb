@@ -39,11 +39,11 @@ module HudsonHelper
         tag << content_tag("span", job.latest_build.result, 
                :class => "result #{job.latest_build.result.downcase}") if true != job.latest_build.building? && "" != job.latest_build.result
         tag " " 
-        tag << content_tag("span", t(:notice_building), :class => "result") if job.latest_build.building?
+        tag << content_tag("span", l(:notice_building), :class => "result") if job.latest_build.building?
         tag << " "
         tag << content_tag("span", job.latest_build.finished_at.localtime.strftime("%Y/%m/%d %H:%M:%S"))
       end
-      tag << t(:notice_no_builds) if "" == job.latest_build.number
+      tag << l(:notice_no_builds) if "" == job.latest_build.number
     end    
   
     tag << "<ul class=\"job-health-reports\">"

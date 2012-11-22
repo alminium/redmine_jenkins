@@ -31,8 +31,8 @@ class HudsonBuild < ActiveRecord::Base
 
   # 活動の表示内容を規定
   acts_as_event :title => Proc.new {|o| 
-                                  retval = "#{t(:label_build)} #{o.job.name} #{o.number}: #{o.result}" unless o.building?
-                                  retval = "#{t(:label_build)} #{o.job.name} #{o.number}: #{t(:notice_building)}" if o.building?
+                                  retval = "#{l(:label_build)} #{o.job.name} #{o.number}: #{o.result}" unless o.building?
+                                  retval = "#{l(:label_build)} #{o.job.name} #{o.number}: #{l(:notice_building)}" if o.building?
                                   retval
                                 },
                   :description => Proc.new{|o|
