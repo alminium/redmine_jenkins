@@ -3,13 +3,13 @@ require 'redmine'
 require 'hudson_application_hooks'
 require 'query_patch'
 
-Redmine::Plugin.register :redmine_hudson do
+Redmine::Plugin.register :redmine_jenkins do
   name 'Redmine Hudson plugin'
   author 'Toshiyuki Ando r-labs'
   url "http://www.r-labs.org/repositories/show/hudson" if respond_to?(:url)
-  description 'This is a Hudson plugin for Redmine'
-  version '1.0.8'
-  requires_redmine :version_or_higher => '0.8.0'
+  description 'This is a Jenkins plugin for Redmine'
+  version '2.1.0'
+  requires_redmine :version_or_higher => '2.1.0'
 
   project_module :hudson do
     # パーミッション設定。
@@ -31,7 +31,7 @@ Redmine::Plugin.register :redmine_hudson do
            :partial => 'hudson_settings/redmine_hudson_settings')
 
   Redmine::WikiFormatting::Macros.register do
-    desc "This is my macro link to hudson"
+    desc "This is my macro link to jenkins"
     macro :build do |obj, args|
       return nil if args.length < 2 # require JobName, BuildNumber
       return nil if @project == nil

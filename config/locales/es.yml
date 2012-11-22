@@ -1,7 +1,7 @@
 # Spanish strings go here
 es:
-  label_hudson: Hudson
-  label_hudson_plural: Hudson
+  label_hudson: Jenkins
+  label_hudson_plural: Jenkins
   label_build: Ejecución
   label_latest_build: Última ejecución
   label_job_list: Listado de tareas
@@ -18,13 +18,13 @@ es:
   label_database: Base de datos
   label_get_build_details: Obtener detalles de ejecución (cambios y ejecución de pruebas)
   label_look_and_feel: Imagen y estilo (sólo iconos)
-  label_look_and_feel_hudson: Hudson
+  label_look_and_feel_hudson: Jenkins
   label_look_and_feel_plugin: Original del plugin
   label_add_health_report: Añadir configuración de InformeSalud
   label_health_report: Informe de Salud
   label_health_report_settings: Configuración del informe de salud
   label_autofetch: Autobúsqueda
-  label_job_description_format: Formato de la descripción de la tarea en Hudson
+  label_job_description_format: Formato de la descripción de la tarea en Jenkins
   label_show_description: Mostrar descripción
   label_hide_description: Esconder descripción
   label_todays_build: Today's Build
@@ -37,8 +37,8 @@ es:
   label_query_limit_changesets_each_job: Max Number of Changesets for query (Using search issues)
   label_use_url_for_plugin: Plugin uses below url for access to hudson. Don't use above. ( for user )
 
-  field_hudson_job: Hudson(Job)
-  field_hudson_build: Hudson(BuildNumber)
+  field_hudson_job: Jenkins(Job)
+  field_hudson_build: Jenkins(BuildNumber)
 
   button_delete_history: Borrar historial
 
@@ -48,15 +48,15 @@ es:
   notice_building: Ahora en ejecución...
   notice_hudson_url: 'con http://, https:// ...'
   notice_get_build_details: Deshabilitar la marca, si toma demasiado tiempo.
-  notice_health_report: Proporcionar un enlace a Hudson, si el plugin encuentra una palabra clave en el informe de salud.
-  notice_health_report_setting: 'Si el plugin encuentra la palabra clave - ${keyword} en el informe de salud, proporciona un enlace a Hudson - ${url_format}'
-  notice_autofetch: Información de búsqueda desde Hudson durante la acción 'index'. <br/> Es posible realizar la llamada desde un script externo mediante una tarea "rake redmine_hudson:fetch".
+  notice_health_report: Proporcionar un enlace a Jenkins, si el plugin encuentra una palabra clave en el informe de salud.
+  notice_health_report_setting: 'Si el plugin encuentra la palabra clave - ${keyword} en el informe de salud, proporciona un enlace a Jenkins - ${url_format}'
+  notice_autofetch: Información de búsqueda desde Jenkins durante la acción 'index'. <br/> Es posible realizar la llamada desde un script externo mediante una tarea "rake redmine_hudson:fetch".
 
-  notice_err_cant_connect: "Imposible conectar con Hudson {{value}}"
+  notice_err_cant_connect: "Imposible conectar con Jenkins {{value}}"
   notice_err_response_invalid: 'Respuesta no válida {{value}}'
   notice_err_http_error: 'Error HTTP {{value}}'
   notice_err_no_settings: "Sin configuración para este proyecto. <a href='{{value}}'>Configurar proyecto</a>"
-  notice_err_no_jobs: Hudson no tiene tareas
+  notice_err_no_jobs: Jenkins no tiene tareas
   notice_err_invalid_url: URL no válida
   notice_err_no_job : 'tarea no encontrada [{{value}}]'
   notice_err_unknown: 'Unknown Error {{value}}'
@@ -64,6 +64,6 @@ es:
   notice_err_build_failed: 'Ejecución fallida {{value}}'
   notice_err_build_failed_no_job: 'Ejecución fallida. Tarea no encontrada [{{value}}]'
 
-  permission_view_hudson: View Hudson
-  permission_build_hudson: Build Hudson
-  permission_edit_hudson_settings: Edit Hudson settings
+  permission_view_hudson: View Jenkins
+  permission_build_hudson: Build Jenkins
+  permission_edit_hudson_settings: Edit Jenkins settings

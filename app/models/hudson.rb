@@ -151,26 +151,26 @@ def Hudson.fetch
 end
 
 def Hudson.autofetch?
-  return false unless Setting.plugin_redmine_hudson['autofetch']
-  return false if Setting.plugin_redmine_hudson['autofetch'] == ""
+  return false unless Setting.plugin_redmine_jenkins['autofetch']
+  return false if Setting.plugin_redmine_jenkins['autofetch'] == ""
   return true
 end
 
 def Hudson.job_description_format
-  return "hudson" unless Setting.plugin_redmine_hudson['job_description_format']
-  return "hudson" if Setting.plugin_redmine_hudson['job_description_format'] == ""
-  return Setting.plugin_redmine_hudson['job_description_format']
+  return "hudson" unless Setting.plugin_redmine_jenkins['job_description_format']
+  return "hudson" if Setting.plugin_redmine_jenkins['job_description_format'] == ""
+  return Setting.plugin_redmine_jenkins['job_description_format']
 end
 
 def Hudson.query_limit_builds_each_job
-  return 100 unless Setting.plugin_redmine_hudson['query_limit_builds_each_job']
-  return 100 if Setting.plugin_redmine_hudson['query_limit_builds_each_job'] !~ /^[0-9]+$/
-  return Setting.plugin_redmine_hudson['query_limit_builds_each_job'].to_i
+  return 100 unless Setting.plugin_redmine_jenkins['query_limit_builds_each_job']
+  return 100 if Setting.plugin_redmine_jenkins['query_limit_builds_each_job'] !~ /^[0-9]+$/
+  return Setting.plugin_redmine_jenkins['query_limit_builds_each_job'].to_i
 end
 
 def Hudson.query_limit_changesets_each_job
-  return 100 unless Setting.plugin_redmine_hudson['query_limit_changesets_each_job']
-  return 100 if Setting.plugin_redmine_hudson['query_limit_changesets_each_job'] !~ /^[0-9]+$/
-  return Setting.plugin_redmine_hudson['query_limit_changesets_each_job'].to_i
+  return 100 unless Setting.plugin_redmine_jenkins['query_limit_changesets_each_job']
+  return 100 if Setting.plugin_redmine_jenkins['query_limit_changesets_each_job'] !~ /^[0-9]+$/
+  return Setting.plugin_redmine_jenkins['query_limit_changesets_each_job'].to_i
 end
 
