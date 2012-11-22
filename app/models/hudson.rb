@@ -145,7 +145,7 @@ def Hudson.fetch
     hudson.fetch
     next if hudson.hudson_api_errors.empty?
     hudson.hudson_api_errors.each do |error|
-      $stderr.print "redmine_hudson: #{hudson.project.name}(#{hudson.settings.url_for(:plugin)}) #{error.class_name}:#{error.method_name} #{error.exception.message}\n"
+      $stderr.print "redmine_jenkins: #{hudson.project.name}(#{hudson.settings.url_for(:plugin)}) #{error.class_name}:#{error.method_name} #{error.exception.message}\n"
     end
   end
 end

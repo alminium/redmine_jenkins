@@ -50,7 +50,7 @@ en:
   notice_get_build_details: Take the checkmark off, if take a lot of time.
   notice_health_report: Provide a link to Jenkins, if plugin find keyword in Health Report.
   notice_health_report_setting: 'If plugin find keyword - ${keyword} in HealthReport, Provide a link to Jenkins - ${url_format}'
-  notice_autofetch: Fetch information from Jenkins during action 'index'. <br> You can call rake-task "redmine_hudson:fetch" by an external script.
+  notice_autofetch: Fetch information from Jenkins during action 'index'. <br> You can call rake-task "redmine_jenkins:fetch" by an external script.
 
   notice_err_cant_connect: "Can't Connect Jenkins %{description}"
   notice_err_response_invalid: 'Response Invalid %{description}'

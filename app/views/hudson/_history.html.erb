@@ -1,5 +1,5 @@
 <%="#{l(:label_build_history)}" %>
 <hr style="width:18em;">
 <%@builds.each do|build| %>
-<p class="build-entry"><%=link_to "##{build[:number]} #{build[:result]}", build[:url]%> <span style="font-size:smaller;"><%=build[:published].strftime("%Y/%m/%d %H:%M:%S") %></span> <%=link_to image_tag('console.png', :plugin => "redmine_hudson"), "#{build[:url]}console"%></p>
+<p class="build-entry"><%=link_to "##{build[:number]} #{build[:result]}", build[:url]%> <span style="font-size:smaller;"><%=build[:published].strftime("%Y/%m/%d %H:%M:%S") %></span> <%=link_to image_tag('console.png', :plugin => "redmine_jenkins"), "#{build[:url]}console"%></p>
 <% end %>

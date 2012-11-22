@@ -229,72 +229,72 @@ class HudsonTest < ActiveSupport::TestCase
 
   def test_hudson_auto_fetch_should_return_false
 
-    Setting.plugin_redmine_hudson['autofetch'] = nil
+    Setting.plugin_redmine_jenkins['autofetch'] = nil
     assert_equal false, Hudson.autofetch?
 
-    Setting.plugin_redmine_hudson['autofetch'] = ""
+    Setting.plugin_redmine_jenkins['autofetch'] = ""
     assert_equal false, Hudson.autofetch?
 
   end
 
   def test_hudson_auto_fetch_should_return_true
-    Setting.plugin_redmine_hudson['autofetch'] = "t"
+    Setting.plugin_redmine_jenkins['autofetch'] = "t"
     assert_equal true, Hudson.autofetch?
   end
 
   def test_hudson_job_description_format_should_return_hudson
-    Setting.plugin_redmine_hudson['job_description_format'] = nil
+    Setting.plugin_redmine_jenkins['job_description_format'] = nil
     assert_equal "hudson", Hudson.job_description_format
 
-    Setting.plugin_redmine_hudson['job_description_format'] = ""
+    Setting.plugin_redmine_jenkins['job_description_format'] = ""
     assert_equal "hudson", Hudson.job_description_format
 
-    Setting.plugin_redmine_hudson['job_description_format'] = "hudson"
+    Setting.plugin_redmine_jenkins['job_description_format'] = "hudson"
     assert_equal "hudson", Hudson.job_description_format
   end
 
   def test_hudson_job_description_format_should_return_any
-    Setting.plugin_redmine_hudson['job_description_format'] = "textile"
+    Setting.plugin_redmine_jenkins['job_description_format'] = "textile"
     assert_equal "textile", Hudson.job_description_format
   end
 
   def test_hudson_query_limit_builds_each_job_should_return_default
-    Setting.plugin_redmine_hudson['query_limit_builds_each_job'] = nil
+    Setting.plugin_redmine_jenkins['query_limit_builds_each_job'] = nil
     assert_equal 100, Hudson.query_limit_builds_each_job
 
-    Setting.plugin_redmine_hudson['query_limit_builds_each_job'] = ""
+    Setting.plugin_redmine_jenkins['query_limit_builds_each_job'] = ""
     assert_equal 100, Hudson.query_limit_builds_each_job
 
-    Setting.plugin_redmine_hudson['query_limit_builds_each_job'] = "a123"
+    Setting.plugin_redmine_jenkins['query_limit_builds_each_job'] = "a123"
     assert_equal 100, Hudson.query_limit_builds_each_job
 
-    Setting.plugin_redmine_hudson['query_limit_builds_each_job'] = "-100"
+    Setting.plugin_redmine_jenkins['query_limit_builds_each_job'] = "-100"
     assert_equal 100, Hudson.query_limit_builds_each_job
 
   end
 
   def test_hudson_query_limit_builds_each_job_should_return_number
-    Setting.plugin_redmine_hudson['query_limit_builds_each_job'] = "150"
+    Setting.plugin_redmine_jenkins['query_limit_builds_each_job'] = "150"
     assert_equal 150, Hudson.query_limit_builds_each_job
   end
 
   def test_hudson_query_limit_changesets_each_job_should_return_default
-    Setting.plugin_redmine_hudson['query_limit_changesets_each_job'] = nil
+    Setting.plugin_redmine_jenkins['query_limit_changesets_each_job'] = nil
     assert_equal 100, Hudson.query_limit_changesets_each_job
 
-    Setting.plugin_redmine_hudson['query_limit_changesets_each_job'] = ""
+    Setting.plugin_redmine_jenkins['query_limit_changesets_each_job'] = ""
     assert_equal 100, Hudson.query_limit_changesets_each_job
 
-    Setting.plugin_redmine_hudson['query_limit_changesets_each_job'] = "a123"
+    Setting.plugin_redmine_jenkins['query_limit_changesets_each_job'] = "a123"
     assert_equal 100, Hudson.query_limit_changesets_each_job
 
-    Setting.plugin_redmine_hudson['query_limit_changesets_each_job'] = "-100"
+    Setting.plugin_redmine_jenkins['query_limit_changesets_each_job'] = "-100"
     assert_equal 100, Hudson.query_limit_changesets_each_job
 
   end
 
   def test_hudson_query_limit_changesets_each_job_should_return_number
-    Setting.plugin_redmine_hudson['query_limit_changesets_each_job'] = "150"
+    Setting.plugin_redmine_jenkins['query_limit_changesets_each_job'] = "150"
     assert_equal 150, Hudson.query_limit_changesets_each_job
   end
 

@@ -40,7 +40,7 @@
           <% if job.latest_build.finished_at != nil %>
             <%=content_tag("span", job.latest_build.finished_at.localtime.strftime("%Y/%m/%d %H:%M:%S"))%>
           <% end %>
-          <%=image_tag("today.png", :plugin => "redmine_hudson", :title => l(:label_todays_build)) if is_today?(job.latest_build.finished_at)%>
+          <%=image_tag("today.png", :plugin => "redmine_jenkins", :title => l(:label_todays_build)) if is_today?(job.latest_build.finished_at)%>
         <% end %>
         <%=l(:notice_no_builds) if "" == job.latest_build.number%>
       <% end %>
@@ -93,9 +93,9 @@
 <style type="text/css"></style>
 
 <% content_for :header_tags do %>
-  <%= stylesheet_link_tag "hudson.css", :plugin => "redmine_hudson", :media => "screen" %>
-  <%= javascript_include_tag 'build_artifacts', :plugin => "redmine_hudson" %>
-  <%= javascript_include_tag 'build_history', :plugin => "redmine_hudson" %>
-  <%= javascript_include_tag 'build_request', :plugin => "redmine_hudson" %>
-  <%= javascript_include_tag 'description_visibility_controller', :plugin => "redmine_hudson" %>
+  <%= stylesheet_link_tag "hudson.css", :plugin => "redmine_jenkins", :media => "screen" %>
+  <%= javascript_include_tag 'build_artifacts', :plugin => "redmine_jenkins" %>
+  <%= javascript_include_tag 'build_history', :plugin => "redmine_jenkins" %>
+  <%= javascript_include_tag 'build_request', :plugin => "redmine_jenkins" %>
+  <%= javascript_include_tag 'description_visibility_controller', :plugin => "redmine_jenkins" %>
 <% end %>

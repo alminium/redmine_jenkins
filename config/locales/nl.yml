@@ -50,7 +50,7 @@ nl:
   notice_get_build_details: Vink uit, als het veel tijd neemt.
   notice_health_report: Geeft een link naar Jenkins, als de plugin het keyword vind in Health Report.
   notice_health_report_setting: 'Als de plugin het keyword vindt - ${keyword} in het HealthReport, Geeft het een link naar Jenkins - ${url_format}'
-  notice_autofetch: Haal informatie van Jenkins tijdens de actie 'index'. <br> U kan de rake-task "redmine_hudson:fetch" uitvoeren in een external script.
+  notice_autofetch: Haal informatie van Jenkins tijdens de actie 'index'. <br> U kan de rake-task "redmine_jenkins:fetch" uitvoeren in een external script.
 
   notice_err_cant_connect: "Kan niet verbinden met Jenkins %1s"
   notice_err_response_invalid: 'Response ongeldig %1s'

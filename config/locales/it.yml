@@ -50,7 +50,7 @@ it:
   notice_get_build_details: Rimuovi spunta, se ci mette molto tempo.
   notice_health_report: Fornisci un link ad Jenkins, se il plugin trova la keyword nell'Helth Report.
   notice_health_report_setting: 'Se il plugin trova la keyword - ${keyword} nel HealthReport, Fornisci un link a Jenkins - ${url_format}'
-  notice_autofetch: Recupera le informazioni da Jenkins durante l'operazione di 'index'. <br> puoi anche eseguire rake-task "redmine_hudson:fetch" da uno script esterno.
+  notice_autofetch: Recupera le informazioni da Jenkins durante l'operazione di 'index'. <br> puoi anche eseguire rake-task "redmine_jenkins:fetch" da uno script esterno.
 
   notice_err_cant_connect: "Impossibile Connettersi a Jenkins {{value}}"
   notice_err_response_invalid: 'Risposta Invalida {{value}}'

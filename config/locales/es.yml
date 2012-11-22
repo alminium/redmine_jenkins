@@ -50,7 +50,7 @@ es:
   notice_get_build_details: Deshabilitar la marca, si toma demasiado tiempo.
   notice_health_report: Proporcionar un enlace a Jenkins, si el plugin encuentra una palabra clave en el informe de salud.
   notice_health_report_setting: 'Si el plugin encuentra la palabra clave - ${keyword} en el informe de salud, proporciona un enlace a Jenkins - ${url_format}'
-  notice_autofetch: Información de búsqueda desde Jenkins durante la acción 'index'. <br/> Es posible realizar la llamada desde un script externo mediante una tarea "rake redmine_hudson:fetch".
+  notice_autofetch: Información de búsqueda desde Jenkins durante la acción 'index'. <br/> Es posible realizar la llamada desde un script externo mediante una tarea "rake redmine_jenkins:fetch".
 
   notice_err_cant_connect: "Imposible conectar con Jenkins {{value}}"
   notice_err_response_invalid: 'Respuesta no válida {{value}}'

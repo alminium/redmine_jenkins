@@ -22,7 +22,7 @@ class HudsonApplicationHooks < Redmine::Hook::ViewListener
       o << "</style>\n"
       o << "<!--[if IE]>"
       o << "<style type='text/css'>"
-      o << ".hudson-build { background-image: url(#{baseurl}/plugin_assets/redmine_hudson/images/hudson_icon.png); }"
+      o << ".hudson-build { background-image: url(#{baseurl}/plugin_assets/redmine_jenkins/images/hudson_icon.png); }"
       o << "</style>\n"
       o << "<![endif]-->"
       return o
@@ -30,9 +30,9 @@ class HudsonApplicationHooks < Redmine::Hook::ViewListener
 
     if (controller.class.name == 'IssuesController' and action_name == 'show')
       o = ""
-      o << stylesheet_link_tag(baseurl + "/plugin_assets/redmine_hudson/stylesheets/hudson.css") + "\n"
-      o << javascript_include_tag(baseurl + "/plugin_assets/redmine_hudson/javascripts/build_result.js") + "\n"
-      o << javascript_include_tag(baseurl + "/plugin_assets/redmine_hudson/javascripts/revision_build_results.js") + "\n"
+      o << stylesheet_link_tag(baseurl + "/plugin_assets/redmine_jenkins/stylesheets/hudson.css") + "\n"
+      o << javascript_include_tag(baseurl + "/plugin_assets/redmine_jenkins/javascripts/build_result.js") + "\n"
+      o << javascript_include_tag(baseurl + "/plugin_assets/redmine_jenkins/javascripts/revision_build_results.js") + "\n"
       return o
     end
 

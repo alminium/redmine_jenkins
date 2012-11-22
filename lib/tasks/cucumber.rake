@@ -10,14 +10,14 @@ unless ARGV.any? {|a| a =~ /^gems/} # Don't load anything when running the gems:
 vendored_cucumber_bin = Dir["#{Rails.root}/vendor/{gems,plugins}/cucumber*/bin/cucumber"].first
 $LOAD_PATH.unshift(File.dirname(vendored_cucumber_bin) + '/../lib') unless vendored_cucumber_bin.nil?
 
-namespace :redmine_hudson do
+namespace :redmine_jenkins do
 
 begin
   require 'cucumber/rake/task'
 
   namespace :cucumber do
     default_dependency_tasks = 
-      ['environment', 'redmine_hudson:config:prepare']
+      ['environment', 'redmine_jenkins:config:prepare']
 
     Cucumber::Rake::Task.new({:ok => default_dependency_tasks}, 'Run features that should pass') do |t|
       t.binary = vendored_cucumber_bin # If nil, the gem's binary is used.
@@ -72,7 +72,7 @@ begin
 
   task 'config:prepare' do
     require 'fileutils'
-    FileUtils.cp "plugins/redmine_hudson/config/cucumber.yml", "config"
+    FileUtils.cp "plugins/redmine_jenkins/config/cucumber.yml", "config"
   end
 
   task :stats => 'cucumber:statsetup'

@@ -1,7 +1,7 @@
 # $Id$
 # Japanise strings go here
-label_hudson: Hudson
-label_hudson_plural: Hudson
+label_hudson: Jenkins
+label_hudson_plural: Jenkins
 label_build: ビルド
 label_latest_build: 最新のビルド
 label_job_list: ジョブの一覧
@@ -18,7 +18,7 @@ label_health_report_test_result: ヘルスレポート:テスト結果
 label_database: DataBase
 label_get_build_details: ビルドの詳細（変更とテスト結果）を取得する
 label_look_and_feel: 見た目 (アイコンが変わります)
-label_look_and_feel_hudson: Hudson
+label_look_and_feel_hudson: Jenkins
 label_look_and_feel_plugin: プラグイン風
 label_add_health_report: ヘルスレポートの設定を追加
 label_health_report: ヘルスレポート
@@ -37,8 +37,8 @@ label_query_limit_builds_each_job: ジョブごとに追跡するビルドの件
 label_query_limit_changesets_each_job: ジョブごとに追跡するチェンジセットの件数（チケットの検索で利用します）
 label_use_url_for_plugin: プラグインからアクセスする場合は、上記と異なるURLを使います。
 
-field_hudson_job: Hudson(ジョブ名)
-field_hudson_build: Hudson(ビルド番号)
+field_hudson_job: Jenkins(ジョブ名)
+field_hudson_build: Jenkins(ビルド番号)
 
 button_delete_history: 履歴を削除
 
@@ -48,15 +48,15 @@ notice_no_builds: ビルドは実行されていません。
 notice_building: ビルド中です。
 notice_hudson_url: 'http://, https:// から記述してください'
 notice_get_build_details: 表示に時間がかかる場合は、チェックを外してください
-notice_health_report: ヘルスレポートの中に指定した文字を見つけたら、Hudson へのリンクを作成します
-notice_health_report_setting: 'ヘルスレポートの中に ${keyword} を見つけたら, Hudson へのリンク ${url_format} を作成します'
-notice_autofetch: アクション 'index' の中で最新の情報を取得します。<br> 定期的に情報を取得したい場合は rake タスク "redmine_hudson:fetch" を使ってください。
+notice_health_report: ヘルスレポートの中に指定した文字を見つけたら、Jenkins へのリンクを作成します
+notice_health_report_setting: 'ヘルスレポートの中に ${keyword} を見つけたら, Jenkins へのリンク ${url_format} を作成します'
+notice_autofetch: アクション 'index' の中で最新の情報を取得します。<br> 定期的に情報を取得したい場合は rake タスク "redmine_jenkins:fetch" を使ってください。
 
-notice_err_cant_connect: 'Hudson に接続できませんでした（Hudson が起動していないかもしれません） %1s'
-notice_err_response_invalid: 'Hudson からの応答が何か変です。 %1s'
-notice_err_http_error: 'Hudson からエラーが返って来ました。%1s'
+notice_err_cant_connect: 'Jenkins に接続できませんでした（Jenkins が起動していないかもしれません） %1s'
+notice_err_response_invalid: 'Jenkins からの応答が何か変です。 %1s'
+notice_err_http_error: 'Jenkins からエラーが返って来ました。%1s'
 notice_err_no_settings: このプロジェクトの設定が見当たりません。<a href='%1s'>設定を確認</a>してください。
-notice_err_no_jobs: URLが設定されていないか、HudsonにJobが登録されていません。
+notice_err_no_jobs: URLが設定されていないか、JenkinsにJobが登録されていません。
 notice_err_invalid_url: URLに誤りがあるようです。
 notice_err_no_job : 'Jobが見当たりません。[%1s]'
 notice_err_unknown: 'エラーが発生しました。%1s'
@@ -64,6 +64,6 @@ notice_err_unknown: 'エラーが発生しました。%1s'
 notice_err_build_failed: 'ビルドに失敗しました。%1s'
 notice_err_build_failed_no_job: 'ビルドに失敗しました。Jobが見当たりません。[%1s]'
 
-permission_view_hudson: Hudsonの閲覧
-permission_build_hudson: Hudsonのビルド
-permission_edit_hudson_settings: Hudsonの管理
+permission_view_hudson: Jenkinsの閲覧
+permission_build_hudson: Jenkinsのビルド
+permission_edit_hudson_settings: Jenkinsの管理

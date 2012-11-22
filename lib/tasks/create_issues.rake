@@ -1,4 +1,4 @@
-namespace :redmine_hudson do
+namespace :redmine_jenkins do
   task :create_issues => :environment do
     tracker = Tracker.find_by_name("Feature")
     project = Project.find_by_identifier("rlabs-hudson")

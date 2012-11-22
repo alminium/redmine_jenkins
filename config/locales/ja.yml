@@ -51,7 +51,7 @@ ja:
   notice_get_build_details: 表示に時間がかかる場合は、チェックを外してください
   notice_health_report: ヘルスレポートの中に指定した文字を見つけたら、Jenkins へのリンクを作成します
   notice_health_report_setting: 'ヘルスレポートの中に ${keyword} を見つけたら, Jenkins へのリンク ${url_format} を作成します'
-  notice_autofetch: アクション 'index' の中で最新の情報を取得します。<br> 定期的に情報を取得したい場合は rake タスク "redmine_hudson:fetch" を使ってください。
+  notice_autofetch: アクション 'index' の中で最新の情報を取得します。<br> 定期的に情報を取得したい場合は rake タスク "redmine_jenkins:fetch" を使ってください。
 
   notice_err_cant_connect: "Jenkins に接続できませんでした（Jenkins が起動していないかもしれません） {{value}}"
   notice_err_response_invalid: 'Jenkins からの応答が何か変です。 {{value}}'

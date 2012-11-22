@@ -1,9 +1,9 @@
 <%
 rerun = File.file?('rerun.txt') ? IO.read('rerun.txt') : ""
 rerun_opts = rerun.to_s.strip.empty? ? "--format #{ENV['CUCUMBER_FORMAT'] || 'progress'} features" : "--format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} #{rerun}"
-std_opts = "--require plugins/redmine_hudson/features --format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} --strict --tags ~@wip"
+std_opts = "--require plugins/redmine_jenkins/features --format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} --strict --tags ~@wip"
 %>
-default: <%= std_opts %> plugins/redmine_hudson/features
-wip: --tags @wip:3 --wip plugins/redmine_hudson/features
+default: <%= std_opts %> plugins/redmine_jenkins/features
+wip: --tags @wip:3 --wip plugins/redmine_jenkins/features
 rerun: <%= rerun_opts %> --format rerun --out rerun.txt --strict --tags ~@wip
-current: <%= std_opts %> --tags @current plugins/redmine_hudson/features 
+current: <%= std_opts %> --tags @current plugins/redmine_jenkins/features/hudson_settings_edit.feature

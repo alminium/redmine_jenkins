@@ -1,7 +1,7 @@
 # $Id$
 # German strings go here
-label_hudson: Hudson
-label_hudson_plural: Hudson
+label_hudson: Jenkins
+label_hudson_plural: Jenkins
 label_build: Build
 label_latest_build: Letzer Build
 label_job_list: Jobliste
@@ -18,13 +18,13 @@ label_health_report_test_result: HealthReport:TestResult
 label_database: DataBase
 label_get_build_details: Get Build Details (changesets and test-results)
 label_look_and_feel: Look and Feel (only icons)
-label_look_and_feel_hudson: Hudson
+label_look_and_feel_hudson: Jenkins
 label_look_and_feel_plugin: Plugin original
 label_add_health_report: Add HealthReport Setting
 label_health_report: Health Bericht
 label_health_report_settings: Health Report Settings
 label_autofetch: AutoFetch
-label_job_description_format: Format for Hudson-Job Description
+label_job_description_format: Format for Jenkins-Job Description
 label_show_description: Show Description
 label_hide_description: Hide Description
 label_todays_build: Today's Build
@@ -37,8 +37,8 @@ label_query_limit_builds_each_job: Max Number of Builds for query (Using search 
 label_query_limit_changesets_each_job: Max Number of Changesets for query (Using search issues)
 label_use_url_for_plugin: Plugin uses below url for access to hudson. Don't use above. ( for user )
 
-field_hudson_job: Hudson(Job)
-field_hudson_build: Hudson(BuildNumber)
+field_hudson_job: Jenkins(Job)
+field_hudson_build: Jenkins(BuildNumber)
 
 button_delete_history: Delete History
 
@@ -48,15 +48,15 @@ notice_no_builds: Keine Builds vorhanden
 notice_building: Baue jetzt...
 notice_hudson_url: 'mit http://, https:// ...'
 notice_get_build_details: Take the checkmark off, if take a lot of time.
-notice_health_report: Provide a link to Hudson, if plugin find keyword in Health Report.
-notice_health_report_setting: 'If plugin find keyword - ${keyword} in HealthReport, Provide a link to Hudson - ${url_format}'
-notice_autofetch: Fetch information from Hudson during action 'index'. <br> You can call rake-task "redmine_hudson:fetch" by an external script.
+notice_health_report: Provide a link to Jenkins, if plugin find keyword in Health Report.
+notice_health_report_setting: 'If plugin find keyword - ${keyword} in HealthReport, Provide a link to Jenkins - ${url_format}'
+notice_autofetch: Fetch information from Jenkins during action 'index'. <br> You can call rake-task "redmine_jenkins:fetch" by an external script.
 
-notice_err_cant_connect: "Es kann keine Verbindung zu Hudson aufgebaut werden. %1s"
+notice_err_cant_connect: "Es kann keine Verbindung zu Jenkins aufgebaut werden. %1s"
 notice_err_response_invalid: 'Antwort nicht valide [%1s]'
 notice_err_http_error: 'Http-Fehler [%1s]'
 notice_err_no_settings: "Keine Einstellungen für dieses Projekt. Bitte überprüfen Sie die <a href='%1s'>Einstellungen</a>."
-notice_err_no_jobs: In Hudson wurde kein Job konfiguriert.
+notice_err_no_jobs: In Jenkins wurde kein Job konfiguriert.
 notice_err_invalid_url: Nicht valide URL
 notice_err_no_job : 'Der Job [%1s] wurde nicht gefunden.'
 notice_err_unknown: 'Unknown Fehler %1s'
@@ -64,6 +64,6 @@ notice_err_unknown: 'Unknown Fehler %1s'
 notice_err_build_failed: 'Build fehlgeschlagen [%1s].'
 notice_err_build_failed_no_job: 'Build fehlgeschlagen. Der Job [%1s] wurde nicht gefunden.'
 
-permission_view_hudson: View Hudson
-permission_build_hudson: Build Hudson
-permission_edit_hudson_settings: Edit Hudson settings
+permission_view_hudson: View Jenkins
+permission_build_hudson: Build Jenkins
+permission_edit_hudson_settings: Edit Jenkins settings

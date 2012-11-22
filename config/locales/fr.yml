@@ -50,7 +50,7 @@ fr:
   notice_get_build_details: A Désactiver, si cela prend trop de temps.
   notice_health_report: Construit un liens vers Jenkins, si le Plugin trouve un Mot Clef dans le Rapport de Santé.
   notice_health_report_setting: 'Si le plugin trouve le mot clef - ${keyword} dans le rapport de santé, contruit un lien vers Jenkins - ${url_format}'
-  notice_autofetch: Récupère les informations depuis Jenkins pendant l'action. <br> Une tache de Rake peut etre appelée "redmine_hudson:fetch" par un script externe.
+  notice_autofetch: Récupère les informations depuis Jenkins pendant l'action. <br> Une tache de Rake peut etre appelée "redmine_jenkins:fetch" par un script externe.
 
   notice_err_cant_connect: "Ne peut pas se connecter à Jenkins"
   notice_err_response_invalid: 'Réponce Invalide {{value}}'

@@ -50,7 +50,7 @@ notice_hudson_url: 'http://, https:// ...'
 notice_get_build_details: Снимите галочку, если это занимает много времени.
 notice_health_report: Предоставляет ссылку на Хадсон, если плагин обнаружит ключевое слово в отчёте о состоянии.
 notice_health_report_setting: 'Если плагин найдёт ключевое слово - ${keyword} в отчёте о состоянии, предоставит ссылку на Хадсон - ${url_format}'
-notice_autofetch: Получать информацию из Хадсона во время индексирования. <br> Вы можете выполнить "redmine_hudson:fetch" посредством внешнего скрипта.
+notice_autofetch: Получать информацию из Хадсона во время индексирования. <br> Вы можете выполнить "redmine_jenkins:fetch" посредством внешнего скрипта.
 
 notice_err_cant_connect: "Невозможно подключиться к Хадсону %1s"
 notice_err_response_invalid: 'Некорректный ответ %1s'

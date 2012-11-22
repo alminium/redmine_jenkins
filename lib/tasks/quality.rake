@@ -1,6 +1,6 @@
 desc 'Auto Code Review Redmine Hudson Plugin'
 begin
-  namespace :redmine_hudson do
+  namespace :redmine_jenkins do
     task :reek => [:cd_plugin_dir, :environment] do
       desc 'check code smell(reek) for Hudson Plugin'
       require "reek"
@@ -26,12 +26,12 @@ begin
     end
 
     task :cd_plugin_dir do
-      Dir.chdir("vendor/plugins/redmine_hudson")
+      Dir.chdir("vendor/plugins/redmine_jenkins")
     end
 
     task :quality => [:reek, :roodi, :flog, :flay]
   end
 rescue LoadError => e
   # rcov not available
-  $stderr.print "redmine_hudson:testing load error #{e}"
+  $stderr.print "redmine_jenkins:testing load error #{e}"
 end

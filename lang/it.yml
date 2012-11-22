@@ -1,8 +1,8 @@
 # $Id$
 # Italian strings go here
 
-label_hudson: Hudson
-label_hudson_plural: Hudson
+label_hudson: Jenkins
+label_hudson_plural: Jenkins
 label_build: Build
 label_latest_build: Ultima Build
 label_job_list: Lista Jobs
@@ -19,13 +19,13 @@ label_health_report_test_result: HealthReport:TestResult
 label_database: DataBase
 label_get_build_details: Ottieni Dettagli Build (modifiche e risultati dei test)
 label_look_and_feel: Aspetto (solo icone)
-label_look_and_feel_hudson: Hudson
+label_look_and_feel_hudson: Jenkins
 label_look_and_feel_plugin: Plugin originale
 label_add_health_report: Aggiungi Impostazioni HealthReport
 label_health_report: Health Report
 label_health_report_settings: Impostazioni Health Report
 label_autofetch: AutoFetch
-label_job_description_format: Formato per Descrizione Hudson-Job
+label_job_description_format: Formato per Descrizione Jenkins-Job
 label_show_description: Mostra Descrizione
 label_hide_description: Nascondi Descrizione
 label_todays_build: Build odierne
@@ -37,8 +37,8 @@ label_log_rotator_num_to_keep: Numeri Da Mantenere
 label_query_limit_builds_each_job: Massimo Numero di Builds per query (Usando la ricerca delle segnalazioni)
 label_query_limit_changesets_each_job: Massimo Numero di Modifiche per query (Usando la ricerca delle segnalazioni)
 label_use_url_for_plugin: Il Plugin usa la url sottostante per accedere a hudson. Non usa quello sopra. (che e per l'utente)
-field_hudson_job: Hudson(Job)
-field_hudson_build: Hudson(BuildNumber)
+field_hudson_job: Jenkins(Job)
+field_hudson_build: Jenkins(BuildNumber)
 
 button_delete_history: Cancella History
 
@@ -48,15 +48,15 @@ notice_no_builds: Nessuna Builds
 notice_building: Compilando...
 notice_hudson_url: 'con http://, https:// ...'
 notice_get_build_details: Rimuovi spunta, se ci mette molto tempo.
-notice_health_report: Fornisci un link ad Hudson, se il plugin trova la keyword nell'Helth Report.
-notice_health_report_setting: 'Se il plugin trova la keyword - ${keyword} nel HealthReport, Fornisci un link a Hudson - ${url_format}'
-notice_autofetch: Recupera le informazioni da Hudson durante l'operazione di 'index'. <br> puoi anche eseguire rake-task "redmine_hudson:fetch" da uno script esterno.
+notice_health_report: Fornisci un link ad Jenkins, se il plugin trova la keyword nell'Helth Report.
+notice_health_report_setting: 'Se il plugin trova la keyword - ${keyword} nel HealthReport, Fornisci un link a Jenkins - ${url_format}'
+notice_autofetch: Recupera le informazioni da Jenkins durante l'operazione di 'index'. <br> puoi anche eseguire rake-task "redmine_jenkins:fetch" da uno script esterno.
 
-notice_err_cant_connect: "Impossibile Connettersi a Hudson %1s"
+notice_err_cant_connect: "Impossibile Connettersi a Jenkins %1s"
 notice_err_response_invalid: 'Risposta Invalida %1s'
 notice_err_http_error: 'Errore http %1s'
 notice_err_no_settings: "Nessuna impostazione per questo progetto. Prego <a href='%1s'>confermare le impostazioni</a>"
-notice_err_no_jobs: Hudson non ha job
+notice_err_no_jobs: Jenkins non ha job
 notice_err_invalid_url: URL Invalida
 notice_err_no_job : 'job non trovato [%1s]'
 notice_err_unknown: 'Errore sconosciuto %1s'
@@ -64,6 +64,6 @@ notice_err_unknown: 'Errore sconosciuto %1s'
 notice_err_build_failed: 'Build fallita %1s'
 notice_err_build_failed_no_job: 'Build faillita. Job non trovato [%1s]'
 
-permission_view_hudson: View Hudson
-permission_build_hudson: Build Hudson
-permission_edit_hudson_settings: Edit Hudson settings
+permission_view_hudson: View Jenkins
+permission_build_hudson: Build Jenkins
+permission_edit_hudson_settings: Edit Jenkins settings

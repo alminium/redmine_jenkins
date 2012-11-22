@@ -1,18 +1,18 @@
 # $Id$
-= Hudson Plugin 1.0.8
+= Jenkins Plugin 1.0.8
 
-This is a plugin collaborates with Hudson for Redmine.
+This is a plugin collaborates with Jenkins for Redmine.
 
-== What's Hudson ?
+== What's Jenkins ?
 
-Huson is application for Continuous Integration.
+Jenkins is application for Continuous Integration.
 Easy install configuration, and good ui.
 
 More detail {Meet Hudson}[http://wiki.hudson-ci.org/display/HUDSON/Meet+Hudson]
 
 == Requirements
-* Require Redmine 0.8.x.
-* Recommend Hudson 1.313.
+* Require Redmine 2.1.x.
+* Recommend Jenkins.
 
 == Feature
 === Show Job List
@@ -20,11 +20,11 @@ Show job details.
 
 * Name, Description, Latest Build ( Build number, Result, Date ) and health report.
 * You can change description visibility dynamically.
-* Provide a link to Hudson, if plugin found keyword in Health Report.
+* Provide a link to Jenkins, if plugin found keyword in Health Report.
 * Bulid number linked to build result page.
 * Download artifacts.
-* Click clock-icon, request hudson to build.
-* Mr. hudson appears. ( sorry, not emotional )
+* Click clock-icon, request jenkins to build.
+* Mr. jenkins appears. ( sorry, not emotional )
 * You can get job list by Atom.
 
 === Show Build History
@@ -40,33 +40,33 @@ Click note icon, show build history.
 
 === Show build result on issue
 
-* job-name, build-number, result and built date and time. when Hudson builds revisions associated issues.
+* job-name, build-number, result and built date and time. when Jenkins builds revisions associated issues.
 
 === Search issues related particular build
 
 You can search issues related job and build using filter.
 Plugin chases issues by taking following step.
- Hudson Job -> Hudson Build -> Related Changeset -> Revision -> Issue
-Hudson Build and Related Changeset are too much, so plugin limits number of Builds and Changesets per each Hudson Job.
+ Jenkins Job -> Jenkins Build -> Related Changeset -> Revision -> Issue
+Jenkins Build and Related Changeset are too much, so plugin limits number of Builds and Changesets per each Jenkins Job.
 You can change limit settings on settings/plugin/redmine_hudson.
 
-=== Rake task 'redmine_hudson:fetch'
+=== Rake task 'redmine_jenkins:fetch'
 
-You can get build results using rake task 'redmine_hudson:fetch'.
+You can get build results using rake task 'redmine_jenkins:fetch'.
 If you use rake task, please uncheck 'AutoFetch' setting.
 You can change 'AutoFetch' setting on settings/plugin/redmine_hudson.
 
 === Clean up stored data
 
 You can delete old data ( builds, changesets, test results ).
-Settings are like Hudson.
+Settings are like Jenkins.
 
 * rotate days ( 1day = keep today's data )
 * rotate nums
 
 === Settings for each projects
 
-* Hudson url (can use https)
+* Jenkins url (can use https)
 User can specify url separately, for plugin access and user access.
 * auth user, password ( 0.1.1 higher )
 * can stop plugin getting test results and changesets. (Getting test results and changesets needs a good amount of time.)
@@ -76,12 +76,12 @@ User can specify url separately, for plugin access and user access.
 
 === Settings for plugins (all projects)
 
-Go  Administration -> Plugins -> 'Redmine Hudson Plugin' Configure.
+Go  Administration -> Plugins -> 'Redmine Jenkins Plugin' Configure.
 
 * You can choose format to write job description. HTML or Textile.
-* AutoFetch Mode. Plugin fetches information from Hudson during action 'index'.
-* Number of Builds per each Hudson Job. ( for search issues )
-* Number of Changesets per each Hudson Job. ( for search issues )
+* AutoFetch Mode. Plugin fetches information from Jenkins during action 'index'.
+* Number of Builds per each Jenkins Job. ( for search issues )
+* Number of Changesets per each Jenkins Job. ( for search issues )
 
 == Language contributors
 
@@ -105,23 +105,23 @@ Go  Administration -> Plugins -> 'Redmine Hudson Plugin' Configure.
 
 1. Move to Project settings
 2. Click 'Modules'
-3. Check the box 'Hudson', and save.
+3. Check the box 'Jenkins', and save.
 
-=== Edit Hudson settings
+=== Edit Jenkins settings
 
-1. Click 'Hudson' tab on the menu
+1. Click 'Jenkins' tab on the menu
 2. Click 'Settings' in sidebar
 3. Edit settings ( url, job... )
 
 === View jobs
 
-1. Click 'Hudson' tab on the menu (In first time, it takes long time)
+1. Click 'Jenkins' tab on the menu (In first time, it takes long time)
 
 == Note
 
-=== Recommend Hudson 1.313
+=== Recommend Jenkins
 
-If you use old version of Hudson, plugin may not get test results and changesets.
+If you use old version of Jenkins, plugin may not get test results and changesets.
 Plugin store build information, if plugin can't get test results or changesets.
 But, If plugin fail, never get test results, changesets again.
 

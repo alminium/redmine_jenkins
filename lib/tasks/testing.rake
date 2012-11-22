@@ -3,7 +3,7 @@ begin
   rcov_unit_options = "-I ../../../lib -x redmine"
   rcov_cucumber_options = "--rails --sort=coverage --exclude 'osx/objc,gems/,spec/,redmine,/var/lib/gems' -o features_rcov"
 
-  namespace :redmine_hudson do
+  namespace :redmine_jenkins do
     namespace :test do
       task :unit => [:cd_plugin_dir, :environment, :init_fixtures] do
         desc 'unittest for Hudson Plugin'
@@ -22,11 +22,11 @@ begin
       end
 
       task :cd_plugin_dir do
-        Dir.chdir("vendor/plugins/redmine_hudson")
+        Dir.chdir("vendor/plugins/redmine_jenkins")
       end
     end
   end
 rescue LoadError => e
   # rcov not available
-  $stderr.print "redmine_hudson:testing load error #{e}"
+  $stderr.print "redmine_jenkins:testing load error #{e}"
 end
