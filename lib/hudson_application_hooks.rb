@@ -11,7 +11,7 @@ class HudsonApplicationHooks < Redmine::Hook::ViewListener
     action_name = controller.action_name
     return '' unless action_name
 
-    baseurl = url_for(:controller => 'hudson', :action => 'index', :id => project) + '/../../..'
+    baseurl = url_for(:controller => 'hudson', :action => 'index', :id => project) + '/../../../..'
 
     if (controller.class.name == 'ProjectsController' and action_name == 'activity')
       hudson = Hudson.find_by_project_id(project.id)
@@ -50,16 +50,16 @@ class HudsonApplicationHooks < Redmine::Hook::ViewListener
 
     o = ''
     o << "<script type='text/javascript'>" + "\n"
-    o << "builds = $H();" + "\n"
-    o << "Event.observe(window, 'load', add_build_info_to_changesets);" + "\n"
+    o << "builds = {};" + "\n"
     o << "function add_build_info_to_changesets(){" + "\n"
-    o << "  var messages = $$('div[class^=\"changeset\"] p');" + "\n"
+    o << "  var messages = $('div[class=\"changeset\"] p');" + "\n"
     o << "  messages.each(function(message){" + "\n"
     o << "    if ( message.innerHTML.indexOf('#{l(:label_revision)}') > 0) {" + "\n"
     o << "  	  add_build_info_to_changeset(message);" + "\n"
     o << "    }" + "\n"
     o << "  });" + "\n"
     o << "};" + "\n"
+    o << "$(document).ready(add_build_info_to_changesets);" + "\n"
 
     o << build_results
     
