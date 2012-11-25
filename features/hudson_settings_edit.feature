@@ -11,7 +11,7 @@ Feature: settings_edit
       And I am logged in as "dlopper" with password "foo"
 
   # jsmith joins "eCookbook" Project as a "Developer"
-  Scenario: Permission - "jsmith" has permisson, can see settings page.
+  Scenario: Permission - "dlopper" has permisson, can see settings page.
     When I go to HudsonSettings at "eCookbook" Project
     Then I should see "Settings"
      And I should see "Plugin uses below url for access to hudson."
@@ -36,9 +36,8 @@ Feature: settings_edit
           | keyword         | url_format                                   |
           | Build stability | http://hoge.com/hudson/simple-job/lastBuild/ |
 
-  @current
+  @javascript @current
   Scenario: Add HealthReport settings
-    Given Hudson API returns "simple-ruby-application_fetch-job_depth0"
     When I go to HudsonSettings at "eCookbook" Project
      And I fill in "http://localhost:8080" for "settings[url]"
      And  I add health report settings below:
