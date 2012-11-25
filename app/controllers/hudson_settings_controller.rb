@@ -3,6 +3,10 @@
 require "rexml/document"
 require File.join(File.dirname(__FILE__), "../models", 'hudson_exceptions')
 
+class HudsonApiException < Exception
+
+end
+
 class HudsonSettingsController < ApplicationController
   unloadable
 
@@ -19,9 +23,9 @@ class HudsonSettingsController < ApplicationController
   def edit
     if (params[:settings] != nil)
       @hudson.settings.project_id = @project.id
-      @hudson.settings.url = HudsonSettings.add_last_slash_to_url(params[:settings].fetch(:url))
+      @hudson.settings.url = HudsonSettings.add_last_slash(params[:settings].fetch(:url))
       @hudson.settings.url_for_plugin = ""
-      @hudson.settings.url_for_plugin = HudsonSettings.add_last_slash_to_url(params[:settings].fetch(:url_for_plugin)) if ( check_box_to_boolean(params[:enable_url_for_plugin]) )
+      @hudson.settings.url_for_plugin = HudsonSettings.add_last_slash(params[:settings].fetch(:url_for_plugin)) if ( check_box_to_boolean(params[:enable_url_for_plugin]) )
       @hudson.settings.job_filter = HudsonSettings.to_value(params[:settings].fetch(:jobs))
       @hudson.settings.auth_user = params[:settings].fetch(:auth_user)
       @hudson.settings.auth_password = params[:settings].fetch(:auth_password)
@@ -54,9 +58,9 @@ class HudsonSettingsController < ApplicationController
       # この find は、外部のサーバ(Hudson)にアクセスするので、before_filter には入れない
       # ジョブの一覧を取得するためだけなので、設定に一時値は反映するけれど、保存はしない
       @hudson.settings = HudsonSettings.new unless @hudson.settings
-      @hudson.settings.url = HudsonSettings.add_last_slash_to_url(params[:url])
+      @hudson.settings.url = HudsonSettings.add_last_slash(params[:url])
       @hudson.settings.url_for_plugin = ""
-      @hudson.settings.url_for_plugin = HudsonSettings.add_last_slash_to_url(params[:url_for_plugin]) if ( check_box_to_boolean(params[:enable_url_for_plugin]) )
+      @hudson.settings.url_for_plugin = HudsonSettings.add_last_slash(params[:url_for_plugin]) if ( check_box_to_boolean(params[:enable_url_for_plugin]) )
 
       find_hudson_jobs
     rescue HudsonApiException => error
@@ -163,7 +167,7 @@ private
 
     return unless params[:new_health_report_settings]
 
-    params[:new_health_report_settings].each do |id, hrs|
+    params[:new_health_report_settings].each do |hrs|
       next if HudsonSettingsHealthReport.is_blank?(hrs)
       @hudson.settings.health_report_settings << HudsonSettingsHealthReport.new(hrs)
     end

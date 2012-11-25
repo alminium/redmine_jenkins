@@ -41,7 +41,7 @@ class HudsonSettings < ActiveRecord::Base
   end
 
   def url=(value)
-    write_attribute(:url, self.add_last_slash(value))
+    write_attribute(:url, HudsonSettings.add_last_slash(value))
   end
 
   # エラーメッセージに表示されるbegin, end を日本語名にするために追加。

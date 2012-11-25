@@ -29,19 +29,12 @@
     <% next if hrs.new_record? -%>
     <%=render 'health_report_setting', :field_name => "health_report_settings[]", :hrs => hrs %>
   <% end -%>
-  <% new_hrs_count = 0 -%>
   <% @hudson.settings.health_report_settings.each do |hrs| -%>
     <% next unless hrs.new_record? -%>
-    <% new_hrs_count += 1 -%>
-    <%=render :partial => 'health_report_setting', :locals => {:field_name => "new_health_report_settings[#{new_hrs_count}]", :hrs => hrs}  %>
+    <%=render 'health_report_setting', :field_name => "new_health_report_settings[]", :hrs => hrs  %>
   <% end -%>
   </div>
-  <span style="font-size:smaller;"><%= link_to t(:label_add_health_report), '#', :onclick => 'appender.add(); return false;' %></span>
-  <script type="text/javascript">
-  //<!--
-  var appender = new HealthReportFieldAppender('<%=t(:notice_health_report_setting)%>', <%=new_hrs_count%>);
-  //-->
-  </script>
+  <span style="font-size:smaller;" id="health-report-setting-appender"><%= link_to t(:label_add_health_report), '#' %></span>
 </fieldset>
 
 <h3><%=t(:label_jobs)%></h3>
@@ -62,22 +55,24 @@
 .health_report_explain { font-weight:bold;}
 -->
 </style>
+<% enable_url_for_plugin = (@settings.url_for_plugin and @settings.url_for_plugin.length != 0) %>
 <script type="text/javascript">
 //<!--
-<% enable_url_for_plugin = (@settings.url_for_plugin and @settings.url_for_plugin.length != 0) %>
-Event.observe($('enable_url_for_plugin'), 'click', switch_state_url_for_plugin);
-function switch_state_url_for_plugin(){
-  display = 'none';
-  if ( $('enable_url_for_plugin').checked ) { display = 'inline'; }
-  $('rect_url_for_plugin').style.display = display;
-}
-$('enable_url_for_plugin').checked = <%=enable_url_for_plugin%>;
-switch_state_url_for_plugin();
+$(document).ready(function() {
+  $("#health-report-setting-appender").healthReportSettingAppender({
+    text: '<%=raw l(:notice_health_report_setting)%>',
+    appendTo: '#health_report_fields'
+  });
+  $("#enable_url_for_plugin").displaySwitcher({ 
+    target: "#rect_url_for_plugin", 
+    initialState: <%=raw enable_url_for_plugin%>
+  });
+});
 //-->
 </script>
 
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag "hudson.css", :plugin => "redmine_hudson", :media => "screen" %>
-  <%= javascript_include_tag 'hudson_settings', :plugin => "redmine_hudson" %>
-  <%= javascript_include_tag 'job_settings_field_controller', :plugin => "redmine_hudson" %>
+  <%= javascript_include_tag 'jquery.health_report_setting_appender.js', :plugin => "redmine_hudson" %>
+  <%= javascript_include_tag 'jquery.display_switcher.js', :plugin => "redmine_hudson" %>
 <% end %>
