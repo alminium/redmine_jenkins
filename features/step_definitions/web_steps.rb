@@ -4,10 +4,6 @@ When /^I go to (.*)$/ do |page_name|
   visit path_to(page_name)
 end
 
-When /^I should see "([^"]*)"$/ do |content|
-  page.has_content?(content).should be_true
-end
-
 When /^I click "([^"]*)"$/ do |element|
   click_on element
 end
@@ -18,5 +14,13 @@ end
 
 When /^I check "([^"]*)"$/ do |field|
   check(field)
+end
+
+When /^I should see "([^"]*)"$/ do |content|
+  page.has_content?(content).should be_true
+end
+
+Then /^the field named "(.*?)" should contain "(.*?)"$/ do |field, value|
+  find_field(field).value.should == value
 end
 
