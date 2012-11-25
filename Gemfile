@@ -1,6 +1,6 @@
 group :redmine_hudson_test do
-  gem 'rspec', :require => false, :group => :development
-  gem "rspec-rails", ">= 2.3.0", :group => :development
+  gem 'rspec', "~> 2.11.0", :require => false, :group => :development
+  gem "rspec-rails", "~> 2.11.0", :group => :development
   gem 'cucumber', :group => :development
   gem 'cucumber-rails', :require => false, :group => :development
   gem 'capybara', :require => false, :group => :development
@@ -14,7 +14,7 @@ group :redmine_hudson_test do
   end
 
   platforms :mri_19, :mingw_19 do
-    gem 'simplecov', :require => false, :group => :development
+    gem 'simplecov', "~> 0.6", :require => false, :group => :development
     gem 'simplecov-rcov', :require => false, :group => :development
     gem 'simplecov-rcov-text', :require => false, :group => :development
   end
