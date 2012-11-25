@@ -17,7 +17,7 @@ begin
 
   namespace :cucumber do
     default_dependency_tasks = 
-      ['environment', 'redmine_hudson:db:test:prepare', 'redmine_hudson:config:prepare']
+      ['environment', 'redmine_hudson:config:prepare']
 
     Cucumber::Rake::Task.new({:ok => default_dependency_tasks}, 'Run features that should pass') do |t|
       t.binary = vendored_cucumber_bin # If nil, the gem's binary is used.
@@ -63,7 +63,11 @@ begin
 
   # In case we don't have ActiveRecord, append a no-op task that we can depend upon.
   task 'db:test:prepare' do
-     
+    system 'rake db:drop'
+    system 'rake db:migrate'
+    system 'rake redmine:plugins:migrate'
+    system 'REDMINE_LANG=en rake redmine:load_default_data'
+    system 'rake db:fixtures:load FIXTURES=projects,users,members,roles,member_roles'
   end
 
   task 'config:prepare' do
