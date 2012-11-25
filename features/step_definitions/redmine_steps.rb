@@ -6,7 +6,7 @@ Given /^Project "([^"]*?)" uses "([^"]*?)" Plugin$/ do |project_name, plugin_nam
      And I go to ProjectSettings at "#{project_name}" Project
      And I click "Modules"
      And I check "#{plugin_name}"
-     And I click "Save"
+     And I click "Save" within "div#tab-content-modules"
   }
 end
 

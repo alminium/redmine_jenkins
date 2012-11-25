@@ -4,8 +4,11 @@ When /^I go to (.*)$/ do |page_name|
   visit path_to(page_name)
 end
 
-When /^I click "([^"]*)"$/ do |element|
-  click_on element
+When /^I click "([^"]*)"(| within "([^"]*)")$/ do |element, temp, area|
+  area = "html" unless area
+  within(area) do
+    click_on element
+  end
 end
 
 When /^I fill in "([^"]*)" for "([^"]*)"$/ do |value, field|
