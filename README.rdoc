@@ -139,6 +139,11 @@ Hopefully i fix it.
 you should try to delete data from database.
 Use 'delete history' button in setting page.
 
+== How to Test
+
+* RAILS_ENV=test rake redmine_hudson:db:test:prepare
+* RAILS_ENV=test rake redmine_hudson:cucumber
+
 == Changelog
 
 === 1.0.8
