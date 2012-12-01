@@ -1,6 +1,4 @@
-# $Id$
-Feature: settings_edit
-  show and edit hudson settings
+Feature: Show and Edit hudson Basic Settings 
 
   Background: 
     Given Project "eCookbook" uses "Hudson" Plugin
@@ -36,7 +34,7 @@ Feature: settings_edit
           | keyword         | url_format                                   |
           | Build stability | http://hoge.com/hudson/simple-job/lastBuild/ |
 
-  @javascript @current
+  @javascript
   Scenario: Add HealthReport settings
     When I go to HudsonSettings at "eCookbook" Project
      And I fill in "http://localhost:8080" for "settings[url]"

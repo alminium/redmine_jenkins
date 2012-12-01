@@ -74,7 +74,7 @@ private
               "&exclude=/hudson/job/lastCompletedBuild" +
               "&exclude=/hudson/job/lastStableBuild" +
               "&exclude=/hudson/job/lastSuccessfulBuild"
-    content = open_hudson_api(api_url, @settings.auth_user, @settings.auth_password)
+    content = HudsonApi.open(api_url, @settings.auth_user, @settings.auth_password)
     rescue HudsonApiException => error
       raise error
     end

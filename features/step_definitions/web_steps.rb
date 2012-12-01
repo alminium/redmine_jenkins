@@ -27,3 +27,6 @@ Then /^the field named "(.*?)" should contain "(.*?)"$/ do |field, value|
   find_field(field).value.should == value
 end
 
+Then /^show me the page$/ do 
+  save_and_open_page
+end

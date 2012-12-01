@@ -20,6 +20,7 @@ rescue LoadError
   require 'cucumber/rails/capybara'
   require 'cucumber/rails/database'
   require 'cucumber/rails/rspec'
+  require 'cucumber/rspec/doubles'
 
 end
 

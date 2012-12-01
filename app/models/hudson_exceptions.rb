@@ -28,25 +28,25 @@ class HudsonApiException < Exception
       @message = I18n.t :notice_err_http_error, :code => object.code, :message => object.message
 
     when Net::HTTPBadResponse
-      @message = t :notice_err_response_invalid, :description => "Net::HTTPBadResponse"
+      @message = I18n.t :notice_err_response_invalid, :description => "Net::HTTPBadResponse"
     when SocketError
-      @message = t :notice_err_cant_connect, :description => object.message
+      @message = I18n.t :notice_err_cant_connect, :description => object.message
     
     when Errno::ECONNREFUSED, Errno::ETIMEDOUT
       @message = I18n.t :notice_err_cant_connect, :description => object.message
     
     when URI::InvalidURIError
-      @message = t :notice_err_invalid_url
+      @message = I18n.t :notice_err_invalid_url
     
     when REXML::ParseException
-      @message = t :notice_err_response_invalid, :description => truncate(object.to_s, 50)
+      @message = I18n.t :notice_err_response_invalid, :description => truncate(object.to_s, 50)
     
     else
       # ruby1.8.7 returns error - "undefined method `closed?' for nil:NilClass" when can't connect server ???
       if "undefined method `closed?' for nil:NilClass" == object.message
-        @message = t :notice_err_cant_connect, :description => object.message
+        @message = I18n.t :notice_err_cant_connect, :description => object.message
       else
-        @message = t :notice_err_unknown, :description => object.message
+        @message = I18n.t :notice_err_unknown, :description => object.message
       end
     end
   end

@@ -30,7 +30,7 @@ class HudsonJobSettings < ActiveRecord::Base
     return unless self.job.settings
 
     api_uri = "#{job.config_url_for(:plugin)}"
-    content = open_hudson_api(api_uri, self.job.settings.auth_user, self.job.settings.auth_password)
+    content = HudsonApi.open(api_uri, self.job.settings.auth_user, self.job.settings.auth_password)
 
     doc = REXML::Document.new content
 

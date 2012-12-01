@@ -112,7 +112,7 @@ class HudsonJob < ActiveRecord::Base
   def request_build
     clear_hudson_api_errors
     api_url = build_url_for(:plugin)
-    open_hudson_api(api_url, self.settings.auth_user, self.settings.auth_password)
+    HudsonApi.open(api_url, self.settings.auth_user, self.settings.auth_password)
   rescue HudsonApiException => error
     @hudson_api_errors << HudsonApiError.new(self.class.name, "request_build '#{self.name}'", error)
   end
@@ -120,7 +120,7 @@ class HudsonJob < ActiveRecord::Base
   def fetch_recent_builds
     clear_hudson_api_errors
     api_uri = rss_url_for(:plugin)
-    content = open_hudson_api(api_uri, self.settings.auth_user, self.settings.auth_password)
+    content = HudsonApi.open(api_uri, self.settings.auth_user, self.settings.auth_password)
 
     doc = REXML::Document.new content
     retval = []
@@ -156,7 +156,7 @@ private
   def fetch_summary
     api_url = rss_url_for(:plugin)
     begin
-      content = open_hudson_api(api_url, self.settings.auth_user, self.settings.auth_password)
+      content = HudsonApi.open(api_url, self.settings.auth_user, self.settings.auth_password)
     rescue HudsonApiException => error
       raise error
     end
@@ -198,7 +198,7 @@ private
     api_url << "&exclude=//upstreamProject"
     content = ""
     begin
-      content = open_hudson_api(api_url, self.settings.auth_user, self.settings.auth_password)
+      content = HudsonApi.open(api_url, self.settings.auth_user, self.settings.auth_password)
     rescue HudsonApiException => error
       raise error
     end

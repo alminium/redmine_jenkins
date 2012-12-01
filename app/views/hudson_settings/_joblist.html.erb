@@ -8,7 +8,7 @@
   <%=@error if @error != nil%>
   <%=l(:notice_err_no_jobs) unless @error != nil%>
 <% else %>
-  <table class="job-list">
+  <table class="job-list" id="job-list">
     <thead>
     <tr><th><%=image_tag('toggle_check.png')%></th>
     <th><%=l(:field_name)%></th>

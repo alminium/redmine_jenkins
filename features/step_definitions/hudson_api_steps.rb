@@ -1,11 +1,7 @@
 # coding: utf-8
 
 Given /^Hudson API returns "(.*?)"$/ do |response_name|
-  @response_jobs = Net::HTTPSuccess.new(Net::HTTP.version_1_2, '200', 'OK')
-  @response_jobs.stubs(:content_type).returns("text/html")
-  @response_jobs.stubs(:body).returns(get_response("#{response_name}"))
-  
-  Net::HTTP.any_instance.stubs(:request).returns(@response_jobs)
+  HudsonApi.should_receive(:open).twice.and_return(get_response("#{response_name}"))
 end
 
 def get_response(name)

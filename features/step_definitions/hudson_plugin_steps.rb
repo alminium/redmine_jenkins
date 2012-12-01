@@ -24,3 +24,13 @@ When /^I should see health report settings below:$/ do |table|
     fields_url[index].value.should == hash["url_format"]
   end
 end
+
+Then /^I should see job list for settings:$/ do |job_list|
+  actual = page.all("#job-list tr").map do |row|
+    row.all("th,td").map do |cell|
+      cell.text
+    end
+  end
+
+  job_list.diff!(actual)
+end
