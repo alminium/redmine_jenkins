@@ -127,10 +127,8 @@ private
     api_url = @hudson.api_url_for(:plugin)
     return if api_url == nil || api_url.length == 0
 
-    api_url = "#{api_url}/xml?depth=0"
-
     # Open the feed and parse it
-    content = HudsonApi.open(api_url, @hudson.settings.auth_user, @hudson.settings.auth_password)
+    content = HudsonApi.get_joblist(api_url, @hudson.settings.auth_user, @hudson.settings.auth_password)
     doc = REXML::Document.new content
     doc.elements.each("hudson/job") do |element|
       @jobs << get_element_value(element, "name")

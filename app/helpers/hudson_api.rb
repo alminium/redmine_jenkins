@@ -5,8 +5,9 @@ require 'net/http'
 
 class HudsonApi
 
-  def self.open(uri, auth_user, auth_password)
-    HudsonApi.new.open uri, auth_user, auth_password
+  def self.get_joblist(hudson_url, auth_user, auth_password)
+    url = "#{hudson_url}/xml?depth=0"
+    HudsonApi.new.open url, auth_user, auth_password
   end
 
   def open(uri, auth_user, auth_password)
